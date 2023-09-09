@@ -13,4 +13,5 @@ jobs:
       - uses: oven-sh/setup-bun@v1
         with:
           bun-version: latest
-      - run: bun x prettier --check ./web/src/*
+      - run: bun install
+      - run: bun prettier --check ./web/src/*
