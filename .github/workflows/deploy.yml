@@ -16,7 +16,8 @@ jobs:
       - run: bun run build
       - run: echo "::add-mask::${{ secrets.TARGET_PASSWORD }}"
       - run: echo "::add-mask::${{ secrets.JUMP_PASSWORD }}"
-      - run: sshpass -p ${{ secrets.TARGET_PASSWORD }} sftp -o ProxyCommand="sshpass -p ${{ secrets.JUMP_PASSWORD }} ssh -W %h:%p xrk4np@portal.cs.virginia.edu" xrk4np@cs4640.cs.virginia.edu << !
+      - run: >
+          sshpass -p ${{ secrets.TARGET_PASSWORD }} sftp -o ProxyCommand="sshpass -p ${{ secrets.JUMP_PASSWORD }} ssh -W %h:%p xrk4np@portal.cs.virginia.edu" xrk4np@cs4640.cs.virginia.edu << !
           mkdir actionstest0
           bye
           !
