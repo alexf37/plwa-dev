@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <!--
   Not technically "sources" but here are the things I used on this page that I didn't personally write (not the rest of the site):
   - Tailwind, for utility classes (https://tailwindcss.com/)
@@ -8,41 +8,44 @@
 -->
 
 <html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="author" content="Alex Foster" />
+    <meta name="IDE" content="VS Code" />
+    <title>Homework 0</title>
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
+    <link rel="stylesheet" type="text/css" href="/index.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="author" content="Alex Foster">
-  <meta name="IDE" content="VS Code">
-  <title>Homework 0</title>
-  <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
-  <link rel="stylesheet" type="text/css" href="/index.css" />
-</head>
-
-<body>
-  <main class="h-full bg-slate-800 text-slate-50 grid place-content-center">
-    <div class="w-full h-4/5 max-w-2xl text-left mx-auto flex flex-col items-start justify-center">
-      <h1 class="tracking-wide text-5xl font-bold text-slate-400">HW0</h1>
-      <h2 class="tracking-wide text-3xl font-semibold mb-4">Publishing</h2>
-      <p class="text-slate-200 tracking-wide mb-2">
-        The main reason I use VS Code for web development is because I think it's easier than something like Neovim when
-        dealing with the JS/TS ecosystem.
-        It also integrates very well with WSL2, which is where I do most of my development since I can't be bothered to
-        run Linux on my laptop. Also, other people are familiar with it so it's easier to review code with people
-        and ask for help when I'm in VS Code.
-      </p>
-      <p class="text-slate-200 tracking-wide">
-        However, this only applies for web development. I learned Go in Neovim when I was taking CSO1 to get better at
-        using Vim so that's now that's just the IDE that feels right to me for writing Go (and C). The bonus is of
-        course that I get to look cool for using Neovim whenever I'm writing Go, even if I'm writing the most horrible
-        code on the planet and have no idea what I'm doing :)
-      </p>
-      <div class="mt-4 flex gap-2 text-slate-300 font-semibold text-lg">
-        <span class="arrow-stretch pb-3">&lt;</span> <a class="hover:underline underline-offset-4" href="/xrk4np/">Back</a>
+  <body>
+    <main class="grid h-full place-content-center bg-slate-800 text-slate-50">
+      <div
+        class="mx-auto flex h-4/5 w-full max-w-2xl flex-col items-start justify-center text-left"
+      >
+        <h1 class="text-5xl font-bold tracking-wide text-slate-400">HW0</h1>
+        <h2 class="mb-4 text-3xl font-semibold tracking-wide">Publishing</h2>
+        <p class="mb-2 tracking-wide text-slate-200">
+          The main reason I use VS Code for web development is because I think
+          it's easier than something like Neovim when dealing with the JS/TS
+          ecosystem. It also integrates very well with WSL2, which is where I do
+          most of my development since I can't be bothered to run Linux on my
+          laptop. Also, other people are familiar with it so it's easier to
+          review code with people and ask for help when I'm in VS Code.
+        </p>
+        <p class="tracking-wide text-slate-200">
+          However, this only applies for web development. I learned Go in Neovim
+          when I was taking CSO1 to get better at using Vim so that's now that's
+          just the IDE that feels right to me for writing Go (and C). The bonus
+          is of course that I get to look cool for using Neovim whenever I'm
+          writing Go, even if I'm writing the most horrible code on the planet
+          and have no idea what I'm doing :)
+        </p>
+        <div class="mt-4 flex gap-2 text-lg font-semibold text-slate-300">
+          <span class="arrow-stretch pb-3">&lt;</span>
+          <a class="underline-offset-4 hover:underline" href="/xrk4np/">Back</a>
+        </div>
       </div>
-    </div>
-
-  </main>
-</body>
-
+    </main>
+  </body>
 </html>
