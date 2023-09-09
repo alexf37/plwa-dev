@@ -6,9 +6,10 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   root: "web/src",
+  base: "/xrk4np",
   publicDir: "../public",
   build: {
-    outDir: "../www",
+    outDir: "../www/xrk4np",
     emptyOutDir: true,
     rollupOptions: {
       input: {

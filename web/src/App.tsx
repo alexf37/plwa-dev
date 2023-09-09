@@ -16,7 +16,7 @@ function App() {
              I'm not sure what to do with this site just yet but hopefully I can think of something cool to park here alongside my assignments. Speaking of which, maybe I should add a menu so you can actually get to them...
           </p>
           <div className="mt-4 flex gap-2 text-slate-300 font-semibold text-lg">
-        <a className="hover:underline underline-offset-4" href="/hw0/homework0.html">HW 0 - Publishing</a><span className="arrow-stretch">&gt;</span> 
+        <a className="hover:underline underline-offset-4" href="/xrk4np/hw0/homework0.html">HW 0 - Publishing</a><span className="arrow-stretch">&gt;</span> 
       </div>
         </div>
       </main>
