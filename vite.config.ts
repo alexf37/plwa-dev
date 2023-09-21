@@ -15,6 +15,9 @@ export default defineConfig({
       input: {
         main: resolve(__dirname, "web", "src/index.html"),
         hw0: resolve(__dirname, "web", "src/hw0/homework0.html"),
+        hw1: resolve(__dirname, "web", "src/hw1/index.html"),
+        hw2: resolve(__dirname, "web", "src/hw2/index.html"),
+        hw3: resolve(__dirname, "web", "src/hw3/index.html"),
       },
     },
   },
