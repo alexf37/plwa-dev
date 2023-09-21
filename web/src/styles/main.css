@@ -155,7 +155,7 @@ h1 {
 .container {
   display: flex;
   margin: 0 auto;
-  max-width: 55rem;
+  max-width: 60rem;
   padding: 2rem 2rem;
   text-align: left;
 }
@@ -169,7 +169,7 @@ h1 {
   flex-flow: column nowrap;
   justify-content: center;
 }
-section > section {
+div.center-all > section {
   flex-basis: 300px;
 }
 
@@ -186,6 +186,10 @@ footer {
   justify-content: space-between;
   flex-wrap: wrap;
   height: 2rem;
+}
+
+.mx-auto {
+  margin: 0 auto;
 }
 
 .primary-footer {
@@ -208,7 +212,7 @@ h2 + p {
   font-size: 1.1rem;
 }
 
-section > * {
+section.hero > * {
   max-width: 50%;
 }
 
@@ -218,6 +222,12 @@ section > * {
   justify-content: center;
   flex-wrap: wrap;
   flex-direction: row;
+  width: 100%;
+  gap: 1rem;
+}
+
+.center-all img {
+  width: 100%;
 }
 
 h4 {
@@ -256,4 +266,8 @@ nav a:hover {
 img {
   max-width: 100%;
   height: auto;
+}
+
+.block {
+  display: block;
 }
