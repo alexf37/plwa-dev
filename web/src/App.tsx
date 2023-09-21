@@ -1,8 +1,8 @@
 function App() {
   return (
     <>
-      <main className="grid h-full place-content-center bg-slate-800 text-slate-50">
-        <div className="mx-auto flex h-4/5 w-full max-w-2xl flex-col items-start justify-center text-left">
+      <main className="mx-auto flex h-full w-full max-w-prose flex-col px-8 py-16 text-left text-slate-50">
+        <div className="m-auto">
           <h1 className="mb-2 text-5xl font-bold tracking-wide text-slate-400">
             Welcome!
           </h1>
@@ -33,6 +33,15 @@ function App() {
               href="/xrk4np/hw0/homework0.html"
             >
               HW 0 - Publishing
+            </a>
+            <span className="arrow-stretch">&gt;</span>
+          </div>
+          <div className="mt-4 flex gap-2 text-lg font-semibold text-slate-300">
+            <a
+              className="underline-offset-4 hover:underline"
+              href="/xrk4np/hw2/"
+            >
+              HW 2 - Static Web Page
             </a>
             <span className="arrow-stretch">&gt;</span>
           </div>
