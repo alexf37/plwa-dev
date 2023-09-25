@@ -1,2 +1,1 @@
-ErrorDocument 404 https://cs4640.cs.virginia.edu/
 Header set X-Custom "Custom Value"
