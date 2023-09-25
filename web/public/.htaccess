@@ -1,0 +1,2 @@
+RewriteEngine on
+ErrorDocument 404 https://cs4640.cs.virginia.edu/xrk4np/index.html
