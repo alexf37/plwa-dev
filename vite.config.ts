@@ -11,6 +11,7 @@ export default defineConfig({
   build: {
     outDir: "../www/xrk4np",
     emptyOutDir: true,
+    manifest: true,
     rollupOptions: {
       input: {
         main: resolve(__dirname, "web", "src/index.html"),
@@ -18,7 +19,6 @@ export default defineConfig({
         hw1: resolve(__dirname, "web", "src/hw1/index.html"),
         hw2: resolve(__dirname, "web", "src/hw2/index.html"),
         hw3: resolve(__dirname, "web", "src/hw3/index.html"),
-        notfound: resolve(__dirname, "web", "src/404/index.html"),
       },
     },
   },
