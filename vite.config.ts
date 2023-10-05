@@ -2,6 +2,27 @@ import { defineConfig } from "vite";
 import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 
+function resIn(dir: string) {
+  return resolve(__dirname, "web/src", dir);
+}
+
+const filesToInclude = [
+  "index.html",
+  "hw0/homework0.html",
+  "hw1/index.html",
+  "hw2/index.html",
+  "hw2/styles/main.css",
+  "hw3/index.html",
+];
+
+const rollupInputs: Record<string, string> = filesToInclude.reduce(
+  (prevv, curv, curi) => ({
+    ...prevv,
+    [curi]: resIn(curv),
+  }),
+  {},
+);
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -13,13 +34,7 @@ export default defineConfig({
     emptyOutDir: true,
     manifest: true,
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, "web", "src/index.html"),
-        hw0: resolve(__dirname, "web", "src/hw0/homework0.html"),
-        hw1: resolve(__dirname, "web", "src/hw1/index.html"),
-        hw2: resolve(__dirname, "web", "src/hw2/index.html"),
-        hw3: resolve(__dirname, "web", "src/hw3/index.html"),
-      },
+      input: rollupInputs,
     },
   },
 });
