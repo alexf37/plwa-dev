@@ -18,7 +18,6 @@ export default defineConfig({
         hw1: resolve(__dirname, "src/hw1/index.html"),
         hw2: resolve(__dirname, "src/hw2/index.html"),
         hw3: resolve(__dirname, "src/hw3/index.html"),
-        notfound: resolve(__dirname, "src/404/index.html"),
       },
     },
   },

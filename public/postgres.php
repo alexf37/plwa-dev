@@ -13,3 +13,4 @@
     } else {
         echo "An error occurred connecting to the database";
     }
+?>
