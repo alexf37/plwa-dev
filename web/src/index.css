@@ -14,4 +14,12 @@
   .arrow-stretch {
     transform: scaleX(0.65) scaleY(1.25);
   }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 }
