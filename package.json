@@ -18,7 +18,8 @@
     "react-dom": "^18.2.0",
     "react-map-gl": "^7.1.6",
     "react-merge-refs": "^2.1.1",
-    "react-virtualized-auto-sizer": "^1.0.20"
+    "react-virtualized-auto-sizer": "^1.0.20",
+    "tailwind-merge": "^1.14.0"
   },
   "devDependencies": {
     "@types/node": "^20.6.0",
