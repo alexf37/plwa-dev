@@ -51,16 +51,17 @@ export function ProfilePopover() {
         <div className="flex gap-2">
           <img
             src="https://avatars.githubusercontent.com/u/122472971?v=4"
-            alt="Profile"
+            alt="Profile Picture"
             className="h-12 w-12 rounded-full"
           />
           <div>
             <h1 className="text-xl font-bold">ExampleUser123</h1>
-            <h2 className="text-sm text-slate-400">12 posts</h2>
+            <h2 className="text-sm text-slate-500">12 posts</h2>
           </div>
         </div>
         <button
           type="button"
+          onClick={() => (location.href = "/xrk4np/app/create-account")}
           className="rounded-lg bg-blue-400 px-3 py-2 text-sm text-white drop-shadow"
         >
           Edit
@@ -69,7 +70,7 @@ export function ProfilePopover() {
       <div className="no-scrollbar max-h-72 divide-y divide-slate-200 overflow-y-auto">
         {posts.map((post) => (
           <div className="py-3 text-sm" key={post.id}>
-            <small className="text-xs text-slate-400">{`${post.timestamp}`}</small>
+            <small className="text-xs text-slate-500">{`${post.timestamp}`}</small>
             <p className="text-slate-900">{post.text}</p>
             <div className="grid grid-cols-6 gap-4 pt-2">
               <Likes likes={post.likes} liked={post.likedByUser} />

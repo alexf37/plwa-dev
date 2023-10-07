@@ -3,7 +3,7 @@ function App() {
     <>
       <main className="mx-auto flex h-full w-full max-w-prose flex-col px-8 py-16 text-left text-slate-50">
         <div className="m-auto">
-          <h1 className="mb-2 text-5xl font-bold tracking-wide text-slate-400">
+          <h1 className="mb-2 text-5xl font-bold tracking-wide text-slate-500">
             Welcome!
           </h1>
           <h2 className="mb-4 text-3xl font-semibold tracking-wide">

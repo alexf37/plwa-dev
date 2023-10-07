@@ -2,7 +2,7 @@ import { useDeferredValue, useEffect, useRef, useState } from "react";
 import { type MapRef } from "react-map-gl";
 import { Map } from "./Map";
 import { Posts } from "./Posts";
-import type { Location } from "./types";
+import type { Location, Post } from "./types";
 import { SpotMarker } from "./SpotMarker";
 import { twMerge } from "tailwind-merge";
 import { NotificationIcon } from "./NotificationIcon";
@@ -11,6 +11,37 @@ import React from "react";
 
 import { Router, Route, RootRoute, Outlet, Link } from "@tanstack/react-router";
 import { ProfilePopover } from "./ProfilePopover";
+import { NotificationsPopover } from "./NotificationsPopover";
+import { PostMarker } from "./PostMarker";
+
+const posts: Post[] = [
+  {
+    id: "3",
+    author: "NotJimRyan",
+    text: "the spanish language lowkey went off with biblioteca ngl",
+    location: {
+      latitude: 38.03545,
+      longitude: -78.513611,
+    },
+    likes: 64,
+    comments: 13,
+    timestamp: "14min ago",
+    likedByUser: false,
+  },
+  {
+    id: "4",
+    author: "trashhhdev",
+    text: "i feel so bad when i take over an older professor on the sidewalk like man i really didn't mean to flex on you with my youthful stride",
+    location: {
+      latitude: 38.03599,
+      longitude: -78.49443,
+    },
+    likes: 54,
+    comments: 21,
+    timestamp: "47min ago",
+    likedByUser: true,
+  },
+];
 
 function CreateAccountPage() {
   return (
@@ -18,7 +49,7 @@ function CreateAccountPage() {
       <div className="pointer-events-auto relative z-50 flex w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 opacity-100 shadow-lg">
         <div className=" space-y-1">
           <h1 className="text-3xl font-bold">Create an account</h1>
-          <h2 className="text-sm text-slate-400">
+          <h2 className="text-sm text-slate-500">
             Enter a username below to create your account
           </h2>
         </div>
@@ -59,12 +90,46 @@ function CreateAccountPage() {
           </Link>
           <button
             type="button"
+            onClick={() => (location.href = "/xrk4np/app/")}
             className="rounded-xl bg-blue-400 px-3 py-2 text-white drop-shadow"
           >
             Create
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function NewPostPage() {
+  return (
+    <div className="pointer-events-none absolute z-50 flex w-full justify-between p-16">
+      <div className="pointer-events-auto flex w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+        <div className="flex items-center justify-between border-b border-slate-200 pb-6">
+          <h1 className="text-4xl font-bold">New Post</h1>
+        </div>
+        <div className="py-4">
+          <textarea
+            name="post"
+            id="newpost"
+            placeholder="Say anything!"
+            className="flex w-full rounded-md px-3 py-2 text-sm"
+          ></textarea>
+        </div>
+        <div className="text-button-container">
+          <Link to="/xrk4np/app" className="text-button bg-red-400 drop-shadow">
+            Cancel
+          </Link>
+          <button
+            type="button"
+            onClick={() => (location.href = "/xrk4np/app/")}
+            className="text-button bg-blue-400 drop-shadow"
+          >
+            Post
+          </button>
+        </div>
+      </div>
+      <RightPane />
     </div>
   );
 }
@@ -86,8 +151,17 @@ const createAccountRoute = new Route({
   path: "/xrk4np/app/create-account/",
   component: CreateAccountPage,
 });
+const NewPostRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/xrk4np/app/new-post/",
+  component: NewPostPage,
+});
 
-const routeTree = rootRoute.addChildren([indexRoute, createAccountRoute]);
+const routeTree = rootRoute.addChildren([
+  indexRoute,
+  createAccountRoute,
+  NewPostRoute,
+]);
 export const router = new Router({ routeTree });
 
 declare module "@tanstack/react-router" {
@@ -188,7 +262,7 @@ function Popover({ children }: React.PropsWithChildren) {
   );
 }
 
-function Main() {
+function RightPane({ children }: React.PropsWithChildren) {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const profileButtonRef = useRef(null);
 
@@ -203,39 +277,50 @@ function Main() {
     setIsNotifsOpen(!isNotifsOpen);
   };
   return (
-    <div className="pointer-events-none absolute z-50 flex h-full w-full justify-between p-16">
-      <Posts />
-      <div className="flex h-full w-96 flex-col items-end justify-between">
-        <div className="flex gap-6">
-          <div className="relative">
-            <Button
-              aria-label="Notifications"
-              className="h-12 w-12"
-              ref={notifsButtonRef}
-              onClick={handleNotifsButtonClick}
-            >
-              <NotificationIcon className="h-7 w-7" />
-            </Button>
-            {isNotifsOpen && <Popover>Content</Popover>}
-          </div>
+    <div className="right-pane-container">
+      <div className="flex gap-6">
+        <div className="relative">
+          <Button
+            aria-label="Notifications"
+            className="h-12 w-12"
+            ref={notifsButtonRef}
+            onClick={handleNotifsButtonClick}
+          >
+            <NotificationIcon className="h-7 w-7" />
+          </Button>
+          {isNotifsOpen && (
+            <Popover>
+              <NotificationsPopover />
+            </Popover>
+          )}
+        </div>
 
-          <div className="relative">
-            <Button
-              aria-label="Profile"
-              className="h-12 w-12"
-              ref={profileButtonRef}
-              onClick={handleProfileButtonClick}
-            >
-              <ProfileIcon className="h-7 w-7" />
-            </Button>
-            {isProfileOpen && (
-              <Popover>
-                <ProfilePopover />
-              </Popover>
-            )}
-          </div>
+        <div className="relative">
+          <Button
+            aria-label="Profile"
+            className="h-12 w-12"
+            ref={profileButtonRef}
+            onClick={handleProfileButtonClick}
+          >
+            <ProfileIcon className="h-7 w-7" />
+          </Button>
+          {isProfileOpen && (
+            <Popover>
+              <ProfilePopover />
+            </Popover>
+          )}
         </div>
       </div>
+      {children}
+    </div>
+  );
+}
+
+function Main() {
+  return (
+    <div className="pointer-events-none absolute z-50 flex h-full w-full justify-between p-16">
+      <Posts />
+      <RightPane />
     </div>
   );
 }
@@ -248,6 +333,12 @@ function Root({ children }: React.PropsWithChildren) {
     mapRef.current?.flyTo({
       center: [INITIAL_VIEWPORT.longitude, INITIAL_VIEWPORT.latitude],
     });
+    document.querySelectorAll("[aria-label='Map marker']").forEach((el) => {
+      el.removeAttribute("aria-label");
+    });
+    document
+      .querySelector(`[mapboxgl-children=""]`)
+      ?.removeAttribute("mapboxgl-children");
   }, []);
 
   const handleFlyToOnClick = ({ latitude, longitude }: Location) => {
@@ -279,6 +370,9 @@ function Root({ children }: React.PropsWithChildren) {
               {...location}
               fillColor={ACTIVITY_COLORS[activity]}
             />
+          ))}
+          {posts.map((post) => (
+            <PostMarker key={post.id} {...post.location} post={post} />
           ))}
         </Map>
       </div>

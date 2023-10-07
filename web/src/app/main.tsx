@@ -4,11 +4,10 @@ import { router } from "./App.tsx";
 import { RouterProvider } from "@tanstack/react-router";
 
 const rootElement = document.getElementById("root")!;
-if (!rootElement.innerHTML) {
-  const root = ReactDOM.createRoot(rootElement);
-  root.render(
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>,
-  );
-}
+
+const root = ReactDOM.createRoot(rootElement);
+root.render(
+  <StrictMode>
+    <RouterProvider router={router} />
+  </StrictMode>,
+);

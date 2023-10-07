@@ -80,7 +80,8 @@ export function Posts() {
         <button
           type="button"
           aria-label="Add Post"
-          className="grid h-10 w-10 place-content-center rounded-full border border-slate-200 bg-white text-slate-900 shadow active:translate-y-1 active:shadow-none active:drop-shadow-sm"
+          onClick={() => (location.href = "/xrk4np/app/new-post")}
+          className="new-post-button"
         >
           <PlusIcon stroke="currentColor" strokeWidth={0.5} />
         </button>
@@ -88,7 +89,7 @@ export function Posts() {
       <div className="no-scrollbar divide-y divide-slate-200 overflow-y-auto">
         {posts.map((post) => (
           <div className="py-4" key={post.id}>
-            <small className="text-xs text-slate-400">{`${post.author} • ${post.timestamp}`}</small>
+            <small className="text-xs text-slate-500">{`${post.author} • ${post.timestamp}`}</small>
             <p className="text-base text-slate-900">{post.text}</p>
             <div className="grid grid-cols-6 gap-4 pt-2">
               <Likes likes={post.likes} liked={post.likedByUser} />
