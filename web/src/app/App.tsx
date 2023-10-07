@@ -7,6 +7,7 @@ import { SpotMarker } from "./SpotMarker";
 import { twMerge } from "tailwind-merge";
 import { NotificationIcon } from "./NotificationIcon";
 import { ProfileIcon } from "./ProfileIcon";
+import React from "react";
 
 const INITIAL_VIEWPORT = {
   latitude: 38.035629,
@@ -71,18 +72,32 @@ const spots: Spot[] = [
   },
 ];
 
-function Button(props: React.ButtonHTMLAttributes<HTMLButtonElement>) {
+const Button = React.forwardRef(
+  (
+    props: React.ButtonHTMLAttributes<HTMLButtonElement>,
+    ref: React.Ref<HTMLButtonElement>,
+  ) => {
+    return (
+      <button
+        type="button"
+        {...props}
+        ref={ref}
+        className={twMerge(
+          "pointer-events-auto grid h-10 w-10 place-content-center rounded-full border border-slate-200 bg-white text-slate-900 shadow",
+          props.className,
+        )}
+      >
+        {props.children}
+      </button>
+    );
+  },
+);
+
+function Popover({ children }: React.PropsWithChildren) {
   return (
-    <button
-      type="button"
-      {...props}
-      className={twMerge(
-        "pointer-events-auto grid h-10 w-10 place-content-center rounded-full border border-slate-200 bg-white text-slate-900 shadow",
-        props.className,
-      )}
-    >
-      {props.children}
-    </button>
+    <div className="absolute right-0 top-full mt-2 w-56 rounded-3xl border bg-white p-4 shadow-lg">
+      {children}
+    </div>
   );
 }
 
@@ -102,18 +117,49 @@ export default function App() {
     });
   };
 
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileButtonRef = useRef(null);
+
+  const handleProfileButtonClick = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
+  const [isNotifsOpen, setIsNotifsOpen] = useState(false);
+  const notifsButtonRef = useRef(null);
+
+  const handleNotifsButtonClick = () => {
+    setIsNotifsOpen(!isNotifsOpen);
+  };
+
   return (
     <>
       <div className="pointer-events-none absolute z-50 flex h-full w-full justify-between p-16">
         <Posts />
         <div className="flex h-full w-96 flex-col items-end justify-between">
           <div className="flex gap-6">
-            <Button aria-label="Notifications" className="h-12 w-12">
-              <NotificationIcon className="h-7 w-7" />
-            </Button>
-            <Button aria-label="Profile" className="h-12 w-12">
-              <ProfileIcon className="h-7 w-7" />
-            </Button>
+            <div className="relative">
+              <Button
+                aria-label="Notifications"
+                className="h-12 w-12"
+                ref={notifsButtonRef}
+                onClick={handleNotifsButtonClick}
+              >
+                <NotificationIcon className="h-7 w-7" />
+              </Button>
+              {isNotifsOpen && <Popover>Content</Popover>}
+            </div>
+
+            <div className="relative">
+              <Button
+                aria-label="Profile"
+                className="h-12 w-12"
+                ref={profileButtonRef}
+                onClick={handleProfileButtonClick}
+              >
+                <ProfileIcon className="h-7 w-7" />
+              </Button>
+              {isProfileOpen && <Popover>Content</Popover>}
+            </div>
           </div>
         </div>
       </div>
