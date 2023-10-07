@@ -1,19 +1,8 @@
-import type { Location } from "./types";
 import { Likes } from "./Likes";
 import { PlusIcon } from "./PlusIcon";
 import { Comments } from "./Comments";
 
-type Post = {
-  id: string;
-  author: string;
-  text: string;
-  image?: string;
-  location: Location;
-  likes: number;
-  comments: number;
-  timestamp: string;
-  likedByUser: boolean;
-};
+import { type Post } from "./types";
 
 const posts: Post[] = [
   {

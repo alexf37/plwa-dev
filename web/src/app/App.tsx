@@ -9,6 +9,93 @@ import { NotificationIcon } from "./NotificationIcon";
 import { ProfileIcon } from "./ProfileIcon";
 import React from "react";
 
+import { Router, Route, RootRoute, Outlet, Link } from "@tanstack/react-router";
+import { ProfilePopover } from "./ProfilePopover";
+
+function CreateAccountPage() {
+  return (
+    <div className="fixed z-30 grid h-full w-full place-content-center bg-white bg-opacity-20 filter backdrop-blur-sm">
+      <div className="pointer-events-auto relative z-50 flex w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 opacity-100 shadow-lg">
+        <div className=" space-y-1">
+          <h1 className="text-3xl font-bold">Create an account</h1>
+          <h2 className="text-sm text-slate-400">
+            Enter a username below to create your account
+          </h2>
+        </div>
+
+        <div className="flex flex-col gap-4 py-4">
+          <div className="flex flex-col gap-1">
+            <label htmlFor="username" className="text-sm font-semibold">
+              Username
+            </label>
+            <input
+              placeholder="ExampleUser123"
+              className="border-input bg-background ring-offset-background flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow"
+              name="username"
+              id="username"
+              type="text"
+            />
+          </div>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="password" className="text-sm font-semibold">
+              Password
+            </label>
+            <input
+              placeholder="********"
+              className="first-letter:border-input bg-background ring-offset-background flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow"
+              name="password"
+              id="password"
+              type="password"
+            />
+          </div>
+        </div>
+        <hr className=" mb-4 border border-slate-200" />
+        <div className="flex justify-end gap-2 font-medium">
+          <Link
+            to="/xrk4np/app"
+            className="rounded-xl bg-red-400 px-3 py-2 text-white drop-shadow"
+          >
+            Cancel
+          </Link>
+          <button
+            type="button"
+            className="rounded-xl bg-blue-400 px-3 py-2 text-white drop-shadow"
+          >
+            Create
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+const rootRoute = new RootRoute({
+  component: () => (
+    <Root>
+      <Outlet />
+    </Root>
+  ),
+});
+const indexRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/xrk4np/app/",
+  component: Main,
+});
+const createAccountRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/xrk4np/app/create-account/",
+  component: CreateAccountPage,
+});
+
+const routeTree = rootRoute.addChildren([indexRoute, createAccountRoute]);
+export const router = new Router({ routeTree });
+
+declare module "@tanstack/react-router" {
+  interface Register {
+    router: typeof router;
+  }
+}
+
 const INITIAL_VIEWPORT = {
   latitude: 38.035629,
   longitude: -78.508403,
@@ -95,13 +182,65 @@ const Button = React.forwardRef(
 
 function Popover({ children }: React.PropsWithChildren) {
   return (
-    <div className="absolute right-0 top-full mt-2 w-56 rounded-3xl border bg-white p-4 shadow-lg">
+    <div className="pointer-events-auto absolute right-0 top-full mt-2 w-96 rounded-3xl border bg-white p-6 shadow-lg">
       {children}
     </div>
   );
 }
 
-export default function App() {
+function Main() {
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const profileButtonRef = useRef(null);
+
+  const handleProfileButtonClick = () => {
+    setIsProfileOpen(!isProfileOpen);
+  };
+
+  const [isNotifsOpen, setIsNotifsOpen] = useState(false);
+  const notifsButtonRef = useRef(null);
+
+  const handleNotifsButtonClick = () => {
+    setIsNotifsOpen(!isNotifsOpen);
+  };
+  return (
+    <div className="pointer-events-none absolute z-50 flex h-full w-full justify-between p-16">
+      <Posts />
+      <div className="flex h-full w-96 flex-col items-end justify-between">
+        <div className="flex gap-6">
+          <div className="relative">
+            <Button
+              aria-label="Notifications"
+              className="h-12 w-12"
+              ref={notifsButtonRef}
+              onClick={handleNotifsButtonClick}
+            >
+              <NotificationIcon className="h-7 w-7" />
+            </Button>
+            {isNotifsOpen && <Popover>Content</Popover>}
+          </div>
+
+          <div className="relative">
+            <Button
+              aria-label="Profile"
+              className="h-12 w-12"
+              ref={profileButtonRef}
+              onClick={handleProfileButtonClick}
+            >
+              <ProfileIcon className="h-7 w-7" />
+            </Button>
+            {isProfileOpen && (
+              <Popover>
+                <ProfilePopover />
+              </Popover>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Root({ children }: React.PropsWithChildren) {
   const mapRef = useRef<MapRef>(null);
   const [mapViewport, setMapViewport] = useState(INITIAL_VIEWPORT);
   const deferredViewport = useDeferredValue(mapViewport);
@@ -117,53 +256,9 @@ export default function App() {
     });
   };
 
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const profileButtonRef = useRef(null);
-
-  const handleProfileButtonClick = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
-
-  const [isNotifsOpen, setIsNotifsOpen] = useState(false);
-  const notifsButtonRef = useRef(null);
-
-  const handleNotifsButtonClick = () => {
-    setIsNotifsOpen(!isNotifsOpen);
-  };
-
   return (
     <>
-      <div className="pointer-events-none absolute z-50 flex h-full w-full justify-between p-16">
-        <Posts />
-        <div className="flex h-full w-96 flex-col items-end justify-between">
-          <div className="flex gap-6">
-            <div className="relative">
-              <Button
-                aria-label="Notifications"
-                className="h-12 w-12"
-                ref={notifsButtonRef}
-                onClick={handleNotifsButtonClick}
-              >
-                <NotificationIcon className="h-7 w-7" />
-              </Button>
-              {isNotifsOpen && <Popover>Content</Popover>}
-            </div>
-
-            <div className="relative">
-              <Button
-                aria-label="Profile"
-                className="h-12 w-12"
-                ref={profileButtonRef}
-                onClick={handleProfileButtonClick}
-              >
-                <ProfileIcon className="h-7 w-7" />
-              </Button>
-              {isProfileOpen && <Popover>Content</Popover>}
-            </div>
-          </div>
-        </div>
-      </div>
-
+      {children}
       <div className="relative z-0 h-full">
         <Map
           ref={mapRef}
