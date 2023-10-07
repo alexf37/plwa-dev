@@ -1,80 +1,283 @@
 <!doctype html>
-<!-- 
-Bootstrap components used:
-- Navbar
-- Accordion
-- Card
-- Button
-- Badge
-
-Sources used:
-- https://cs4640.cs.virginia.edu
-- https://www.hongkiat.com/blog/less-basic/
-- https://getbootstrap.com/docs/5.3/
--->
-<html lang="en" data-bs-theme="dark">
+<html lang="en">
   <head>
+    <!-- https://cs4640.cs.virginia.edu/xrk4np/app/ -->
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Homework 3</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SpotChat</title>
     <meta name="author" content="Alex Foster" />
-    <meta name="description" content="homework 3" />
-    <meta name="keywords" content="bootstrap site for cs4640" />
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
+    <meta name="description" content="CS 4640 Webdev Project" />
+    <script defer type="module" src="./main.tsx"></script>
     <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    <link
-      rel="stylesheet/less"
-      type="text/css"
-      href="/hw3/styles/custom.less"
-    />
-    <script defer src="/less.js"></script>
+    <link rel="stylesheet" type="text/css" href="/index.css" />
+    <link rel="stylesheet" type="text/css" href="./app.css" />
   </head>
 
   <body class="overflow-hidden">
     <div id="root">
       <div
-        class="pointer-events-none absolute z-50 flex w-full justify-between p-16"
+        class="pointer-events-none absolute z-50 flex h-full w-full justify-between p-16"
       >
         <div
-          class="pointer-events-auto flex w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg"
+          class="pointer-events-auto flex h-full w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg"
         >
           <div
             class="flex items-center justify-between border-b border-slate-200 pb-6"
           >
-            <h1 class="text-4xl font-bold">New Post</h1>
-          </div>
-          <div class="py-4">
-            <textarea
-              name="post"
-              id="newpost"
-              placeholder="Say anything!"
-              class="flex w-full rounded-md px-3 py-2 text-sm"
-            ></textarea>
-          </div>
-          <div class="text-button-container">
-            <a
-              class="text-button active bg-red-400 drop-shadow"
-              href="/xrk4np/app"
-              data-status="active"
-              >Cancel</a
-            ><button type="button" class="text-button bg-blue-400 drop-shadow">
-              Post
+            <h1 class="text-4xl font-bold">Posts</h1>
+            <button
+              type="button"
+              aria-label="Add Post"
+              class="grid h-10 w-10 place-content-center rounded-full border border-slate-200 bg-white text-slate-900 shadow active:translate-y-1 active:shadow-none active:drop-shadow-sm"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                stroke="currentColor"
+                stroke-width="0.5"
+                class="h-6 w-6"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 3.75a.75.75 0 01.75.75v6.75h6.75a.75.75 0 010 1.5h-6.75v6.75a.75.75 0 01-1.5 0v-6.75H4.5a.75.75 0 010-1.5h6.75V4.5a.75.75 0 01.75-.75z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
             </button>
           </div>
+          <div class="no-scrollbar divide-y divide-slate-200 overflow-y-auto">
+            <div class="py-4">
+              <small class="text-xs text-slate-500"
+                >EagerBadger3633 • 30s ago</small
+              >
+              <p class="text-base text-slate-900">
+                grillology tastes like doodoo today ngl, i say we boycott
+              </p>
+              <div class="grid grid-cols-6 gap-4 pt-2">
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Like">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">12</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Comment">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">3</span>
+                </div>
+              </div>
+            </div>
+            <div class="py-4">
+              <small class="text-xs text-slate-500"
+                >AngryBird4119 • 8min ago</small
+              >
+              <p class="text-base text-slate-900">
+                got hit in the head by a frisbee on the lawn :/
+              </p>
+              <div class="grid grid-cols-6 gap-4 pt-2">
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Like">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">19</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Comment">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">1</span>
+                </div>
+              </div>
+            </div>
+            <div class="py-4">
+              <small class="text-xs text-slate-500"
+                >NotJimRyan • 14min ago</small
+              >
+              <p class="text-base text-slate-900">
+                the spanish language lowkey went off with biblioteca ngl
+              </p>
+              <div class="grid grid-cols-6 gap-4 pt-2">
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Like">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">64</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Comment">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">13</span>
+                </div>
+              </div>
+            </div>
+            <div class="py-4">
+              <small class="text-xs text-slate-500"
+                >trashhhdev • 47min ago</small
+              >
+              <p class="text-base text-slate-900">
+                i feel so bad when i take over an older professor on the
+                sidewalk like man i really didn't mean to flex on you with my
+                youthful stride
+              </p>
+              <div class="grid grid-cols-6 gap-4 pt-2">
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Like">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      class="h-5 w-5 text-red-500"
+                    >
+                      <path
+                        d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">55</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Comment">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">21</span>
+                </div>
+              </div>
+            </div>
+            <div class="py-4">
+              <small class="text-xs text-slate-500"
+                >elizabeth12 • 48min ago</small
+              >
+              <p class="text-base text-slate-900">
+                how do they milk the almonds tho
+              </p>
+              <div class="grid grid-cols-6 gap-4 pt-2">
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Like">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">8</span>
+                </div>
+                <div class="flex items-center gap-1.5 text-slate-900">
+                  <button type="button" aria-label="Comment">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                      class="h-5 w-5"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 01-.923 1.785A5.969 5.969 0 006 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337z"
+                      ></path>
+                    </svg></button
+                  ><span class="text-sm">3</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="right-pane-container">
+        <div class="flex h-full w-96 flex-col items-end justify-between">
           <div class="flex gap-6">
             <div class="relative">
               <button
@@ -126,8 +329,8 @@ Sources used:
       <div class="relative z-0 h-full">
         <div style="overflow: visible; height: 0px; width: 0px">
           <div
-            class="mapboxgl-map"
             style="position: relative; width: 1283px; height: 911px"
+            class="mapboxgl-map"
           >
             <div class="mapboxgl-canary" style="visibility: hidden"></div>
             <div
