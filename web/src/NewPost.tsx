@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { router } from "./routes";
 
 export function NewPost() {
