@@ -1,11 +1,9 @@
-/** @type {import('tailwindcss').Config} */
 import { type Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 export default {
   content: [
-    "./web/src/index.html",
-    "./web/src/**/*.{js,ts,jsx,tsx}",
-    "./web/src/**/*.html",
+    "./web/src/**/*.{html,js,ts,jsx,tsx}",
+    "./web/public/**/*.{html,php,js,ts,jsx,tsx}",
   ],
   theme: {
     extend: {

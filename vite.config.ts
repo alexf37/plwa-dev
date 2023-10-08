@@ -33,6 +33,7 @@ export default defineConfig({
     outDir: "../www/xrk4np",
     emptyOutDir: true,
     manifest: true,
+    cssCodeSplit: true,
     rollupOptions: {
       input: rollupInputs,
     },
