@@ -1,20 +1,16 @@
-import { useDeferredValue, useEffect, useRef, useState } from "react";
+import {
+  useDeferredValue,
+  useEffect,
+  useRef,
+  useState,
+  type PropsWithChildren,
+} from "react";
 import { type MapRef } from "react-map-gl";
 import { Map } from "./components/Map";
-import { Posts } from "./components/Posts";
 import type { Location, Post } from "./types";
 import { SpotMarker } from "./components/SpotMarker";
-import { twMerge } from "tailwind-merge";
-import { NotificationIcon } from "./components/icons/NotificationIcon";
-import { ProfileIcon } from "./components/icons/ProfileIcon";
-import { Popover } from "./components/Popover";
-import React from "react";
 
-import { Router, Route, RootRoute, Outlet, Link } from "@tanstack/react-router";
-import { ProfilePopover } from "./components/ProfilePopover";
-import { NotificationsPopover } from "./components/NotificationsPopover";
 import { PostMarker } from "./components/PostMarker";
-import { CreateAccount } from "./CreateAccount";
 
 const posts: Post[] = [
   {
@@ -44,75 +40,6 @@ const posts: Post[] = [
     likedByUser: true,
   },
 ];
-
-function NewPostPage() {
-  return (
-    <div className="pointer-events-none absolute z-50 flex w-full justify-between p-16">
-      <div className="pointer-events-auto flex w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
-        <div className="flex items-center justify-between border-b border-slate-200 pb-6">
-          <h1 className="text-4xl font-bold">New Post</h1>
-        </div>
-        <div className="py-4">
-          <textarea
-            name="post"
-            id="newpost"
-            placeholder="Say anything!"
-            className="flex w-full rounded-md px-3 py-2 text-sm"
-          ></textarea>
-        </div>
-        <div className="text-button-container">
-          <Link to="/xrk4np/app" className="text-button bg-red-400 drop-shadow">
-            Cancel
-          </Link>
-          <button
-            type="button"
-            onClick={() => (location.href = "/xrk4np/app/")}
-            className="text-button bg-blue-400 drop-shadow"
-          >
-            Post
-          </button>
-        </div>
-      </div>
-      <RightPane />
-    </div>
-  );
-}
-
-const rootRoute = new RootRoute({
-  component: () => (
-    <Root>
-      <Outlet />
-    </Root>
-  ),
-});
-const indexRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/xrk4np/app/",
-  component: Main,
-});
-const createAccountRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/xrk4np/app/create-account/",
-  component: CreateAccount,
-});
-const NewPostRoute = new Route({
-  getParentRoute: () => rootRoute,
-  path: "/xrk4np/app/new-post/",
-  component: NewPostPage,
-});
-
-const routeTree = rootRoute.addChildren([
-  indexRoute,
-  createAccountRoute,
-  NewPostRoute,
-]);
-export const router = new Router({ routeTree });
-
-declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
-}
 
 const INITIAL_VIEWPORT = {
   latitude: 38.035629,
@@ -177,91 +104,7 @@ const spots: Spot[] = [
   },
 ];
 
-const Button = React.forwardRef(
-  (
-    props: React.ButtonHTMLAttributes<HTMLButtonElement>,
-    ref: React.Ref<HTMLButtonElement>,
-  ) => {
-    return (
-      <button
-        type="button"
-        {...props}
-        ref={ref}
-        className={twMerge(
-          "pointer-events-auto grid h-10 w-10 place-content-center rounded-full border border-slate-200 bg-white text-slate-900 shadow",
-          props.className,
-        )}
-      >
-        {props.children}
-      </button>
-    );
-  },
-);
-
-function RightPane({ children }: React.PropsWithChildren) {
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
-  const profileButtonRef = useRef(null);
-
-  const handleProfileButtonClick = () => {
-    setIsProfileOpen(!isProfileOpen);
-  };
-
-  const [isNotifsOpen, setIsNotifsOpen] = useState(false);
-  const notifsButtonRef = useRef(null);
-
-  const handleNotifsButtonClick = () => {
-    setIsNotifsOpen(!isNotifsOpen);
-  };
-  return (
-    <div className="right-pane-container">
-      <div className="flex gap-6">
-        <div className="relative">
-          <Button
-            aria-label="Notifications"
-            className="h-12 w-12"
-            ref={notifsButtonRef}
-            onClick={handleNotifsButtonClick}
-          >
-            <NotificationIcon className="h-7 w-7" />
-          </Button>
-          {isNotifsOpen && (
-            <Popover>
-              <NotificationsPopover />
-            </Popover>
-          )}
-        </div>
-
-        <div className="relative">
-          <Button
-            aria-label="Profile"
-            className="h-12 w-12"
-            ref={profileButtonRef}
-            onClick={handleProfileButtonClick}
-          >
-            <ProfileIcon className="h-7 w-7" />
-          </Button>
-          {isProfileOpen && (
-            <Popover>
-              <ProfilePopover />
-            </Popover>
-          )}
-        </div>
-      </div>
-      {children}
-    </div>
-  );
-}
-
-function Main() {
-  return (
-    <div className="pointer-events-none absolute z-50 flex h-full w-full justify-between p-16">
-      <Posts />
-      <RightPane />
-    </div>
-  );
-}
-
-function Root({ children }: React.PropsWithChildren) {
+export function MapBase({ children }: PropsWithChildren) {
   const mapRef = useRef<MapRef>(null);
   const [mapViewport, setMapViewport] = useState(INITIAL_VIEWPORT);
   const deferredViewport = useDeferredValue(mapViewport);
