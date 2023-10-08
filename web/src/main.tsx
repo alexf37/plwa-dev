@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-router";
 import { CreateAccount } from "./CreateAccount";
 import { NewPost } from "./NewPost";
-import { MapBase } from "./App";
+import { MapBase } from "./components/MapBase";
 import { Landing } from "./Landing";
 import { Posts } from "./components/Posts";
 import { RightPane } from "./components/RightPane";

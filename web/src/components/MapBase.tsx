@@ -6,11 +6,10 @@ import {
   type PropsWithChildren,
 } from "react";
 import { type MapRef } from "react-map-gl";
-import { Map } from "./components/Map";
-import type { Location, Post } from "./types";
-import { SpotMarker } from "./components/SpotMarker";
-
-import { PostMarker } from "./components/PostMarker";
+import { Map } from "./Map";
+import type { Location, Post } from "../types";
+import { SpotMarker } from "./SpotMarker";
+import { PostMarker } from "./PostMarker";
 
 const posts: Post[] = [
   {
@@ -112,12 +111,6 @@ export function MapBase({ children }: PropsWithChildren) {
     mapRef.current?.flyTo({
       center: [INITIAL_VIEWPORT.longitude, INITIAL_VIEWPORT.latitude],
     });
-    document.querySelectorAll("[aria-label='Map marker']").forEach((el) => {
-      el.removeAttribute("aria-label");
-    });
-    document
-      .querySelector(`[mapboxgl-children=""]`)
-      ?.removeAttribute("mapboxgl-children");
   }, []);
 
   const handleFlyToOnClick = ({ latitude, longitude }: Location) => {
