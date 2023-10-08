@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { router } from "./routes";
 
 export function CreateAccount() {
   return (
@@ -39,15 +40,16 @@ export function CreateAccount() {
         </div>
         <hr className=" mb-4 border border-slate-200" />
         <div className="flex justify-end gap-2 font-medium">
-          <Link
-            to="/xrk4np/app"
+          <button
+            type="button"
+            onClick={() => router.navigate({ to: "/xrk4np/app" })}
             className="rounded-xl bg-red-400 px-3 py-2 text-white drop-shadow"
           >
             Cancel
-          </Link>
+          </button>
           <button
             type="button"
-            onClick={() => (location.href = "/xrk4np/app/")}
+            onClick={() => router.navigate({ to: "/xrk4np/app/new-post" })}
             className="rounded-xl bg-blue-400 px-3 py-2 text-white drop-shadow"
           >
             Create

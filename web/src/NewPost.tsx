@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { router } from "./routes";
 
 export function NewPost() {
   return (
@@ -15,12 +16,16 @@ export function NewPost() {
         ></textarea>
       </div>
       <div className="text-button-container">
-        <Link to="/xrk4np/app" className="text-button bg-red-400 drop-shadow">
-          Cancel
-        </Link>
         <button
           type="button"
-          onClick={() => (location.href = "/xrk4np/app/")}
+          onClick={() => router.navigate({ to: "/xrk4np/app" })}
+          className="text-button bg-red-400 drop-shadow"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          onClick={() => router.navigate({ to: "/xrk4np/app/" })}
           className="text-button bg-blue-400 drop-shadow"
         >
           Post
