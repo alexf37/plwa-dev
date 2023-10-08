@@ -7,7 +7,7 @@ import {
 } from "react";
 import { type MapRef } from "react-map-gl";
 import { Map } from "./Map";
-import type { Location, Post } from "../types";
+import { ACTIVITY_COLORS, SPOTS, type Location, type Post } from "../types";
 import { SpotMarker } from "./SpotMarker";
 import { PostMarker } from "./PostMarker";
 
@@ -46,63 +46,6 @@ const INITIAL_VIEWPORT = {
   zoom: 14,
 };
 
-const ACTIVITY_COLORS = {
-  dead: "#e2e8f0",
-  light: "#0ea5e9",
-  medium: "#22c55e",
-  heavy: "#f59e0b",
-  extreme: "#ef4444",
-} as const;
-
-type Spot = {
-  name: string;
-  location: Location;
-  activity: keyof typeof ACTIVITY_COLORS;
-};
-
-const spots: Spot[] = [
-  {
-    name: "First Year Dorms",
-    location: {
-      latitude: 38.03599,
-      longitude: -78.49643,
-    },
-    activity: "heavy",
-  },
-  {
-    name: "Lawn",
-    location: {
-      latitude: 38.035629,
-      longitude: -78.503403,
-    },
-    activity: "extreme",
-  },
-  {
-    name: "JPA",
-    location: {
-      latitude: 38.028629,
-      longitude: -78.508403,
-    },
-    activity: "medium",
-  },
-  {
-    name: "North Grounds",
-    location: {
-      latitude: 38.042629,
-      longitude: -78.503503,
-    },
-    activity: "medium",
-  },
-  {
-    name: "The Corner",
-    location: {
-      latitude: 38.036519,
-      longitude: -78.500403,
-    },
-    activity: "light",
-  },
-];
-
 export function MapBase({ children }: PropsWithChildren) {
   const mapRef = useRef<MapRef>(null);
   const [mapViewport, setMapViewport] = useState(INITIAL_VIEWPORT);
@@ -136,11 +79,12 @@ export function MapBase({ children }: PropsWithChildren) {
             handleFlyToOnClick({ latitude, longitude });
           }}
         >
-          {spots.map(({ name, location, activity }) => (
+          {SPOTS.map((spot) => (
             <SpotMarker
-              key={name}
-              {...location}
-              fillColor={ACTIVITY_COLORS[activity]}
+              key={spot.id}
+              spot={spot}
+              {...spot.location}
+              fillColor={ACTIVITY_COLORS[spot.activity]}
             />
           ))}
           {posts.map((post) => (

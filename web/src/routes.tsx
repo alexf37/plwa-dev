@@ -6,6 +6,7 @@ import { Landing } from "./Landing";
 import { Posts } from "./components/Posts";
 import { RightPane } from "./components/RightPane";
 import { ContentPortal } from "./components/ContentPortal";
+import { Spot } from "./Spot";
 
 const rootRoute = new RootRoute();
 const indexRoute = new Route({
@@ -35,6 +36,11 @@ const appIndexRoute = new Route({
     </ContentPortal>
   ),
 });
+const spotRoute = new Route({
+  getParentRoute: () => appIndexRoute,
+  path: "/spot/$spotId",
+  component: Spot,
+});
 
 const createAccountRoute = new Route({
   getParentRoute: () => appRoute,
@@ -56,7 +62,11 @@ const newPostRoute = new Route({
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
-  appRoute.addChildren([appIndexRoute, createAccountRoute, newPostRoute]),
+  appRoute.addChildren([
+    appIndexRoute.addChildren([spotRoute]),
+    createAccountRoute,
+    newPostRoute,
+  ]),
 ]);
 export const router = new Router({ routeTree });
 
