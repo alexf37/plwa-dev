@@ -1,6 +1,6 @@
 import { Marker } from "react-map-gl";
-import { type Location } from "./types";
-import { PinIcon } from "./PinIcon";
+import { type Location } from "../types";
+import { PinIcon } from "./icons/PinIcon";
 
 type SpotMarkerProps = {
   fillColor: string;

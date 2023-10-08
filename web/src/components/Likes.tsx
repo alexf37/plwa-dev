@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { HeartIcon } from "./HeartIcon";
+import { HeartIcon } from "./icons/HeartIcon";
 
 type LikesProps = {
   liked?: boolean;

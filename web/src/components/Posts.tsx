@@ -1,8 +1,8 @@
 import { Likes } from "./Likes";
-import { PlusIcon } from "./PlusIcon";
+import { PlusIcon } from "./icons/PlusIcon";
 import { Comments } from "./Comments";
 
-import { type Post } from "./types";
+import { type Post } from "../types";
 
 const posts: Post[] = [
   {

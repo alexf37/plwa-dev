@@ -1,6 +1,6 @@
 import { Comments } from "./Comments";
 import { Likes } from "./Likes";
-import { type Post } from "./types";
+import { type Post } from "../types";
 
 const posts: Post[] = [
   {
