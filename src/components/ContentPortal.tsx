@@ -8,7 +8,7 @@ export function ContentPortal({
   return (
     <div
       className={twMerge(
-        "pointer-events-none absolute z-50 flex h-full w-full justify-between gap-6 p-16 max-sm:flex-col-reverse max-sm:justify-start max-sm:overflow-y-scroll",
+        "pointer-events-none absolute z-50 flex h-full w-full justify-between gap-6 p-16 max-sm:flex-col-reverse max-sm:justify-start max-sm:overflow-y-scroll max-sm:p-6",
         props?.className,
       )}
     >

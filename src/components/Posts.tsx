@@ -4,6 +4,7 @@ import { Comments } from "./Comments";
 import { router } from "../routes";
 
 import { type Post } from "../types";
+import { Card } from "./Card";
 
 const posts: Post[] = [
   {
@@ -75,7 +76,7 @@ const posts: Post[] = [
 
 export function Posts() {
   return (
-    <div className="pointer-events-auto flex h-fit max-h-full w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <Card>
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
         <h1 className="text-4xl font-bold">Posts</h1>
         <button
@@ -99,6 +100,6 @@ export function Posts() {
           </div>
         ))}
       </div>
-    </div>
+    </Card>
   );
 }
