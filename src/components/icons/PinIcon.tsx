@@ -1,10 +1,9 @@
 import { twMerge } from "tailwind-merge";
 
 export function PinIcon(
-  props: React.SVGProps<SVGSVGElement> & { indicatorColor?: string },
+  {indicatorColor, ...props}: React.SVGProps<SVGSVGElement> & { indicatorColor?: string },
 ) {
-  const indicatorColor = props.indicatorColor ?? "none";
-  delete props.indicatorColor;
+  indicatorColor ??= "none";
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
