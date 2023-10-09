@@ -59,7 +59,7 @@ function ControlButtons() {
 
 export function RightPane({ children }: React.PropsWithChildren) {
   return (
-    <div className="right-pane-container">
+    <div className="right-pane-container gap-6">
       <ControlButtons />
       {children}
     </div>
