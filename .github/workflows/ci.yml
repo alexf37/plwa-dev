@@ -14,4 +14,4 @@ jobs:
         with:
           bun-version: latest
       - run: bun install
-      - run: bun prettier --check ./web/src/*
+      - run: bun prettier --check ./src/*
