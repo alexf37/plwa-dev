@@ -24,7 +24,7 @@ services:
       - 8080:80
     volumes:
       - ./src/:/opt/src/
-      - ./apache/xrk4np/public_html:/var/www/html/xrk4np/
+      - ./apache/xrk4np/public_html/:/var/www/html/xrk4np/
       - ./log/:/opt/log/
     depends_on:
       - db

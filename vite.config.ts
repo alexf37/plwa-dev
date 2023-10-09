@@ -3,7 +3,7 @@ import { resolve } from "path";
 import react from "@vitejs/plugin-react";
 
 function resIn(dir: string) {
-  return resolve(__dirname, "web/src", dir);
+  return resolve(__dirname, "src", dir);
 }
 
 const filesToInclude = [

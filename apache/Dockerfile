@@ -9,4 +9,6 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 COPY ./php-ini/php.prod.ini /usr/local/etc/php/php.ini
 
+RUN mkdir /var/www/html/
+
 RUN service apache2 restart
