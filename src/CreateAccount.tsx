@@ -1,5 +1,5 @@
 import { router } from "./routes";
-import { useTitle } from "./hooks/useTitle"
+import { useTitle } from "./hooks/useTitle";
 
 export function CreateAccount() {
   useTitle("Create Account | SpotChat");

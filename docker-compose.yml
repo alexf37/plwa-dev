@@ -1,10 +1,10 @@
-version: '3.3'
+version: "3.3"
 
 services:
   db:
     build:
       dockerfile: ./db/Dockerfile
-    container_name: 'db'
+    container_name: "db"
     restart: on-failure
     ports:
       - 5432:5432
@@ -19,7 +19,7 @@ services:
     build:
       context: ./apache/
       dockerfile: ./Dockerfile
-    container_name: 'web'
+    container_name: "web"
     ports:
       - 8080:80
     volumes:

@@ -1,4 +1,4 @@
-import { useTitle } from "./hooks/useTitle"
+import { useTitle } from "./hooks/useTitle";
 
 export function Landing() {
   useTitle("Alex's CS4640 Site");

@@ -1,8 +1,9 @@
 import { twMerge } from "tailwind-merge";
 
-export function PinIcon(
-  {indicatorColor, ...props}: React.SVGProps<SVGSVGElement> & { indicatorColor?: string },
-) {
+export function PinIcon({
+  indicatorColor,
+  ...props
+}: React.SVGProps<SVGSVGElement> & { indicatorColor?: string }) {
   indicatorColor ??= "none";
   return (
     <svg
