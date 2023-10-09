@@ -1,5 +1,5 @@
 import { Marker } from "react-map-gl";
-import { Post, type Location } from "./types";
+import { Post, type Location } from "../types";
 import { Likes } from "./Likes";
 import { Comments } from "./Comments";
 

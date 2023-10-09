@@ -1,8 +1,9 @@
 import { Likes } from "./Likes";
-import { PlusIcon } from "./PlusIcon";
+import { PlusIcon } from "./icons/PlusIcon";
 import { Comments } from "./Comments";
+import { router } from "../routes";
 
-import { type Post } from "./types";
+import { type Post } from "../types";
 
 const posts: Post[] = [
   {
@@ -74,13 +75,13 @@ const posts: Post[] = [
 
 export function Posts() {
   return (
-    <div className="pointer-events-auto flex h-full w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <div className="pointer-events-auto flex h-fit max-h-full w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
         <h1 className="text-4xl font-bold">Posts</h1>
         <button
           type="button"
           aria-label="Add Post"
-          onClick={() => (location.href = "/xrk4np/app/new-post")}
+          onClick={() => router.navigate({ to: "/xrk4np/app/new-post" })}
           className="new-post-button"
         >
           <PlusIcon stroke="currentColor" strokeWidth={0.5} />

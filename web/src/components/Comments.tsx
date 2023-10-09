@@ -1,4 +1,4 @@
-import { CommentIcon } from "./CommentIcon";
+import { CommentIcon } from "./icons/CommentIcon";
 
 type CommentsProps = {
   comments: number;

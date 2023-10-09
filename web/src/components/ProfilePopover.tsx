@@ -1,6 +1,7 @@
 import { Comments } from "./Comments";
 import { Likes } from "./Likes";
-import { type Post } from "./types";
+import { type Post } from "../types";
+import { router } from "../routes";
 
 const posts: Post[] = [
   {
@@ -61,7 +62,7 @@ export function ProfilePopover() {
         </div>
         <button
           type="button"
-          onClick={() => (location.href = "/xrk4np/app/create-account")}
+          onClick={() => router.navigate({ to: "/xrk4np/app/create-account" })}
           className="rounded-lg bg-blue-400 px-3 py-2 text-sm text-white drop-shadow"
         >
           Edit
