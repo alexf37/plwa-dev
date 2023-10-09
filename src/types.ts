@@ -79,8 +79,8 @@ export const SPOTS: Spot[] = [
     id: "sts",
     name: "STS",
     location: {
-      latitude: 38.03299,
-      longitude: -78.51143,
+      latitude: 38.033429344826004,
+      longitude: -78.51069595462664,
     },
     activity: "dead",
   },

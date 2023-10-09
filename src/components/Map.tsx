@@ -13,7 +13,6 @@ const MAPBOX_STYLE =
 export const Map = forwardRef<MapRef, ComponentProps<typeof ReactMapGL>>(
   (props, forwardedRef) => {
     const mapRef = useRef<MapRef>(null);
-
     return (
       <>
         <AutoSizer
@@ -31,6 +30,9 @@ export const Map = forwardRef<MapRef, ComponentProps<typeof ReactMapGL>>(
               mapboxAccessToken={PUBLIC_MAPBOX_KEY}
               mapStyle={MAPBOX_STYLE}
               style={{ width, height }}
+              projection={{
+                name: "globe",
+              }}
               {...props}
             />
           )}

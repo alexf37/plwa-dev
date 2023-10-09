@@ -6,6 +6,7 @@ import { CloseIcon } from "./components/icons/CloseIcon";
 
 import { twMerge } from "tailwind-merge";
 import { useSocketChat } from "./hooks/useSocketChat";
+import { useEffect, useRef } from "react";
 
 type Message = {
   sender: string;
@@ -35,6 +36,11 @@ function ChatBox({ spot }: { spot: Spot }) {
     spot.id,
     username,
   );
+  const chatBoxDiv = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    chatBoxDiv.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+  }, [messages.length]);
 
   return (
     <>
@@ -42,6 +48,7 @@ function ChatBox({ spot }: { spot: Spot }) {
         {messages.map((chat) => (
           <ChatBubble message={chat} isOwn={chat.sender === username} />
         ))}
+        <div className="h-0 w-0" ref={chatBoxDiv}></div>
       </div>
       <form
         className="grid grid-cols-12 gap-2 pt-2"
