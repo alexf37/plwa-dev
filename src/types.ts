@@ -34,8 +34,8 @@ export const SPOTS: Spot[] = [
     id: "firstyeardorms",
     name: "First Year Dorms",
     location: {
-      latitude: 38.03599,
-      longitude: -78.49643,
+      latitude: 38.03499,
+      longitude: -78.51143,
     },
     activity: "heavy",
   },
@@ -74,5 +74,14 @@ export const SPOTS: Spot[] = [
       longitude: -78.500403,
     },
     activity: "light",
+  },
+  {
+    id: "sts",
+    name: "STS",
+    location: {
+      latitude: 38.03299,
+      longitude: -78.51143,
+    },
+    activity: "dead",
   },
 ];
