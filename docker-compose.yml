@@ -1,10 +1,10 @@
-version: '3.3'
+version: "3.3"
 
 services:
   db:
     build:
       dockerfile: ./db/Dockerfile
-    container_name: 'db'
+    container_name: "db"
     restart: on-failure
     ports:
       - 5432:5432
@@ -17,15 +17,15 @@ services:
       - db-data:/var/lib/postgresql/data
   php:
     build:
-      context: ./web/
+      context: ./apache/
       dockerfile: ./Dockerfile
-    container_name: 'web'
+    container_name: "web"
     ports:
       - 8080:80
     volumes:
-      - ./web/src/:/opt/src/
-      - ./web/www/:/var/www/html/
-      - ./web/log/:/opt/log/
+      - ./src/:/opt/src/
+      - ./apache/xrk4np/public_html/:/var/www/html/xrk4np/
+      - ./log/:/opt/log/
     depends_on:
       - db
     environment:

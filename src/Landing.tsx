@@ -1,4 +1,7 @@
+import { useTitle } from "./hooks/useTitle";
+
 export function Landing() {
+  useTitle("Alex's CS4640 Site");
   return (
     <>
       <div className="h-full w-full bg-slate-800">
