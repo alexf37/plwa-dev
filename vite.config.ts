@@ -26,11 +26,11 @@ const rollupInputs: Record<string, string> = filesToInclude.reduce(
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
-  root: "web/src",
-  base: "/xrk4np",
+  root: "src",
+  base: "/xrk4np/",
   publicDir: "../public",
   build: {
-    outDir: "../www/xrk4np",
+    outDir: "../apache/xrk4np/public_html",
     emptyOutDir: true,
     manifest: true,
     cssCodeSplit: true,

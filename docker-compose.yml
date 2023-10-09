@@ -17,15 +17,15 @@ services:
       - db-data:/var/lib/postgresql/data
   php:
     build:
-      context: ./web/
+      context: ./apache/
       dockerfile: ./Dockerfile
     container_name: 'web'
     ports:
       - 8080:80
     volumes:
-      - ./web/src/:/opt/src/
-      - ./web/www/:/var/www/html/
-      - ./web/log/:/opt/log/
+      - ./src/:/opt/src/
+      - ./apache/xrk4np/public_html:/var/www/html/xrk4np/
+      - ./log/:/opt/log/
     depends_on:
       - db
     environment:

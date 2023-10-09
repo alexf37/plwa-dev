@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+apache/xrk4np
 
 # Editor directories and files
 .vscode/*
