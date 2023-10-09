@@ -30,16 +30,17 @@ function ChatBubble({ message, isOwn }: { message: Message; isOwn: boolean }) {
 }
 
 function ChatBox({ spot }: { spot: Spot }) {
+  const username = "EagerBadger123";
   const { messages, sendMessage, messageInputProps } = useSocketChat(
     spot.id,
-    "EagerBadger123",
+    username,
   );
 
   return (
     <>
       <div className="no-scrollbar h-96 w-full space-y-3 overflow-auto py-4">
         {messages.map((chat) => (
-          <ChatBubble message={chat} isOwn={chat.sender === "EagerBadger123"} />
+          <ChatBubble message={chat} isOwn={chat.sender === username} />
         ))}
       </div>
       <form
