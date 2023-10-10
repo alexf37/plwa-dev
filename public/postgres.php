@@ -2,11 +2,12 @@
     use PgSql\Connection;
 
     function db_connect() {
-        $host = "db";
+        $is_local = $_SERVER["SERVER_NAME"] === "localhost";
+        $host = $is_local ? "db" : "localhost";
         $port = "5432";
         $database = "example";
-        $user = "localuser";
-        $password = "cs4640LocalUser!"; 
+        $user = $is_local ? "localuser" : "xrk4np";
+        $password = $is_local ? "cs4640LocalUser!" : "zpSFBGMZIzxp"; 
     
         $dbHandle = pg_connect("host=$host port=$port dbname=$database user=$user password=$password");
         return $dbHandle;

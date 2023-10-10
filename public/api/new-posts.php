@@ -7,7 +7,6 @@
     if (!$dbHandle) respond_server_error(500, "An error occurred connecting to the database");
     $create_tables_result = db_init_tables($dbHandle);
     if (!$create_tables_result) respond_server_error(500, "An error occurred creating tables");
-$create_tables_result
 
     // handle requests
     handle_http_methods(function() {
