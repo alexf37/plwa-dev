@@ -32,15 +32,13 @@ export function NewPost() {
           type="button"
           onClick={async () => {
             const res = await fetch(
-              `/xrk4np/api/posts.php?text=${text}&time=${new Date().toISOString()}&author=ExampleUser123`,
+              `/xrk4np/api/new-posts.php?text=${text}&time=${new Date().toISOString()}&author=ExampleUser123`,
               {
                 method: "POST",
                 mode: "no-cors",
               },
             );
-            if (res.ok) {
-              router.navigate({ to: "/xrk4np/app" });
-            }
+            console.log(await res.json());
           }}
           className="text-button bg-blue-400 drop-shadow"
         >

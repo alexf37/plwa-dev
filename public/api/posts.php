@@ -2,10 +2,15 @@
     header("Content-Type: application/json");
 
     require("../postgres.php");
-    if(!$dbHandle) {
-        echo "An error occurred connecting to the database";
-        exit();
-    }
+    // init db and tables
+    if (!$dbHandle) respond_server_error(500, "An error occurred connecting to the database");
+    $result = pg_query($dbHandle, "CREATE TABLE IF NOT EXISTS posts (
+        id SERIAL PRIMARY KEY,
+        text VARCHAR(255) NOT NULL,
+        time VARCHAR(255) NOT NULL,
+        author VARCHAR(255) NOT NULL
+    );");
+    if (!$result) respond_server_error(500, "An error occurred creating the posts table");
 
     $method = $_SERVER['REQUEST_METHOD'];
     if ($method == "POST") {
@@ -23,7 +28,7 @@
         $result = pg_fetch_all($result, PGSQL_ASSOC);
         echo json_encode($result);
     } else {
-        echo array("error"=>"Unsupported HTTP method");
+        echo json_encode(array("error"=>"Unsupported HTTP method"));
         exit();
     }
 ?>
