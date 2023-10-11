@@ -1,11 +1,12 @@
 <?php
     use PgSql\Connection;
+    require("./api-handler.php");
 
     function db_connect() {
         $is_local = $_SERVER["SERVER_NAME"] === "localhost";
         $host = $is_local ? "db" : "localhost";
         $port = "5432";
-        $database = "example";
+        $database = $is_local ? "example" : "xrk4np";
         $user = $is_local ? "localuser" : "xrk4np";
         $password = $is_local ? "cs4640LocalUser!" : "zpSFBGMZIzxp"; 
     
