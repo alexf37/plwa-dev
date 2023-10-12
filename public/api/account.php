@@ -4,8 +4,7 @@
     handle_http_methods(function() {
         GET([], function() {
             session_start();
-            $username = $_SESSION["username"];
-            respond_with_success(array("username"=>$username));
+            $user = $_SESSION["user"];
+            respond_with_success(array("user"=>$user));
         });
     });
-?>

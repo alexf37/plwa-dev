@@ -30,7 +30,7 @@ export function NewPost() {
           type="button"
           onClick={async () => {
             const res = await fetch(
-              `/xrk4np/api/posts.php?text=${text}&time=${new Date().toISOString()}&author=ExampleUser123`,
+              `/xrk4np/api/posts.php?text=${text}&time=${new Date().toISOString()}`,
               {
                 method: "POST",
                 mode: "no-cors",

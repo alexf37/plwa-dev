@@ -25,9 +25,6 @@ async function toLoginIfNotAuthed() {
   if (!isAuthenticated) {
     throw redirect({
       to: "/xrk4np/app/login",
-      search: {
-        redirect: router.state.location.href,
-      },
     });
   }
 }

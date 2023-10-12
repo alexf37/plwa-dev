@@ -16,11 +16,8 @@
             if (!$result) respond_server_error(500, "An error occurred inserting the post");
             $result = pg_fetch_all($result, PGSQL_ASSOC);
             if (count($result) === 0) respond_client_error(401, "Invalid username or password");
-            session_start([
-                'cookie_lifetime' => 86400,
-            ]);
-            $_SESSION["username"] = $username;
+            session_start();
+            $_SESSION["user"] = $result[0];
             respond_with_success(array("success"=>"Logged in successfully"));
         });
     });
-?>

@@ -55,7 +55,7 @@ export function ProfilePopover() {
         console.log(res);
         return res;
       })
-      .then((data) => setUsername(data.username));
+      .then((data) => setUsername(data.user.username));
   }, []);
 
   function logout() {
