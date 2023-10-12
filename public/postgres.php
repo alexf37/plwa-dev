@@ -21,6 +21,11 @@
             time VARCHAR(255) NOT NULL,
             author VARCHAR(255) NOT NULL
         );");
+        $result = pg_query($dbHandle, "CREATE TABLE IF NOT EXISTS users (
+            id SERIAL PRIMARY KEY,
+            username VARCHAR(255) NOT NULL,
+            password VARCHAR(255) NOT NULL
+        );");
         return $result;
     }
 ?>

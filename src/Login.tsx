@@ -2,15 +2,14 @@ import { router } from "./routes";
 import { useTitle } from "./hooks/useTitle";
 import { useState } from "react";
 
-export function CreateAccount() {
+export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  useTitle("Login | SpotChat");
 
-  useTitle("Create Account | SpotChat");
-
-  async function handleCreateAccount() {
+  async function handleLogin() {
     const res = await fetch(
-      `/xrk4np/api/auth/create-account.php?username=${encodeURIComponent(
+      `/xrk4np/api/auth/login.php?username=${encodeURIComponent(
         username,
       )}&password=${encodeURIComponent(password)}`,
       {
@@ -26,8 +25,10 @@ export function CreateAccount() {
       .json()
       .catch((e) => console.log(e))
       .then((data) => data.success);
+
     if (success) {
-      router.navigate({ to: "/xrk4np/app" });
+      console.log(success);
+      location.href = "/xrk4np/app";
     }
   }
 
@@ -35,9 +36,9 @@ export function CreateAccount() {
     <div className="fixed z-30 grid h-full w-full place-content-center bg-white bg-opacity-20 filter backdrop-blur-sm">
       <div className="pointer-events-auto relative z-50 flex w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 opacity-100 shadow-lg">
         <div className=" space-y-1">
-          <h1 className="text-3xl font-bold">Create an account</h1>
+          <h1 className="text-3xl font-bold">Login</h1>
           <h2 className="text-sm text-slate-500">
-            Enter a username below to create your account
+            Enter your username below to login
           </h2>
         </div>
 
@@ -82,10 +83,12 @@ export function CreateAccount() {
           </button>
           <button
             type="button"
-            onClick={() => handleCreateAccount()}
+            onClick={() => {
+              handleLogin();
+            }}
             className="rounded-xl bg-blue-400 px-3 py-2 text-white drop-shadow"
           >
-            Create
+            Login
           </button>
         </div>
       </div>

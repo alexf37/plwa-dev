@@ -38,7 +38,9 @@ export function NewPost() {
                 mode: "no-cors",
               },
             );
-            console.log(await res.text());
+            if (res.ok) {
+              router.navigate({ to: "/xrk4np/app" });
+            }
           }}
           className="text-button bg-blue-400 drop-shadow"
         >

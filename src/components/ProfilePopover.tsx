@@ -2,6 +2,7 @@ import { Comments } from "./Comments";
 import { Likes } from "./Likes";
 import { type Post } from "../types";
 import { router } from "../routes";
+import { useEffect, useState } from "react";
 
 const posts: Post[] = [
   {
@@ -46,6 +47,16 @@ const posts: Post[] = [
 ];
 
 export function ProfilePopover() {
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    fetch("/xrk4np/api/account.php")
+      .then((res) => res.json())
+      .then((res) => {
+        console.log(res);
+        return res;
+      })
+      .then((data) => setUsername(data.username));
+  }, []);
   return (
     <>
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
@@ -56,7 +67,7 @@ export function ProfilePopover() {
             className="h-12 w-12 rounded-full"
           />
           <div>
-            <h1 className="text-xl font-bold">ExampleUser123</h1>
+            <h1 className="text-xl font-bold">{username}</h1>
             <h2 className="text-sm text-slate-500">12 posts</h2>
           </div>
         </div>

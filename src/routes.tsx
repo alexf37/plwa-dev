@@ -1,4 +1,10 @@
-import { Router, Route, RootRoute, Outlet } from "@tanstack/react-router";
+import {
+  Router,
+  Route,
+  RootRoute,
+  Outlet,
+  redirect,
+} from "@tanstack/react-router";
 import { CreateAccount } from "./CreateAccount";
 import { NewPost } from "./NewPost";
 import { MapBase } from "./components/MapBase";
@@ -7,6 +13,25 @@ import { Posts } from "./components/Posts";
 import { RightPane } from "./components/RightPane";
 import { ContentPortal } from "./components/ContentPortal";
 import { Spot } from "./Spot";
+import { Login } from "./Login";
+
+async function toLoginIfNotAuthed() {
+  const res = await fetch(`/xrk4np/api/auth/status.php`);
+  if (!res.ok) console.error("idk what went wrong tbh");
+  const isAuthenticated = await res
+    .json()
+    .catch((e) => console.log(e))
+    .then((data) => data.status);
+  console.log(isAuthenticated);
+  if (!isAuthenticated) {
+    throw redirect({
+      to: "/xrk4np/app/login",
+      search: {
+        redirect: router.state.location.href,
+      },
+    });
+  }
+}
 
 const rootRoute = new RootRoute();
 const indexRoute = new Route({
@@ -27,6 +52,7 @@ const appRoute = new Route({
 const appIndexRoute = new Route({
   getParentRoute: () => appRoute,
   path: "/",
+  beforeLoad: toLoginIfNotAuthed,
   component: () => (
     <ContentPortal>
       <Posts />
@@ -47,6 +73,11 @@ const createAccountRoute = new Route({
   path: "/create-account",
   component: CreateAccount,
 });
+const loginRoute = new Route({
+  getParentRoute: () => appRoute,
+  path: "/login",
+  component: Login,
+});
 const newPostRoute = new Route({
   getParentRoute: () => appRoute,
   path: "/new-post",
@@ -65,6 +96,7 @@ const routeTree = rootRoute.addChildren([
   appRoute.addChildren([
     appIndexRoute.addChildren([spotRoute]),
     createAccountRoute,
+    loginRoute,
     newPostRoute,
   ]),
 ]);
