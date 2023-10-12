@@ -1,5 +1,4 @@
 import { router } from "./routes";
-import { useTitle } from "./hooks/useTitle";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Input } from "./components/Input";
@@ -7,7 +6,6 @@ import { Input } from "./components/Input";
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  useTitle("Login | SpotChat");
 
   async function handleLogin() {
     const res = await fetch(
@@ -59,7 +57,7 @@ export function Login() {
               </label>
               <Input
                 placeholder="ExampleUser123"
-                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow ring-offset-background"
+                className="border-input bg-background ring-offset-background flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow"
                 name="username"
                 id="username"
                 type="text"
@@ -76,7 +74,7 @@ export function Login() {
               </label>
               <Input
                 placeholder="••••••••"
-                className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm shadow ring-offset-background first-letter:border-input"
+                className="bg-background ring-offset-background first-letter:border-input flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow"
                 name="password"
                 id="password"
                 autoComplete="off"

@@ -1,5 +1,4 @@
 import { router } from "./routes";
-import { useTitle } from "./hooks/useTitle";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Input } from "./components/Input";
@@ -7,8 +6,6 @@ import { Input } from "./components/Input";
 export function CreateAccount() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
-  useTitle("Create Account | SpotChat");
 
   async function handleCreateAccount() {
     const res = await fetch(
