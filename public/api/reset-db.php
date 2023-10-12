@@ -12,9 +12,9 @@ handle_http_methods(function () {
         global $dbHandle;
         $result = pg_query(
             $dbHandle,
-            "DROP TABLE IF EXISTS posts;
-            DROP TABLE IF EXISTS users;
-            DROP TABLE IF EXISTS likes;"
+            "DROP TABLE IF EXISTS posts CASCADE;
+            DROP TABLE IF EXISTS users CASCADE;
+            DROP TABLE IF EXISTS likes CASCADE;"
         );
         if (!$result) respond_server_error(500, "An error occurred resetting the database.");
         respond_with_success(["success" => "Database reset successfully"]);

@@ -18,25 +18,28 @@ function db_connect()
 
 function db_init_tables(Connection $dbHandle)
 {
-    $result = pg_query($dbHandle, "CREATE TABLE IF NOT EXISTS posts (
-            id SERIAL PRIMARY KEY,
-            text VARCHAR(255) NOT NULL,
-            time VARCHAR(255) NOT NULL,
-            author VARCHAR(255) NOT NULL,
-            post VARCHAR(255)
-        );");
-    $result = pg_query($dbHandle, "CREATE TABLE IF NOT EXISTS users (
-            id SERIAL PRIMARY KEY,
-            username VARCHAR(255) NOT NULL,
-            password VARCHAR(255) NOT NULL,
-            image VARCHAR(255)
-        );");
-    $result = pg_query($dbHandle, "CREATE TABLE IF NOT EXISTS likes (
-            id SERIAL PRIMARY KEY,
-            author VARCHAR(255) NOT NULL,
-            text VARCHAR(255) NOT NULL,
-            time VARCHAR(255) NOT NULL,
-            post VARCHAR(255) NOT NULL
-        );");
+    $result = pg_query(
+        $dbHandle,
+        "CREATE TABLE IF NOT EXISTS users (
+        id SERIAL PRIMARY KEY,
+        username VARCHAR(255) NOT NULL,
+        password VARCHAR(255) NOT NULL,
+        image VARCHAR(255)
+    );
+    CREATE TABLE IF NOT EXISTS posts (
+        id SERIAL PRIMARY KEY,
+        text VARCHAR(255) NOT NULL,
+        time VARCHAR(255) NOT NULL,
+        author INT NOT NULL REFERENCES users (id),
+        post INT REFERENCES posts (id)
+    );
+    CREATE TABLE IF NOT EXISTS likes (
+        id SERIAL PRIMARY KEY,
+        author INT NOT NULL REFERENCES users (id),
+        text VARCHAR(255) NOT NULL,
+        time VARCHAR(255) NOT NULL,
+        post INT NOT NULL REFERENCES posts (id)
+    );"
+    );
     return $result;
 }

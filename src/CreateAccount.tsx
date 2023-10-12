@@ -18,7 +18,7 @@ export function CreateAccount() {
       },
     );
     if (!res.ok) {
-      console.error("idk what went wrong tbh");
+      console.error(await res.json());
       return;
     }
     const success = await res
