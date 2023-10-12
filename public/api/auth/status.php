@@ -1,13 +1,14 @@
 <?php
-    require("../../api-handler.php");
+require("../../api-handler.php");
 
-    handle_http_methods(function() {
-        GET([], function() {
-            session_start([
-                'cookie_lifetime' => 86400,
-            ]);
-            $status = $_SESSION["username"] == true;
-            respond_with_success(array("status"=>$status));
-        });
+handle_http_methods(function () {
+    GET([], function () {
+        session_start();
+        $status = $_SESSION["username"] == true;
+        if (!$status) {
+            $_SESSION = array();
+            session_destroy();
+        }
+        respond_with_success(array("status" => $status));
     });
-?>
+});
