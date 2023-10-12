@@ -22,7 +22,6 @@ async function toLoginIfNotAuthed() {
     .json()
     .catch((e) => console.log(e))
     .then((data) => data.status);
-  console.log(isAuthenticated);
   if (!isAuthenticated) {
     throw redirect({
       to: "/xrk4np/app/login",
@@ -71,11 +70,13 @@ const spotRoute = new Route({
 const createAccountRoute = new Route({
   getParentRoute: () => appRoute,
   path: "/create-account",
+  beforeLoad: undefined,
   component: CreateAccount,
 });
 const loginRoute = new Route({
   getParentRoute: () => appRoute,
   path: "/login",
+  beforeLoad: undefined,
   component: Login,
 });
 const newPostRoute = new Route({

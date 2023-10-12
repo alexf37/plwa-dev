@@ -57,6 +57,17 @@ export function ProfilePopover() {
       })
       .then((data) => setUsername(data.username));
   }, []);
+
+  function logout() {
+    fetch("/xrk4np/api/auth/logout.php")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.success) {
+          router.navigate({ to: "/xrk4np/app/login" });
+        }
+      });
+  }
+
   return (
     <>
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
@@ -71,13 +82,21 @@ export function ProfilePopover() {
             <h2 className="text-sm text-slate-500">12 posts</h2>
           </div>
         </div>
-        <button
-          type="button"
-          onClick={() => router.navigate({ to: "/xrk4np/app/create-account" })}
-          className="rounded-lg bg-blue-400 px-3 py-2 text-sm text-white drop-shadow"
-        >
-          Edit
-        </button>
+        <div className="flex gap-2">
+          <button
+            type="button"
+            className="rounded-lg bg-blue-400 px-3 py-2 text-sm text-white drop-shadow"
+          >
+            Edit
+          </button>
+          <button
+            type="button"
+            onClick={() => logout()}
+            className="rounded-lg bg-red-400 px-3 py-2 text-sm text-white drop-shadow"
+          >
+            Logout
+          </button>
+        </div>
       </div>
       <div className="no-scrollbar max-h-72 divide-y divide-slate-200 overflow-y-auto">
         {posts.map((post) => (
