@@ -1,6 +1,7 @@
 import { router } from "./routes";
 import { useTitle } from "./hooks/useTitle";
 import { useState } from "react";
+import { Link } from "@tanstack/react-router";
 
 export function CreateAccount() {
   const [username, setUsername] = useState("");
@@ -73,6 +74,15 @@ export function CreateAccount() {
         </div>
         <hr className=" mb-4 border border-slate-200" />
         <div className="flex justify-end gap-2 font-medium">
+          <Link to="/xrk4np/app/login" className="mr-auto">
+            <button
+              type="button"
+              onClick={() => router.navigate({ to: "/xrk4np/app" })}
+              className="px-3 py-2 text-sm text-slate-600"
+            >
+              Login
+            </button>
+          </Link>
           <button
             type="button"
             onClick={() => router.navigate({ to: "/xrk4np/app" })}
