@@ -59,7 +59,7 @@ export function Login() {
               </label>
               <Input
                 placeholder="ExampleUser123"
-                className="border-input bg-background ring-offset-background flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm shadow ring-offset-background"
                 name="username"
                 id="username"
                 type="text"
@@ -76,7 +76,7 @@ export function Login() {
               </label>
               <Input
                 placeholder="••••••••"
-                className="first-letter:border-input bg-background ring-offset-background flex h-10 w-full rounded-md border px-3 py-2 text-sm shadow"
+                className="flex h-10 w-full rounded-md border bg-background px-3 py-2 text-sm shadow ring-offset-background first-letter:border-input"
                 name="password"
                 id="password"
                 autoComplete="off"
