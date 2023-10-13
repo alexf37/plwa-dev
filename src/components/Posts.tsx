@@ -4,13 +4,18 @@ import { Comments } from "./Comments";
 import { router } from "../routes";
 import { Card } from "./Card";
 import { useEffect, useState } from "react";
+import { formatDistanceToNowStrict } from "date-fns";
 
 type Post = {
   id: string;
-  author: number;
-  username: string;
+  author: string;
+  author_id: string;
   text: string;
   time: string;
+  like_count: string;
+  user_liked: string;
+  latitude: string;
+  longitude: string;
 };
 
 export function Posts() {
@@ -37,11 +42,14 @@ export function Posts() {
         {posts.map((post) => (
           <div className="py-4" key={post.id}>
             <small className="text-xs text-slate-500">{`${
-              post.username
-            } • ${new Date(post.time).toLocaleTimeString()}`}</small>
+              post.author
+            } • ${formatDistanceToNowStrict(new Date(post.time))} ago`}</small>
             <p className="text-base text-slate-900">{post.text}</p>
             <div className="grid grid-cols-6 gap-4 pt-2">
-              <Likes likes={0} liked={false} />
+              <Likes
+                likes={parseInt(post.like_count)}
+                liked={!!parseInt(post.user_liked)}
+              />
               <Comments comments={0} />
             </div>
           </div>

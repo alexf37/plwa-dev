@@ -31,12 +31,13 @@ function db_init_tables(Connection $dbHandle)
         text VARCHAR(255) NOT NULL,
         time VARCHAR(255) NOT NULL,
         author INT NOT NULL REFERENCES users (id),
-        post INT REFERENCES posts (id)
+        post INT REFERENCES posts (id),
+        lat FLOAT,
+        lng FLOAT
     );
     CREATE TABLE IF NOT EXISTS likes (
         id SERIAL PRIMARY KEY,
         author INT NOT NULL REFERENCES users (id),
-        text VARCHAR(255) NOT NULL,
         time VARCHAR(255) NOT NULL,
         post INT NOT NULL REFERENCES posts (id)
     );"

@@ -12,7 +12,32 @@ if (!$create_tables_result) respond_server_error(500, "An error occurred creatin
 handle_http_methods(function () {
     GET([], function () {
         global $dbHandle;
-        $result = pg_query($dbHandle, "SELECT posts.*, users.username FROM posts JOIN users ON posts.author = users.id ORDER BY posts.time DESC;");
+        session_start();
+        $user = $_SESSION["user"];
+        if (!$user) {
+            $_SESSION = array();
+            session_destroy();
+        }
+        $result = pg_query_params(
+            $dbHandle,
+            "SELECT 
+            posts.id, 
+            posts.text, 
+            posts.time, 
+            posts.lat AS latitude,
+            posts.lng AS longitude,
+            posts.author AS author_id,
+            users.username AS author,
+            (SELECT COUNT(*) FROM likes WHERE likes.post = posts.id) AS like_count,
+            CASE 
+              WHEN EXISTS (SELECT 1 FROM likes WHERE likes.post = posts.id AND likes.author = $1) 
+              THEN 1 
+              ELSE 0 
+            END AS user_liked
+            FROM posts JOIN users ON posts.author = users.id
+            ORDER BY posts.time DESC;",
+            [$user["id"]]
+        );
         $result = pg_fetch_all($result, PGSQL_ASSOC);
         respond_with_success($result);
     });
