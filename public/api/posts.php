@@ -12,7 +12,7 @@ if (!$create_tables_result) respond_server_error(500, "An error occurred creatin
 handle_http_methods(function () {
     GET([], function () {
         global $dbHandle;
-        $result = pg_query($dbHandle, "SELECT * FROM posts;");
+        $result = pg_query($dbHandle, "SELECT posts.*, users.username FROM posts JOIN users ON posts.author = users.id ORDER BY posts.time DESC;");
         $result = pg_fetch_all($result, PGSQL_ASSOC);
         respond_with_success($result);
     });
