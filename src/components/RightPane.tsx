@@ -1,10 +1,24 @@
-import { useRef, useState } from "react";
+import { Suspense, lazy, useRef, useState } from "react";
 import { Button } from "./Button";
 import { Popover } from "./Popover";
-import { NotificationsPopover } from "./NotificationsPopover";
 import { NotificationIcon } from "./icons/NotificationIcon";
 import { ProfileIcon } from "./icons/ProfileIcon";
-import { ProfilePopover } from "./ProfilePopover";
+
+const NotificationsPopover = lazy(() =>
+  import("./NotificationsPopover").then((module) => ({
+    default: module.NotificationsPopover,
+  })),
+);
+
+const ProfilePopover = lazy(() =>
+  import("./ProfilePopover").then((module) => ({
+    default: module.ProfilePopover,
+  })),
+);
+
+function Loading() {
+  return <div>Loading...</div>;
+}
 
 function ControlButtons() {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
@@ -33,7 +47,9 @@ function ControlButtons() {
         </Button>
         {isNotifsOpen && (
           <Popover>
-            <NotificationsPopover />
+            <Suspense fallback={<Loading />}>
+              <NotificationsPopover />
+            </Suspense>
           </Popover>
         )}
       </div>
@@ -49,7 +65,9 @@ function ControlButtons() {
         </Button>
         {isProfileOpen && (
           <Popover>
-            <ProfilePopover />
+            <Suspense fallback={<Loading />}>
+              <ProfilePopover />
+            </Suspense>
           </Popover>
         )}
       </div>
