@@ -14,6 +14,8 @@ import { RightPane } from "./components/RightPane";
 import { ContentPortal } from "./components/ContentPortal";
 import { Spot } from "./Spot";
 import { Login } from "./Login";
+import { Splash } from "./Splash";
+import { MapProvider } from "react-map-gl";
 
 async function toLoginIfNotAuthed() {
   const res = await fetch(`/xrk4np/api/auth/status.php`);
@@ -39,9 +41,11 @@ const appRoute = new Route({
   getParentRoute: () => rootRoute,
   path: "/xrk4np/app",
   component: () => (
-    <MapBase>
-      <Outlet />
-    </MapBase>
+    <MapProvider>
+      <MapBase>
+        <Outlet />
+      </MapBase>
+    </MapProvider>
   ),
 });
 
@@ -57,6 +61,11 @@ const appIndexRoute = new Route({
       </RightPane>
     </ContentPortal>
   ),
+});
+const splashRoute = new Route({
+  getParentRoute: () => rootRoute,
+  path: "/xrk4np/app/splash",
+  component: Splash,
 });
 const spotRoute = new Route({
   getParentRoute: () => appIndexRoute,
@@ -91,6 +100,7 @@ const newPostRoute = new Route({
 
 const routeTree = rootRoute.addChildren([
   indexRoute,
+  splashRoute,
   appRoute.addChildren([
     appIndexRoute.addChildren([spotRoute]),
     createAccountRoute,
