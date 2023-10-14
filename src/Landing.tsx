@@ -61,7 +61,7 @@ export function Landing() {
             <div className="mt-4 flex gap-2 text-lg font-semibold text-slate-300">
               <a
                 className="underline-offset-4 hover:underline"
-                href="/xrk4np/app/"
+                href="/xrk4np/app/splash"
               >
                 Project - SpotChat
               </a>
