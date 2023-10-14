@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef } from "react";
 import { Map } from "./components/Map";
 import { type MapRef } from "react-map-gl";
+import { Link } from "@tanstack/react-router";
+import { RightArrowIcon } from "./components/icons/RightArrowIcon";
 
 const INITIAL_VIEWPORT = {
   latitude: 60.035629,
@@ -23,8 +25,8 @@ export function Splash() {
       map.on("moveend", () => {
         const center = map.getCenter();
         map.easeTo({
-          center: { ...center, lng: center.lng - 2 },
-          duration: 1000,
+          center: { ...center, lng: center.lng - 9 },
+          duration: 5000,
           easing: (p) => p,
         });
       });
@@ -42,12 +44,16 @@ export function Splash() {
             <span className="text-blue-400">Spot</span>Chat
           </h1>
           <h2 className="text-2xl text-white md:text-3xl">Find your spot.</h2>
-          <a
-            href="/xrk4np/app"
-            className="text-md mt-2 rounded-full border-2 border-white px-3.5 py-2.5 font-semibold text-white drop-shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+          <Link
+            to="/xrk4np/app"
+            className="text-md group mt-2 flex items-center gap-2 rounded-full border-2 border-white px-4 py-2.5 font-semibold text-white drop-shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
           >
-            Try it out
-          </a>
+            Try it out{" "}
+            <RightArrowIcon
+              className="ml-auto h-4 w-4 transition-all group-hover:translate-x-1"
+              strokeWidth={2}
+            />
+          </Link>
         </hgroup>
       </div>
       <div className="pointer-events-none relative z-0 h-full">
