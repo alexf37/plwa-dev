@@ -24,7 +24,7 @@ function Helper() {
         animate: false,
       });
     }
-  }, [map]);
+  }, []);
   return (
     <>
       <div></div>
