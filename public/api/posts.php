@@ -42,7 +42,7 @@ handle_http_methods(function () {
             END AS user_liked
             FROM posts JOIN users ON posts.author = users.id
             WHERE (posts.author = $1 OR ($2 = 1))
-            AND (posts.post = $3 OR $3 IS NULL)
+            AND (posts.post = $3 OR ($3 IS NULL AND posts.post IS NULL))
             ORDER BY posts.time DESC;",
             [$user["id"], $onlyMine ? 0 : 1, $parentId]
         );
