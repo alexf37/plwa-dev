@@ -40,7 +40,7 @@ export function MapBase({ children }: PropsWithChildren) {
   }, []);
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
-    fetch("/xrk4np/api/posts.php?onlyMine=0")
+    fetch("/xrk4np/api/posts.php")
       .then((res) => res.json())
       .then((data: Post[]) => {
         const shuffled = data.sort(() => 0.5 - Math.random());

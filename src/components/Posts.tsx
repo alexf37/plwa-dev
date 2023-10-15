@@ -13,7 +13,7 @@ export function Posts() {
   const [minimised, setMinimised] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
-    fetch("/xrk4np/api/posts.php?onlyMine=0")
+    fetch("/xrk4np/api/posts.php")
       .then((res) => res.json())
       .then((data) => setPosts(data))
       .catch((e) => console.log(e));

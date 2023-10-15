@@ -10,13 +10,17 @@ if (!$create_tables_result) respond_server_error(500, "An error occurred creatin
 
 // handle requests
 handle_http_methods(function () {
-    GET(["onlyMine"], function ($onlyMine) {
+    GET(["onlyMine?"], function ($onlyMine) {
         global $dbHandle;
         session_start();
         $user = $_SESSION["user"];
         if (!$user) {
             $_SESSION = array();
             session_destroy();
+        }
+        if ($onlyMine != 1 && $onlyMine != 0) {
+            if ($onlyMine !== null) respond_client_error(400, "Invalid parameter type: onlyMine must be a 1 or 0");
+            $onlyMine = false;
         }
         $result = pg_query_params(
             $dbHandle,
@@ -42,7 +46,7 @@ handle_http_methods(function () {
         $result = pg_fetch_all($result, PGSQL_ASSOC);
         respond_with_success($result);
     });
-    POST(["text", "time", "latitude", "longitude"], function ($text, $time, $lat, $lng) {
+    POST(["text", "time", "latitude?", "longitude?"], function ($text, $time, $lat, $lng) {
         global $dbHandle;
         session_start();
         $user = $_SESSION["user"];
@@ -51,6 +55,7 @@ handle_http_methods(function () {
             session_destroy();
             respond_client_error(401, "Not logged in.");
         }
+        if (strlen($text) < 1) respond_client_error(400, "Post must be at least 1 character long.");
         $author = $user["id"];
         $result = pg_query_params($dbHandle, "INSERT INTO posts (text, time, author, lat, lng) VALUES ($1, $2, $3, $4, $5);", array($text, $time, $author, $lat, $lng));
         if (!$result) respond_server_error(500, "An error occurred inserting the post");
