@@ -1,8 +1,20 @@
 import { router } from "./routes";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { type Location } from "./types";
 
 export function NewPost() {
   const [text, setText] = useState("");
+  const [location, setLocation] = useState<Location | undefined>();
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        setLocation({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      });
+    }
+  }, []);
   return (
     <div className="pointer-events-auto flex h-min w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
@@ -33,6 +45,8 @@ export function NewPost() {
               body: JSON.stringify({
                 text,
                 time: new Date().toISOString(),
+                latitude: location?.latitude ?? null,
+                longitude: location?.longitude ?? null,
               }),
               method: "POST",
               mode: "no-cors",

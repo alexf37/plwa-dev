@@ -41,7 +41,7 @@ handle_http_methods(function () {
         $result = pg_fetch_all($result, PGSQL_ASSOC);
         respond_with_success($result);
     });
-    POST(["text", "time"], function ($text, $time) {
+    POST(["text", "time", "latitude", "longitude"], function ($text, $time, $lat, $lng) {
         global $dbHandle;
         session_start();
         $user = $_SESSION["user"];
@@ -51,7 +51,7 @@ handle_http_methods(function () {
             respond_client_error(401, "Not logged in.");
         }
         $author = $user["id"];
-        $result = pg_query_params($dbHandle, "INSERT INTO posts (text, time, author) VALUES ($1, $2, $3);", array($text, $time, $author));
+        $result = pg_query_params($dbHandle, "INSERT INTO posts (text, time, author, lat, lng) VALUES ($1, $2, $3, $4, $5);", array($text, $time, $author, $lat, $lng));
         if (!$result) respond_server_error(500, "An error occurred inserting the post");
         respond_with_success(array("success" => "Post inserted successfully"));
     });
