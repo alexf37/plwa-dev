@@ -56,6 +56,7 @@ handle_http_methods(function () {
             respond_client_error(401, "Not logged in.");
         }
         if (strlen($text) < 1) respond_client_error(400, "Post must be at least 1 character long.");
+        if (strlen($text) > 280) respond_client_error(400, "Post must be at most 280 characters long.");
         $author = $user["id"];
         $result = pg_query_params($dbHandle, "INSERT INTO posts (text, time, author, lat, lng) VALUES ($1, $2, $3, $4, $5);", array($text, $time, $author, $lat, $lng));
         if (!$result) respond_server_error(500, "An error occurred inserting the post");

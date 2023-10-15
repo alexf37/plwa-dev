@@ -59,6 +59,8 @@ export function NewPost() {
           name="post"
           id="newpost"
           value={text}
+          maxLength={280}
+          minLength={1}
           onChange={(e) => setText(e.target.value)}
           placeholder="Say anything!"
           className="flex w-full rounded-md px-3 py-2 text-sm"
