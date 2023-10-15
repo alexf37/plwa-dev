@@ -34,6 +34,7 @@ handle_http_methods(function () {
             users.username AS author,
             posts.post AS parent_id,
             (SELECT COUNT(*) FROM likes WHERE likes.post = posts.id) AS like_count,
+            (SELECT COUNT(*) FROM posts AS child_posts WHERE child_posts.post = posts.id) AS comment_count,
             CASE 
               WHEN EXISTS (SELECT 1 FROM likes WHERE likes.post = posts.id AND likes.author = $1) 
               THEN 1 

@@ -10,18 +10,7 @@ import { Map } from "./Map";
 import { ACTIVITY_COLORS, SPOTS, type Location } from "../types";
 import { SpotMarker } from "./SpotMarker";
 import { PostMarker } from "./PostMarker";
-
-type Post = {
-  id: string;
-  author: string;
-  author_id: string;
-  text: string;
-  time: string;
-  like_count: string;
-  user_liked: string;
-  latitude: string;
-  longitude: string;
-};
+import { type Post } from "../types";
 
 const INITIAL_VIEWPORT = {
   latitude: 38.035629,

@@ -9,6 +9,7 @@ export type Post = {
   text: string;
   time: string;
   like_count: string;
+  comment_count: string;
   user_liked: string;
   latitude: string;
   longitude: string;

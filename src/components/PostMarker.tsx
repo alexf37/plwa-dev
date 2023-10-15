@@ -33,7 +33,7 @@ export function PostMarker({ latitude, longitude, post }: PostMarkerProps) {
                 likes={parseInt(post.like_count)}
                 liked={!!parseInt(post.user_liked)}
               />
-              <Comments comments={0} />
+              <Comments comments={parseInt(post.comment_count)} />
             </div>
           </div>
         </div>
