@@ -80,7 +80,7 @@ export function ProfilePopover() {
           <div className="py-3 text-sm" key={post.id}>
             <small className="text-xs text-slate-500">{`${formatDistanceToNowStrict(
               new Date(post.time),
-            )}`}</small>
+            )} ago`}</small>
             <p className="text-slate-900">{post.text}</p>
             <div className="grid grid-cols-6 gap-4 pt-2">
               <Likes
