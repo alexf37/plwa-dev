@@ -13,6 +13,13 @@ handle_http_methods(function () {
     POST(["username", "password"], function ($username, $password) {
         global $dbHandle;
 
+        $username_length = strlen($username);
+        $password_length = strlen($password);
+        if ($username_length < 4) respond_client_error(400, "Username must be at least 4 bytes long.");
+        if ($password_length < 4) respond_client_error(400, "Password must be at least 4 bytes long.");
+        if ($username_length > 50) respond_client_error(400, "Username must be less than 50 bytes long.");
+        if ($password_length > 50) respond_client_error(400, "Password must be less than 50 bytes long.");
+
         $result = pg_query_params($dbHandle, "SELECT * FROM users WHERE username=$1;", array($username));
         if (!$result) respond_server_error(500, "An error occurred querying the database.");
         $result = pg_fetch_all($result, PGSQL_ASSOC);

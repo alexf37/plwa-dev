@@ -2,23 +2,29 @@ import { router } from "./routes";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Input } from "./components/Input";
-import { hash } from "./utils";
 
 export function CreateAccount() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState({
+    message: "",
+    show: false,
+  });
 
   async function handleCreateAccount() {
     const res = await fetch(`/xrk4np/api/auth/create-account.php`, {
       body: JSON.stringify({
         username,
-        password: await hash(password),
+        password,
       }),
       method: "POST",
       mode: "no-cors",
     });
     if (!res.ok) {
-      console.error(await res.json());
+      setError({
+        message: await res.json().then((data) => data.error),
+        show: true,
+      });
       return;
     }
     const success = await res
@@ -54,10 +60,15 @@ export function CreateAccount() {
                 Username
               </label>
               <Input
+                required
                 placeholder="ExampleUser123"
                 name="username"
                 id="username"
                 type="text"
+                autoComplete="off"
+                minLength={4}
+                maxLength={50}
+                pattern="[a-zA-Z0-9]+"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
               />
@@ -67,14 +78,22 @@ export function CreateAccount() {
                 Password
               </label>
               <Input
+                required
                 placeholder="••••••••"
                 name="password"
+                autoComplete="off"
                 id="password"
+                minLength={4}
+                maxLength={50}
                 type="password"
+                pattern="[A-Za-z0-9!@#$%&]+"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            {error.show && (
+              <p className="text-sm text-red-500">{error.message}</p>
+            )}
           </div>
           <hr className=" mb-4 border border-slate-200" />
           <div className="flex justify-end gap-2 font-medium">
