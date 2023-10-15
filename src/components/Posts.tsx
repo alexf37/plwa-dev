@@ -5,18 +5,7 @@ import { router } from "../routes";
 import { Card } from "./Card";
 import { useEffect, useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
-
-type Post = {
-  id: string;
-  author: string;
-  author_id: string;
-  text: string;
-  time: string;
-  like_count: string;
-  user_liked: string;
-  latitude: string;
-  longitude: string;
-};
+import { type Post } from "../types";
 
 export function Posts() {
   const [posts, setPosts] = useState<Post[]>([]);

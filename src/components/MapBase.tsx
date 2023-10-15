@@ -7,38 +7,21 @@ import {
 } from "react";
 import { type MapRef } from "react-map-gl";
 import { Map } from "./Map";
-import { ACTIVITY_COLORS, SPOTS, type Location, type Post } from "../types";
+import { ACTIVITY_COLORS, SPOTS, type Location } from "../types";
 import { SpotMarker } from "./SpotMarker";
 import { PostMarker } from "./PostMarker";
 
-const posts: Post[] = [
-  {
-    id: "3",
-    author: "NotJimRyan",
-    text: "the spanish language lowkey went off with biblioteca ngl",
-    location: {
-      latitude: 38.03545,
-      longitude: -78.513611,
-    },
-    likes: 64,
-    comments: 13,
-    timestamp: "14min ago",
-    likedByUser: false,
-  },
-  {
-    id: "4",
-    author: "trashhhdev",
-    text: "i feel so bad when i take over an older professor on the sidewalk like man i really didn't mean to flex on you with my youthful stride",
-    location: {
-      latitude: 38.03599,
-      longitude: -78.49443,
-    },
-    likes: 54,
-    comments: 21,
-    timestamp: "47min ago",
-    likedByUser: true,
-  },
-];
+type Post = {
+  id: string;
+  author: string;
+  author_id: string;
+  text: string;
+  time: string;
+  like_count: string;
+  user_liked: string;
+  latitude: string;
+  longitude: string;
+};
 
 const INITIAL_VIEWPORT = {
   latitude: 38.035629,
@@ -54,6 +37,16 @@ export function MapBase({ children }: PropsWithChildren) {
     mapRef.current?.flyTo({
       center: [INITIAL_VIEWPORT.longitude, INITIAL_VIEWPORT.latitude],
     });
+  }, []);
+  const [posts, setPosts] = useState<Post[]>([]);
+  useEffect(() => {
+    fetch("/xrk4np/api/posts.php?onlyMine=0")
+      .then((res) => res.json())
+      .then((data: Post[]) => {
+        const shuffled = data.sort(() => 0.5 - Math.random());
+        setPosts(shuffled.slice(0, 3));
+      })
+      .catch((e) => console.log(e));
   }, []);
 
   const handleFlyToOnClick = ({ latitude, longitude }: Location) => {
@@ -88,7 +81,12 @@ export function MapBase({ children }: PropsWithChildren) {
             />
           ))}
           {posts.map((post) => (
-            <PostMarker key={post.id} {...post.location} post={post} />
+            <PostMarker
+              key={post.id}
+              latitude={new Number(post.latitude).valueOf()}
+              longitude={new Number(post.longitude).valueOf()}
+              post={post}
+            />
           ))}
         </Map>
       </div>

@@ -5,13 +5,13 @@ export type Location = {
 export type Post = {
   id: string;
   author: string;
+  author_id: string;
   text: string;
-  image?: string;
-  location: Location;
-  likes: number;
-  comments: number;
-  timestamp: string;
-  likedByUser: boolean;
+  time: string;
+  like_count: string;
+  user_liked: string;
+  latitude: string;
+  longitude: string;
 };
 
 export type Spot = {
