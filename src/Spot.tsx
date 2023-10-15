@@ -6,7 +6,7 @@ import { CloseIcon } from "./components/icons/CloseIcon";
 
 import { twMerge } from "tailwind-merge";
 import { useSocketChat } from "./hooks/useSocketChat";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Message = {
   sender: string;
@@ -31,7 +31,12 @@ function ChatBubble({ message, isOwn }: { message: Message; isOwn: boolean }) {
 }
 
 function ChatBox({ spot }: { spot: Spot }) {
-  const username = "EagerBadger123";
+  const [username, setUsername] = useState("");
+  useEffect(() => {
+    fetch("/xrk4np/api/account.php")
+      .then((res) => res.json())
+      .then((data) => setUsername(data.user.username ?? "Anonymous"));
+  }, []);
   const { messages, sendMessage, messageInputProps } = useSocketChat(
     spot.id,
     username,

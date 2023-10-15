@@ -15,7 +15,7 @@ type MessageResponse = {
   value: string;
 };
 
-export function useSocketChat(room: string, name: string) {
+export function useSocketChat(room: string, name?: string) {
   const { current: socket } = useRef(
     io(CHAT_SERVER, {
       autoConnect: false,
@@ -27,13 +27,15 @@ export function useSocketChat(room: string, name: string) {
   useEffect(() => {
     socket.disconnect();
     socket.connect();
+    if (!name) return;
     socket.emit("join", { room, name });
     return () => {
       socket.disconnect();
       setChats([]);
     };
-  }, [room]);
+  }, [name, room, socket]);
   useEffect(() => {
+    if (!name) return;
     function onChat(value: MessageResponse) {
       if (value.type !== "chat") return;
       const chatMessage = {
@@ -55,12 +57,12 @@ export function useSocketChat(room: string, name: string) {
 
     socket.on("join", onJoin);
     socket.on("message", onChat);
-  }, []);
+  }, [name, socket]);
 
   function sendMessage() {
     socket.emit("message", {
       type: "chat",
-      name: "EagerBadger123",
+      name: name,
       value: inputValue,
     });
     setInputValue("");
