@@ -1,50 +1,20 @@
 import { Comments } from "./Comments";
 import { Likes } from "./Likes";
-import { type Post } from "../types";
 import { router } from "../routes";
 import { useEffect, useState } from "react";
+import { formatDistanceToNowStrict } from "date-fns";
 
-const posts: Post[] = [
-  {
-    id: "1",
-    author: "EagerBadger3633",
-    text: "lowkey might be cool to have a goat",
-    location: {
-      latitude: 38.035629,
-      longitude: -78.503403,
-    },
-    likes: 91,
-    comments: 13,
-    timestamp: "12 minutes ago",
-    likedByUser: false,
-  },
-  {
-    id: "2",
-    author: "AngryBird4119",
-    text: "do bald people use shampoo or do they just use body wash up there",
-    location: {
-      latitude: 38.035629,
-      longitude: -78.503403,
-    },
-    likes: 22,
-    comments: 4,
-    timestamp: "46 minutes ago",
-    likedByUser: false,
-  },
-  {
-    id: "3",
-    author: "NotJimRyan",
-    text: "god gave me physics 2 at 9am because he knew i was getting too powerful",
-    location: {
-      latitude: 38.03545,
-      longitude: -78.513611,
-    },
-    likes: 82,
-    comments: 51,
-    timestamp: "3 hours ago",
-    likedByUser: false,
-  },
-];
+type PostFromApi = {
+  id: string;
+  author: string;
+  author_id: string;
+  text: string;
+  time: string;
+  like_count: string;
+  user_liked: string;
+  latitude: string;
+  longitude: string;
+};
 
 export function ProfilePopover() {
   const [username, setUsername] = useState("");
@@ -56,6 +26,13 @@ export function ProfilePopover() {
         return res;
       })
       .then((data) => setUsername(data.user.username));
+  }, []);
+  const [posts, setPosts] = useState<PostFromApi[]>([]);
+  useEffect(() => {
+    fetch("/xrk4np/api/posts.php?onlyMine=1")
+      .then((res) => res.json())
+      .then((data) => setPosts(data))
+      .catch((e) => console.log(e));
   }, []);
 
   function logout() {
@@ -101,11 +78,16 @@ export function ProfilePopover() {
       <div className="no-scrollbar max-h-72 divide-y divide-slate-200 overflow-y-auto">
         {posts.map((post) => (
           <div className="py-3 text-sm" key={post.id}>
-            <small className="text-xs text-slate-500">{`${post.timestamp}`}</small>
+            <small className="text-xs text-slate-500">{`${formatDistanceToNowStrict(
+              new Date(post.time),
+            )}`}</small>
             <p className="text-slate-900">{post.text}</p>
             <div className="grid grid-cols-6 gap-4 pt-2">
-              <Likes likes={post.likes} liked={post.likedByUser} />
-              <Comments comments={post.comments} />
+              <Likes
+                likes={parseInt(post.like_count)}
+                liked={!!parseInt(post.user_liked)}
+              />
+              <Comments comments={0} />
             </div>
           </div>
         ))}

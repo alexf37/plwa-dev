@@ -21,9 +21,10 @@ type Post = {
 export function Posts() {
   const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
-    fetch("/xrk4np/api/posts.php")
+    fetch("/xrk4np/api/posts.php?onlyMine=0")
       .then((res) => res.json())
-      .then((data) => setPosts(data));
+      .then((data) => setPosts(data))
+      .catch((e) => console.log(e));
   }, []);
   return (
     <Card>

@@ -10,7 +10,7 @@ if (!$create_tables_result) respond_server_error(500, "An error occurred creatin
 
 // handle requests
 handle_http_methods(function () {
-    GET([], function () {
+    GET(["onlyMine"], function ($onlyMine) {
         global $dbHandle;
         session_start();
         $user = $_SESSION["user"];
@@ -35,8 +35,9 @@ handle_http_methods(function () {
               ELSE 0 
             END AS user_liked
             FROM posts JOIN users ON posts.author = users.id
+            WHERE posts.author = $1 OR ($2 = 1)
             ORDER BY posts.time DESC;",
-            [$user["id"]]
+            [$user["id"], $onlyMine ? 0 : 1]
         );
         $result = pg_fetch_all($result, PGSQL_ASSOC);
         respond_with_success($result);
