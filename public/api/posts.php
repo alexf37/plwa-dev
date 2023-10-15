@@ -48,6 +48,7 @@ handle_http_methods(function () {
         if (!$user) {
             $_SESSION = array();
             session_destroy();
+            respond_client_error(401, "Not logged in.");
         }
         $author = $user["id"];
         $result = pg_query_params($dbHandle, "INSERT INTO posts (text, time, author) VALUES ($1, $2, $3);", array($text, $time, $author));

@@ -6,6 +6,6 @@ handle_http_methods(function () {
         session_start();
         $_SESSION = array();
         session_destroy();
-        respond_with_success(array("success" => "success"));
+        respond_with_success(array("success" => "Logged out successfully."));
     });
 });
