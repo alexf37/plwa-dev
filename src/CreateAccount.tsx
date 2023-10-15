@@ -2,6 +2,7 @@ import { router } from "./routes";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Input } from "./components/Input";
+import { hash } from "./utils";
 
 export function CreateAccount() {
   const [username, setUsername] = useState("");
@@ -11,7 +12,7 @@ export function CreateAccount() {
     const res = await fetch(`/xrk4np/api/auth/create-account.php`, {
       body: JSON.stringify({
         username,
-        password,
+        password: await hash(password),
       }),
       method: "POST",
       mode: "no-cors",

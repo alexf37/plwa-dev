@@ -2,6 +2,7 @@ import { router } from "./routes";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Input } from "./components/Input";
+import { hash } from "./utils";
 
 export function Login() {
   const [username, setUsername] = useState("");
@@ -15,7 +16,7 @@ export function Login() {
     const res = await fetch(`/xrk4np/api/auth/login.php`, {
       body: JSON.stringify({
         username,
-        password,
+        password: await hash(password),
       }),
       method: "POST",
       mode: "no-cors",
