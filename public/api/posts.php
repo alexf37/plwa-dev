@@ -10,7 +10,7 @@ if (!$create_tables_result) respond_server_error(500, "An error occurred creatin
 
 // handle requests
 handle_http_methods(function () {
-    GET(["onlyMine?"], function ($onlyMine) {
+    GET(["onlyMine?", "parentId?"], function ($onlyMine, $parentId) {
         global $dbHandle;
         session_start();
         $user = $_SESSION["user"];
@@ -32,6 +32,7 @@ handle_http_methods(function () {
             posts.lng AS longitude,
             posts.author AS author_id,
             users.username AS author,
+            posts.post AS parent_id,
             (SELECT COUNT(*) FROM likes WHERE likes.post = posts.id) AS like_count,
             CASE 
               WHEN EXISTS (SELECT 1 FROM likes WHERE likes.post = posts.id AND likes.author = $1) 
@@ -39,14 +40,15 @@ handle_http_methods(function () {
               ELSE 0 
             END AS user_liked
             FROM posts JOIN users ON posts.author = users.id
-            WHERE posts.author = $1 OR ($2 = 1)
+            WHERE (posts.author = $1 OR ($2 = 1))
+            AND (posts.post = $3 OR $3 IS NULL)
             ORDER BY posts.time DESC;",
-            [$user["id"], $onlyMine ? 0 : 1]
+            [$user["id"], $onlyMine ? 0 : 1, $parentId]
         );
         $result = pg_fetch_all($result, PGSQL_ASSOC);
         respond_with_success($result);
     });
-    POST(["text", "time", "latitude?", "longitude?"], function ($text, $time, $lat, $lng) {
+    POST(["text", "time", "latitude?", "longitude?", "parentId?"], function ($text, $time, $lat, $lng, $parentId) {
         global $dbHandle;
         session_start();
         $user = $_SESSION["user"];
@@ -58,7 +60,7 @@ handle_http_methods(function () {
         if (strlen($text) < 1) respond_client_error(400, "Post must be at least 1 character long.");
         if (strlen($text) > 280) respond_client_error(400, "Post must be at most 280 characters long.");
         $author = $user["id"];
-        $result = pg_query_params($dbHandle, "INSERT INTO posts (text, time, author, lat, lng) VALUES ($1, $2, $3, $4, $5);", array($text, $time, $author, $lat, $lng));
+        $result = pg_query_params($dbHandle, "INSERT INTO posts (text, time, author, lat, lng, post) VALUES ($1, $2, $3, $4, $5, $6);", array($text, $time, $author, $lat, $lng, $parentId));
         if (!$result) respond_server_error(500, "An error occurred inserting the post");
         respond_with_success(array("success" => "Post inserted successfully"));
     });
