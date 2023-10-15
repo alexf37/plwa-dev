@@ -8,15 +8,14 @@ export function CreateAccount() {
   const [password, setPassword] = useState("");
 
   async function handleCreateAccount() {
-    const res = await fetch(
-      `/xrk4np/api/auth/create-account.php?username=${encodeURIComponent(
+    const res = await fetch(`/xrk4np/api/auth/create-account.php`, {
+      body: JSON.stringify({
         username,
-      )}&password=${encodeURIComponent(password)}`,
-      {
-        method: "POST",
-        mode: "no-cors",
-      },
-    );
+        password,
+      }),
+      method: "POST",
+      mode: "no-cors",
+    });
     if (!res.ok) {
       console.error(await res.json());
       return;

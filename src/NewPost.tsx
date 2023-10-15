@@ -29,13 +29,14 @@ export function NewPost() {
         <button
           type="button"
           onClick={async () => {
-            const res = await fetch(
-              `/xrk4np/api/posts.php?text=${text}&time=${new Date().toISOString()}`,
-              {
-                method: "POST",
-                mode: "no-cors",
-              },
-            );
+            const res = await fetch(`/xrk4np/api/posts.php`, {
+              body: JSON.stringify({
+                text,
+                time: new Date().toISOString(),
+              }),
+              method: "POST",
+              mode: "no-cors",
+            });
             if (res.ok) {
               router.navigate({ to: "/xrk4np/app" });
             }

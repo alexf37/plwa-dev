@@ -6,19 +6,25 @@ import { Input } from "./components/Input";
 export function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState({
+    message: "",
+    show: false,
+  });
 
   async function handleLogin() {
-    const res = await fetch(
-      `/xrk4np/api/auth/login.php?username=${encodeURIComponent(
+    const res = await fetch(`/xrk4np/api/auth/login.php`, {
+      body: JSON.stringify({
         username,
-      )}&password=${encodeURIComponent(password)}`,
-      {
-        method: "POST",
-        mode: "no-cors",
-      },
-    );
+        password,
+      }),
+      method: "POST",
+      mode: "no-cors",
+    });
     if (!res.ok) {
-      console.error("idk what went wrong tbh");
+      setError({
+        message: await res.json().then((data) => data.error),
+        show: true,
+      });
       return;
     }
     const success = await res
@@ -83,7 +89,11 @@ export function Login() {
                 onChange={(e) => setPassword(e.target.value)}
               />
             </div>
+            {error.show && (
+              <p className="text-sm text-red-500">{error.message}</p>
+            )}
           </div>
+
           <hr className=" mb-4 border border-slate-200" />
           <div className="flex justify-end gap-2 font-medium">
             <Link
@@ -98,7 +108,7 @@ export function Login() {
               type="submit"
               className="rounded-xl bg-blue-400 px-3 py-2 text-white drop-shadow"
             >
-              Login
+              {error.show ? "Try again" : "Login"}
             </button>
           </div>
         </form>
