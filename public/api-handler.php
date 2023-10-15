@@ -30,7 +30,11 @@ function execute_with_url_params(string $method, array $method_superglobal, arra
         $args = array();
         foreach ($url_param_keys as $key => $value) {
             if (!isset($method_superglobal[$value])) {
-                respond_client_error(400, "Missing required parameter: $key");
+                if (str_ends_with($value, "?")) {
+                    $args[$key] = $method_superglobal[rtrim($value, "?")];
+                    continue;
+                }
+                respond_client_error(400, "Missing required parameter: $value");
             }
             $args[$key] = $method_superglobal[$value];
         }
