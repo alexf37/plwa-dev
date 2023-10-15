@@ -35,8 +35,8 @@ function ControlButtons() {
     setIsNotifsOpen(!isNotifsOpen);
   };
   return (
-    <div className="flex gap-6">
-      <div className="relative">
+    <div className="flex gap-6 max-md:relative">
+      <div className="md:relative">
         <Button
           aria-label="Notifications"
           className="h-12 w-12"
@@ -54,7 +54,7 @@ function ControlButtons() {
         )}
       </div>
 
-      <div className="relative">
+      <div className="md:relative">
         <Button
           aria-label="Profile"
           className="h-12 w-12"
