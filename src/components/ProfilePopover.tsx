@@ -60,6 +60,7 @@ export function ProfilePopover() {
       body: JSON.stringify({
         username: tempUsername,
       }),
+      mode: "no-cors",
     });
     if (!res.ok) {
       if (user) setTempUsername(user.username);
