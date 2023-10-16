@@ -32,8 +32,11 @@ export function MapBase({ children }: PropsWithChildren) {
     fetch("/xrk4np/api/posts.php")
       .then((res) => res.json())
       .then((data: Post[]) => {
-        const shuffled = data.sort(() => 0.5 - Math.random());
-        setPosts(shuffled.slice(0, 3));
+        const sorted = data.sort(
+          (a, b) => parseInt(b.comment_count) - parseInt(a.comment_count),
+        );
+        console.log(sorted);
+        setPosts(sorted.slice(0, 3).reverse());
       })
       .catch((e) => console.log(e));
   }, []);
