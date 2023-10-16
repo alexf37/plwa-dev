@@ -39,7 +39,8 @@ function db_init_tables(Connection $dbHandle)
         id SERIAL PRIMARY KEY,
         author INT NOT NULL REFERENCES users (id),
         time TEXT NOT NULL,
-        post INT NOT NULL REFERENCES posts (id)
+        post INT NOT NULL REFERENCES posts (id),
+        UNIQUE(author, post)
     );"
     );
     return $result;
