@@ -16,6 +16,7 @@ import { Spot } from "./Spot";
 import { Login } from "./Login";
 import { Splash } from "./Splash";
 import { MapProvider } from "react-map-gl";
+import { Post } from "./Post";
 
 async function toLoginIfNotAuthed() {
   const res = await fetch(`/xrk4np/api/auth/status.php`);
@@ -72,6 +73,18 @@ const spotRoute = new Route({
   path: "/spot/$spotId",
   component: Spot,
 });
+const postRoute = new Route({
+  getParentRoute: () => appRoute,
+  path: "/post/$postId",
+  component: () => (
+    <ContentPortal>
+      <Post />
+      <RightPane>
+        <Outlet />
+      </RightPane>
+    </ContentPortal>
+  ),
+});
 
 const createAccountRoute = new Route({
   getParentRoute: () => appRoute,
@@ -106,6 +119,7 @@ const routeTree = rootRoute.addChildren([
     createAccountRoute,
     loginRoute,
     newPostRoute,
+    postRoute,
   ]),
 ]);
 export const router = new Router({ routeTree });

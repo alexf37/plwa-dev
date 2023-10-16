@@ -4,17 +4,7 @@ import { router } from "../routes";
 import { useEffect, useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 
-type PostFromApi = {
-  id: string;
-  author: string;
-  author_id: string;
-  text: string;
-  time: string;
-  like_count: string;
-  user_liked: string;
-  latitude: string;
-  longitude: string;
-};
+import { type Post } from "../types";
 
 export function ProfilePopover() {
   const [username, setUsername] = useState("");
@@ -27,7 +17,7 @@ export function ProfilePopover() {
       })
       .then((data) => setUsername(data.user.username));
   }, []);
-  const [posts, setPosts] = useState<PostFromApi[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   useEffect(() => {
     fetch("/xrk4np/api/posts.php?onlyMine=1")
       .then((res) => res.json())
@@ -87,7 +77,7 @@ export function ProfilePopover() {
                 likes={parseInt(post.like_count)}
                 liked={!!parseInt(post.user_liked)}
               />
-              <Comments comments={0} />
+              <Comments comments={0} postId={post.id} />
             </div>
           </div>
         ))}
