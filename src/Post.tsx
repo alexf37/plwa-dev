@@ -111,11 +111,14 @@ export function Post() {
               </div>
             ))}
           </div>
-          <div
-            className="space-y-1 pt-2"
-            onSubmit={() => handleSubmitNewPost()}
-          >
-            <form className="flex gap-2">
+          <div className="space-y-1 pt-2">
+            <form
+              className="flex gap-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmitNewPost();
+              }}
+            >
               <textarea
                 name="post"
                 id="newcomment"
