@@ -33,7 +33,10 @@ export function MapBase({ children }: PropsWithChildren) {
       .then((res) => res.json())
       .then((data: Post[]) => {
         const sorted = data.sort(
-          (a, b) => parseInt(b.comment_count) - parseInt(a.comment_count),
+          (a, b) =>
+            parseInt(b.like_count) +
+            parseInt(b.comment_count) -
+            (parseInt(a.like_count) + parseInt(a.comment_count)),
         );
         console.log(sorted);
         setPosts(sorted.slice(0, 3).reverse());
