@@ -77,7 +77,10 @@ export function ProfilePopover() {
                 likes={parseInt(post.like_count)}
                 liked={!!parseInt(post.user_liked)}
               />
-              <Comments comments={0} postId={post.id} />
+              <Comments
+                comments={parseInt(post.comment_count)}
+                postId={post.id}
+              />
             </div>
           </div>
         ))}
