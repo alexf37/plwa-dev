@@ -160,6 +160,7 @@ export function ProfilePopover() {
             <p className="text-slate-900">{post.text}</p>
             <div className="grid grid-cols-6 gap-4 pt-2">
               <Likes
+                postId={post.id}
                 likes={parseInt(post.like_count)}
                 liked={!!parseInt(post.user_liked)}
               />

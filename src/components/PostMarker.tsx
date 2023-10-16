@@ -30,6 +30,7 @@ export function PostMarker({ latitude, longitude, post }: PostMarkerProps) {
             </div>
             <div className="flex gap-4 pt-2 ">
               <Likes
+                postId={post.id}
                 likes={parseInt(post.like_count)}
                 liked={!!parseInt(post.user_liked)}
               />
