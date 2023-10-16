@@ -17,7 +17,7 @@ handle_http_methods(function () {
         $user = $_SESSION["user"];
         respond_with_success(array("user" => $user));
     });
-    PATCH(["username"], function ($username) {
+    POST(["username"], function ($username) {
         global $dbHandle;
         session_start();
         $status = isset($_SESSION["user"]);

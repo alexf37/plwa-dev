@@ -56,10 +56,11 @@ export function ProfilePopover() {
       return;
     }
     const res = await fetch("/xrk4np/api/account.php", {
-      method: "PATCH",
+      method: "POST",
       body: JSON.stringify({
         username: tempUsername,
       }),
+      mode: "no-cors",
     });
     if (!res.ok) {
       if (user) setTempUsername(user.username);
