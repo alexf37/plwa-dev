@@ -1,6 +1,7 @@
 import { router } from "./routes";
 import { useEffect, useState } from "react";
 import { type Location } from "./types";
+import { Card } from "./components/Card";
 
 export function NewPost() {
   const [text, setText] = useState("");
@@ -50,7 +51,7 @@ export function NewPost() {
     }
   }
   return (
-    <div className="pointer-events-auto flex h-min w-96 flex-col rounded-3xl border border-slate-200 bg-white p-8 shadow-lg">
+    <Card>
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
         <h1 className="text-4xl font-bold">New Post</h1>
       </div>
@@ -85,6 +86,6 @@ export function NewPost() {
           Post
         </button>
       </div>
-    </div>
+    </Card>
   );
 }
