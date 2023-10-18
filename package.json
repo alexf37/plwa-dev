@@ -22,7 +22,8 @@
     "react-merge-refs": "^2.1.1",
     "react-virtualized-auto-sizer": "^1.0.20",
     "socket.io-client": "^4.7.2",
-    "tailwind-merge": "^1.14.0"
+    "tailwind-merge": "^1.14.0",
+    "zod": "latest"
   },
   "devDependencies": {
     "@types/node": "^20.6.0",

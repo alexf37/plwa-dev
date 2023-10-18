@@ -1,11 +1,10 @@
-import { useParams } from "@tanstack/react-router";
-import { Card } from "./components/Card";
-import { router } from "./routes";
-import { ACTIVITY_COLORS, SPOTS, type Spot } from "./types";
-import { CloseIcon } from "./components/icons/CloseIcon";
+import { Card } from "./Card";
+import { router } from "../routes";
+import { ACTIVITY_COLORS, SPOTS, type Spot } from "../types";
+import { CloseIcon } from "./icons/CloseIcon";
 
 import { twMerge } from "tailwind-merge";
-import { useSocketChat } from "./hooks/useSocketChat";
+import { useSocketChat } from "../hooks/useSocketChat";
 import { useEffect, useRef, useState } from "react";
 
 type Message = {
@@ -79,8 +78,7 @@ function ChatBox({ spot }: { spot: Spot }) {
   );
 }
 
-export function Spot() {
-  const { spotId } = useParams(router.routeTree.parentRoute);
+export function Spot({ spotId }: { spotId: string }) {
   const spot = SPOTS.find((s) => s.id === spotId);
   return (
     <Card>
@@ -97,7 +95,14 @@ export function Spot() {
         <button
           type="button"
           aria-label="Leave Spot"
-          onClick={() => router.navigate({ to: "/xrk4np/app" })}
+          onClick={() =>
+            router.navigate({
+              search: (prev) => ({
+                ...prev,
+                spot: undefined,
+              }),
+            })
+          }
           className="new-post-button"
         >
           <CloseIcon stroke="currentColor" strokeWidth={2} />

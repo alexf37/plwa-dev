@@ -3,6 +3,8 @@ import { Button } from "./Button";
 import { Popover } from "./Popover";
 import { NotificationIcon } from "./icons/NotificationIcon";
 import { ProfileIcon } from "./icons/ProfileIcon";
+import { Spot } from "./Spot";
+import { useRouter } from "@tanstack/react-router";
 
 const NotificationsPopover = lazy(() =>
   import("./NotificationsPopover").then((module) => ({
@@ -76,9 +78,13 @@ function ControlButtons() {
 }
 
 export function RightPane({ children }: React.PropsWithChildren) {
+  const router = useRouter();
+  const searchParams = router.state.resolvedLocation.search;
+  const spot = searchParams.spot;
   return (
     <div className="right-pane-container max-w-full gap-6">
       <ControlButtons />
+      {spot && <Spot spotId={spot} />}
       {children}
     </div>
   );

@@ -41,7 +41,7 @@ export function NewPost() {
       mode: "no-cors",
     });
     if (res.ok) {
-      router.navigate({ to: "/xrk4np/app" });
+      router.navigate({ to: "/xrk4np/app", search: (prev) => prev });
     } else {
       setError({
         message: await res.json().then((data) => data.error),
@@ -70,7 +70,9 @@ export function NewPost() {
       <div className="text-button-container">
         <button
           type="button"
-          onClick={() => router.navigate({ to: "/xrk4np/app" })}
+          onClick={() =>
+            router.navigate({ to: "/xrk4np/app", search: (prev) => prev })
+          }
           className="text-button bg-red-400 drop-shadow"
         >
           Cancel

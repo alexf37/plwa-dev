@@ -38,7 +38,12 @@ export function Posts() {
           <button
             type="button"
             aria-label="Add Post"
-            onClick={() => router.navigate({ to: "/xrk4np/app/new-post" })}
+            onClick={() =>
+              router.navigate({
+                to: "/xrk4np/app/new-post",
+                search: (prev) => prev,
+              })
+            }
             className="new-post-button"
           >
             <PencilSquare stroke="currentColor" strokeWidth={1.5} />

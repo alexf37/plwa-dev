@@ -61,7 +61,9 @@ export function Post() {
         <button
           type="button"
           aria-label="Back to All Posts"
-          onClick={() => router.navigate({ to: "/xrk4np/app" })}
+          onClick={() =>
+            router.navigate({ to: "/xrk4np/app", search: (prev) => prev })
+          }
           className="new-post-button"
         >
           <CloseIcon stroke="currentColor" strokeWidth={2} />

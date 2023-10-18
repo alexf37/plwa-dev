@@ -22,10 +22,10 @@ export function SpotMarker({
         className="flex h-12 w-12 justify-center"
         onClick={() =>
           router.navigate({
-            to: `/xrk4np/app/spot/$spotId`,
-            params: {
-              spotId: spot.id,
-            },
+            search: (prev) => ({
+              ...prev,
+              spot: spot.id,
+            }),
           })
         }
       >

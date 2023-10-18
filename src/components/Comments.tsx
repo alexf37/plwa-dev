@@ -18,6 +18,7 @@ export function Comments({ comments, postId }: CommentsProps) {
             params: {
               postId,
             },
+            search: (prev) => prev,
           })
         }
       >
