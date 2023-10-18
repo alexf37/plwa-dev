@@ -8,15 +8,19 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { type Post } from "../types";
 import { PencilSquare } from "./icons/PencilSquare";
 import { MinusIcon } from "./icons/MinusIcon";
+import { RefreshIcon } from "./icons/RefreshIcon";
 
 export function Posts() {
   const [minimised, setMinimised] = useState(false);
   const [posts, setPosts] = useState<Post[]>([]);
-  useEffect(() => {
+  function fetchPosts() {
     fetch("/xrk4np/api/posts.php")
       .then((res) => res.json())
       .then((data) => setPosts(data))
       .catch((e) => console.log(e));
+  }
+  useEffect(() => {
+    fetchPosts();
   }, []);
   return (
     <Card>
@@ -25,7 +29,15 @@ export function Posts() {
         <div className="flex gap-4">
           <button
             type="button"
-            aria-label="Add Post"
+            aria-label="Refresh Posts"
+            onClick={fetchPosts}
+            className="new-post-button"
+          >
+            <RefreshIcon stroke="currentColor" strokeWidth={1.5} />
+          </button>
+          <button
+            type="button"
+            aria-label={minimised ? "Expand Posts" : "Minimise Posts"}
             onClick={() => setMinimised(!minimised)}
             className="new-post-button"
           >
