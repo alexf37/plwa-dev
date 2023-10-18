@@ -46,7 +46,7 @@ const indexRoute = new Route({
 
 const splashRoute = new Route({
   getParentRoute: () => baseRoute,
-  path: "/xrk4np/app/splash",
+  path: "/app/splash",
   component: Splash,
 });
 
