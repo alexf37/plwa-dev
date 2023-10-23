@@ -65,6 +65,8 @@ function ChatBox({ spot }: { spot: Spot }) {
           placeholder="Say something..."
           className="col-span-9 flex h-10 w-full rounded-xl border px-3 py-2 text-sm shadow outline-blue-400"
           type="text"
+          minLength={1}
+          maxLength={280}
           {...messageInputProps}
         />
         <button
