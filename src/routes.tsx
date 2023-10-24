@@ -4,18 +4,15 @@ import {
   RootRoute,
   Outlet,
   redirect,
+  lazyRouteComponent,
 } from "@tanstack/react-router";
-import { CreateAccount } from "./CreateAccount";
 import { NewPost } from "./NewPost";
 import { MapBase } from "./components/MapBase";
 import { Landing } from "./Landing";
-import { Posts } from "./components/Posts";
 import { RightPane } from "./components/RightPane";
 import { ContentPortal } from "./components/ContentPortal";
-import { Login } from "./Login";
 import { Splash } from "./Splash";
 import { MapProvider } from "react-map-gl";
-import { Post } from "./Post";
 import { z } from "zod";
 
 async function redirectToLoginIfNotAuthed() {
@@ -82,13 +79,13 @@ const appLayoutRoute = new Route({
 const appIndexRoute = new Route({
   getParentRoute: () => appLayoutRoute,
   path: "/",
-  component: () => <Posts />,
+  component: lazyRouteComponent(() => import("./components/Posts"), "Posts"),
 });
 
 const postRoute = new Route({
   getParentRoute: () => appLayoutRoute,
   path: "/post/$postId",
-  component: () => <Post />,
+  component: lazyRouteComponent(() => import("./Post"), "Post"),
 });
 
 const newPostRoute = new Route({
@@ -105,12 +102,15 @@ const authRoute = new Route({
 const createAccountRoute = new Route({
   getParentRoute: () => authRoute,
   path: "/create-account",
-  component: CreateAccount,
+  component: lazyRouteComponent(
+    () => import("./CreateAccount"),
+    "CreateAccount",
+  ),
 });
 const loginRoute = new Route({
   getParentRoute: () => authRoute,
   path: "/login",
-  component: Login,
+  component: lazyRouteComponent(() => import("./Login"), "Login"),
 });
 
 const routeTree = rootRoute.addChildren([
