@@ -98,6 +98,9 @@ export function ProfilePopover() {
               name="username"
               id="username"
               type="text"
+              minLength={4}
+              maxLength={50}
+              pattern="[a-zA-Z0-9]+"
               autoCorrect="off"
               autoCapitalize="off"
               autoComplete="off"
