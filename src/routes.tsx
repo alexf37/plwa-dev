@@ -14,6 +14,9 @@ import { ContentPortal } from "./components/ContentPortal";
 import { Splash } from "./Splash";
 import { MapProvider } from "react-map-gl";
 import { z } from "zod";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 async function redirectToLoginIfNotAuthed() {
   const res = await fetch(`/xrk4np/api/auth/status.php`);
@@ -52,9 +55,11 @@ const appBaseRoute = new Route({
   path: "/app",
   component: () => (
     <MapProvider>
-      <MapBase>
-        <Outlet />
-      </MapBase>
+      <QueryClientProvider client={queryClient}>
+        <MapBase>
+          <Outlet />
+        </MapBase>
+      </QueryClientProvider>
     </MapProvider>
   ),
 });

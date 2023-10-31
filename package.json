@@ -13,6 +13,7 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.4.3",
     "@tanstack/react-router": "beta",
     "date-fns": "^2.30.0",
     "mapbox-gl": "^2.15.0",
