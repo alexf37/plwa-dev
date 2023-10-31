@@ -9,6 +9,7 @@ import { CloseIcon } from "./components/icons/CloseIcon";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPost, fetchPostComments } from "./utils";
 import { LoadingSpinner } from "./components/LoadingSpinner";
+import { RefreshIcon } from "./components/icons/RefreshIcon";
 
 export function Post() {
   const router = useRouter();
@@ -67,16 +68,29 @@ export function Post() {
     <Card>
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
         <h1 className="text-4xl font-bold">Post</h1>
-        <button
-          type="button"
-          aria-label="Back to All Posts"
-          onClick={() =>
-            router.navigate({ to: "/xrk4np/app", search: (prev) => prev })
-          }
-          className="new-post-button"
-        >
-          <CloseIcon stroke="currentColor" strokeWidth={2} />
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="button"
+            aria-label="Refresh Posts"
+            onClick={() => {
+              refetchPost();
+              refetchComments();
+            }}
+            className="new-post-button"
+          >
+            <RefreshIcon stroke="currentColor" strokeWidth={1.5} />
+          </button>
+          <button
+            type="button"
+            aria-label="Back to All Posts"
+            onClick={() =>
+              router.navigate({ to: "/xrk4np/app", search: (prev) => prev })
+            }
+            className="new-post-button"
+          >
+            <CloseIcon stroke="currentColor" strokeWidth={2} />
+          </button>
+        </div>
       </div>
       {postIsSuccess ? (
         <div className="border-b border-slate-200 py-4" key={post.id}>
