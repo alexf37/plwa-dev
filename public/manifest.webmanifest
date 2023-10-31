@@ -1,0 +1,10 @@
+{
+  "name": "SpotChat",
+  "short_name": "SpotChat",
+  "version": "0.1.0",
+  "start_url": "/xrk4np/app",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff"
+}
