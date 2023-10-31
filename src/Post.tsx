@@ -23,6 +23,7 @@ export function Post() {
     data: post,
     isSuccess: postIsSuccess,
     isError: postIsError,
+    refetch: refetchPost,
   } = useQuery({
     queryKey: ["fetchPost", postId],
     queryFn: () => fetchPost(postId),
@@ -32,6 +33,7 @@ export function Post() {
     data: comments,
     isSuccess: commentsIsSuccess,
     isError: commentsIsError,
+    refetch: refetchComments,
   } = useQuery({
     queryKey: ["fetchPostComments", postId],
     queryFn: () => fetchPostComments(postId),
@@ -51,7 +53,8 @@ export function Post() {
     if (res.ok) {
       setText("");
       setError((prev) => ({ ...prev, show: false }));
-      fetchPostComments(postId);
+      refetchPost();
+      refetchComments();
     } else {
       setError({
         message: await res.json().then((data) => data.error),
