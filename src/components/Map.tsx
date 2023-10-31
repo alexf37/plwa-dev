@@ -14,30 +14,28 @@ export const Map = forwardRef<MapRef, ComponentProps<typeof ReactMapGL>>(
   (props, forwardedRef) => {
     const mapRef = useRef<MapRef>(null);
     return (
-      <>
-        <AutoSizer
-          onResize={() => {
-            // Hacky fix - resize needs to happen on the next event loop tick
-            // after the size has propogated down to the map
-            setTimeout(() => {
-              mapRef.current?.resize();
-            }, 0);
-          }}
-        >
-          {({ width, height }) => (
-            <ReactMapGL
-              ref={mergeRefs([mapRef, forwardedRef])}
-              mapboxAccessToken={PUBLIC_MAPBOX_KEY}
-              mapStyle={MAPBOX_STYLE}
-              style={{ width, height }}
-              projection={{
-                name: "globe",
-              }}
-              {...props}
-            />
-          )}
-        </AutoSizer>
-      </>
+      <AutoSizer
+        onResize={() => {
+          // Hacky fix - resize needs to happen on the next event loop tick
+          // after the size has propogated down to the map
+          setTimeout(() => {
+            mapRef.current?.resize();
+          }, 0);
+        }}
+      >
+        {({ width, height }) => (
+          <ReactMapGL
+            ref={mergeRefs([mapRef, forwardedRef])}
+            mapboxAccessToken={PUBLIC_MAPBOX_KEY}
+            mapStyle={MAPBOX_STYLE}
+            style={{ width, height }}
+            projection={{
+              name: "globe",
+            }}
+            {...props}
+          />
+        )}
+      </AutoSizer>
     );
   },
 );

@@ -1,9 +1,9 @@
 import {
-  useDeferredValue,
   useEffect,
   useRef,
   useState,
   type PropsWithChildren,
+  useMemo,
 } from "react";
 import { type MapRef } from "react-map-gl";
 import { Map } from "./Map";
@@ -21,7 +21,6 @@ const INITIAL_VIEWPORT = {
 export function MapBase({ children }: PropsWithChildren) {
   const mapRef = useRef<MapRef>(null);
   const [mapViewport, setMapViewport] = useState(INITIAL_VIEWPORT);
-  const deferredViewport = useDeferredValue(mapViewport);
   useEffect(() => {
     mapRef.current?.flyTo({
       center: [INITIAL_VIEWPORT.longitude, INITIAL_VIEWPORT.latitude],
@@ -38,7 +37,6 @@ export function MapBase({ children }: PropsWithChildren) {
             parseInt(b.comment_count) -
             (parseInt(a.like_count) + parseInt(a.comment_count)),
         );
-        console.log(sorted);
         setPosts(sorted.slice(0, 3).reverse());
       })
       .catch((e) => console.log(e));
@@ -50,13 +48,35 @@ export function MapBase({ children }: PropsWithChildren) {
     });
   };
 
+  const spotMarkers = useMemo(() => {
+    return SPOTS.map((spot) => (
+      <SpotMarker
+        key={spot.id}
+        spot={spot}
+        {...spot.location}
+        fillColor={ACTIVITY_COLORS[spot.activity]}
+      />
+    ));
+  }, []);
+
+  const postMarkers = useMemo(() => {
+    return posts.map((post) => (
+      <PostMarker
+        key={post.id}
+        latitude={new Number(post.latitude).valueOf()}
+        longitude={new Number(post.longitude).valueOf()}
+        post={post}
+      />
+    ));
+  }, [posts]);
+
   return (
     <>
       {children}
       <div className="relative z-0 h-full">
         <Map
           ref={mapRef}
-          {...deferredViewport}
+          {...mapViewport}
           onMove={({ viewState: { latitude, longitude, zoom } }) => {
             setMapViewport({ latitude, longitude, zoom });
           }}
@@ -67,22 +87,8 @@ export function MapBase({ children }: PropsWithChildren) {
             handleFlyToOnClick({ latitude, longitude });
           }}
         >
-          {SPOTS.map((spot) => (
-            <SpotMarker
-              key={spot.id}
-              spot={spot}
-              {...spot.location}
-              fillColor={ACTIVITY_COLORS[spot.activity]}
-            />
-          ))}
-          {posts.map((post) => (
-            <PostMarker
-              key={post.id}
-              latitude={new Number(post.latitude).valueOf()}
-              longitude={new Number(post.longitude).valueOf()}
-              post={post}
-            />
-          ))}
+          {spotMarkers}
+          {postMarkers}
         </Map>
       </div>
     </>
