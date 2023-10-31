@@ -1,14 +1,51 @@
-async function digestMessage(message: string) {
-  const msgUint8 = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", msgUint8);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  const hashHex = hashArray
-    .map((b) => b.toString(16).padStart(2, "0"))
-    .join("");
-  return hashHex;
+import z from "zod";
+import { postSchema } from "./types";
+
+export async function fetchPosts() {
+  const res = await fetch("/xrk4np/api/posts.php");
+  if (!res.ok) {
+    // could throw error response from server here if wanted
+    throw new Error("Failed to fetch posts");
+  }
+  const data = await res.json();
+  console.log(data);
+  const parseResult = z.array(postSchema).safeParse(data);
+  if (!parseResult.success) {
+    throw new Error("Failed to parse posts response");
+  }
+  return parseResult.data;
 }
 
-export async function hash(string: string) {
-  const digest = await digestMessage(string);
-  return digest;
+export async function fetchPost(postId: string) {
+  const res = await fetch(
+    `/xrk4np/api/posts.php?postId=${encodeURIComponent(postId)}`,
+  );
+  if (!res.ok) {
+    // could throw error response from server here if wanted
+    throw new Error("Failed to fetch post");
+  }
+  const data = await res.json();
+  console.log(data);
+  const parseResult = z.array(postSchema).nonempty().safeParse(data);
+  if (!parseResult.success) {
+    throw new Error("Failed to parse post response");
+  }
+  return parseResult.data[0];
+}
+
+export async function fetchPostComments(postId: string) {
+  const res = await fetch(
+    `/xrk4np/api/posts.php?parentId=${encodeURIComponent(postId)}`,
+  );
+  if (!res.ok) {
+    // could throw error response from server here if wanted
+    throw new Error("Failed to fetch post");
+  }
+  const data = await res.json();
+  console.log(data);
+  const parseResult = z.array(postSchema).safeParse(data);
+  if (!parseResult.success) {
+    throw new Error("Failed to parse comments response");
+  }
+  return parseResult.data;
 }
