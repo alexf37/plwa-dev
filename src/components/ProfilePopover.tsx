@@ -4,8 +4,10 @@ import { router } from "../routes";
 import { useEffect, useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 
-import { type DeprecatedPost as Post } from "../types";
 import { Input } from "./Input";
+import { fetchOwnPosts } from "../utils";
+import { useQuery } from "@tanstack/react-query";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 type User = {
   username: string;
@@ -32,13 +34,17 @@ export function ProfilePopover() {
         setTempUsername(data.user.username);
       });
   }, []);
-  const [posts, setPosts] = useState<Post[]>([]);
-  useEffect(() => {
-    fetch("/xrk4np/api/posts.php?onlyMine=1")
-      .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((e) => console.log(e));
-  }, []);
+  const {
+    data: posts,
+    isSuccess: postsIsSuccess,
+    isError: postsIsError,
+    error: postsError,
+  } = useQuery({
+    queryKey: ["fetchOwnPosts"],
+    queryFn: fetchOwnPosts,
+  });
+
+  if (postsIsError) console.log(postsError);
 
   function logout() {
     fetch("/xrk4np/api/auth/logout.php")
@@ -110,7 +116,9 @@ export function ProfilePopover() {
             {error.show && inEditMode && (
               <p className="text-sm text-red-500">{error.message}</p>
             )}
-            <h2 className="text-sm text-slate-500">{posts.length} posts</h2>
+            <h2 className="text-sm text-slate-500">
+              {postsIsSuccess && `${posts.length} posts`}
+            </h2>
           </div>
           <div className="flex gap-2">
             <button
@@ -133,7 +141,9 @@ export function ProfilePopover() {
           <div className="flex gap-2">
             <div>
               <h1 className="text-xl font-bold">{user?.username}</h1>
-              <h2 className="text-sm text-slate-500">{posts.length} posts</h2>
+              <h2 className="text-sm text-slate-500">
+                {postsIsSuccess && `${posts.length} posts`}
+              </h2>
             </div>
           </div>
           <div className="flex gap-2">
@@ -155,25 +165,33 @@ export function ProfilePopover() {
         </div>
       )}
       <div className="no-scrollbar max-h-72 divide-y divide-slate-200 overflow-y-auto">
-        {posts.map((post) => (
-          <div className="py-3 text-sm" key={post.id}>
-            <small className="text-xs text-slate-500">{`${formatDistanceToNowStrict(
-              new Date(post.time),
-            )} ago`}</small>
-            <p className="text-slate-900">{post.text}</p>
-            <div className="grid grid-cols-6 gap-4 pt-2">
-              <Likes
-                postId={post.id}
-                likes={parseInt(post.like_count)}
-                liked={!!parseInt(post.user_liked)}
-              />
-              <Comments
-                comments={parseInt(post.comment_count)}
-                postId={post.id}
-              />
+        {postsIsSuccess ? (
+          posts.map((post) => (
+            <div className="py-3 text-sm" key={post.id}>
+              <small className="text-xs text-slate-500">{`${formatDistanceToNowStrict(
+                new Date(post.time),
+              )} ago`}</small>
+              <p className="text-slate-900">{post.text}</p>
+              <div className="grid grid-cols-6 gap-4 pt-2">
+                <Likes
+                  postId={post.id}
+                  likes={post.like_count}
+                  liked={post.user_liked}
+                />
+                <Comments comments={post.comment_count} postId={post.id} />
+              </div>
             </div>
+          ))
+        ) : postsIsError ? (
+          <div className="py-4">
+            <p className="text-base text-slate-900">Error loading posts</p>
           </div>
-        ))}
+        ) : (
+          <div className="flex items-center justify-center gap-2 py-4">
+            <LoadingSpinner />
+            <p className="text-base text-slate-900">Loading posts...</p>
+          </div>
+        )}
       </div>
     </>
   );

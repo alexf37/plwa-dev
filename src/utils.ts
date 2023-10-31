@@ -16,6 +16,21 @@ export async function fetchPosts() {
   return parseResult.data;
 }
 
+export async function fetchOwnPosts() {
+  const res = await fetch("/xrk4np/api/posts.php?onlyMine=1");
+  if (!res.ok) {
+    // could throw error response from server here if wanted
+    throw new Error("Failed to fetch posts");
+  }
+  const data = await res.json();
+  console.log(data);
+  const parseResult = z.array(postSchema).safeParse(data);
+  if (!parseResult.success) {
+    throw new Error("Failed to parse own posts response");
+  }
+  return parseResult.data;
+}
+
 export async function fetchPost(postId: string) {
   const res = await fetch(
     `/xrk4np/api/posts.php?postId=${encodeURIComponent(postId)}`,
