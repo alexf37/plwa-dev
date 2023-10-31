@@ -8,6 +8,7 @@ import { Comments } from "./components/Comments";
 import { CloseIcon } from "./components/icons/CloseIcon";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPost, fetchPostComments } from "./utils";
+import { LoadingSpinner } from "./components/LoadingSpinner";
 
 export function Post() {
   const router = useRouter();
@@ -92,7 +93,10 @@ export function Post() {
       ) : postIsError ? (
         <p className="text-sm text-red-500">Error loading post</p>
       ) : (
-        <p className="text-sm text-slate-500">Loading...</p>
+        <div className="flex items-center justify-center gap-2 py-4">
+          <LoadingSpinner />
+          <p className="text-base text-slate-900">Loading post...</p>
+        </div>
       )}
 
       <h2 className="pt-4 text-lg font-semibold">Comments</h2>
@@ -119,7 +123,29 @@ export function Post() {
         ) : commentsIsError ? (
           <p className="text-sm text-red-500">Error loading comments</p>
         ) : (
-          <p className="text-sm text-slate-500">Loading...</p>
+          <div className="flex items-center justify-center gap-2 py-4">
+            <svg
+              className="h-5 w-5 animate-spin text-blue-500"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                stroke-width="4"
+              ></circle>
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              ></path>
+            </svg>
+            <p className="text-base text-slate-900">Loading comments...</p>
+          </div>
         )}
       </div>
       <div className="space-y-1 pt-2">

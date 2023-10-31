@@ -11,6 +11,7 @@ import { RefreshIcon } from "./icons/RefreshIcon";
 import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "../utils";
 import { Post } from "../types";
+import { LoadingSpinner } from "./LoadingSpinner";
 
 function sortPostsByTime(posts: Post[]) {
   return posts.sort((a, b) => b.time.getTime() - a.time.getTime());
@@ -89,7 +90,8 @@ export function Posts() {
               <p className="text-base text-slate-900">Error loading posts</p>
             </div>
           ) : (
-            <div className="py-4">
+            <div className="flex items-center justify-center gap-2 py-4">
+              <LoadingSpinner />
               <p className="text-base text-slate-900">Loading posts...</p>
             </div>
           )}
