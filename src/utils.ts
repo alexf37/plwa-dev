@@ -8,7 +8,6 @@ export async function fetchPosts() {
     throw new Error("Failed to fetch posts");
   }
   const data = await res.json();
-  console.log(data);
   const parseResult = z.array(postSchema).safeParse(data);
   if (!parseResult.success) {
     throw new Error("Failed to parse posts response");
@@ -23,7 +22,6 @@ export async function fetchOwnPosts() {
     throw new Error("Failed to fetch posts");
   }
   const data = await res.json();
-  console.log(data);
   const parseResult = z.array(postSchema).safeParse(data);
   if (!parseResult.success) {
     throw new Error("Failed to parse own posts response");
@@ -40,7 +38,6 @@ export async function fetchPost(postId: string) {
     throw new Error("Failed to fetch post");
   }
   const data = await res.json();
-  console.log(data);
   const parseResult = z.array(postSchema).nonempty().safeParse(data);
   if (!parseResult.success) {
     throw new Error("Failed to parse post response");
@@ -57,7 +54,6 @@ export async function fetchPostComments(postId: string) {
     throw new Error("Failed to fetch post");
   }
   const data = await res.json();
-  console.log(data);
   const parseResult = z.array(postSchema).safeParse(data);
   if (!parseResult.success) {
     throw new Error("Failed to parse comments response");
