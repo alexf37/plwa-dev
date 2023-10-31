@@ -6,8 +6,13 @@ import { formatDistanceToNowStrict } from "date-fns";
 import { Likes } from "./components/Likes";
 import { Comments } from "./components/Comments";
 import { CloseIcon } from "./components/icons/CloseIcon";
-import { useQuery } from "@tanstack/react-query";
-import { fetchPost, fetchPostComments } from "./utils";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  NewPostParams,
+  fetchPost,
+  fetchPostComments,
+  submitNewPost,
+} from "./utils";
 import { LoadingSpinner } from "./components/LoadingSpinner";
 import { RefreshIcon } from "./components/icons/RefreshIcon";
 
@@ -15,10 +20,6 @@ export function Post() {
   const router = useRouter();
   const { postId } = useParams(router.routeTree.parentRoute);
   const [text, setText] = useState("");
-  const [error, setError] = useState({
-    message: "",
-    show: false,
-  });
 
   const {
     data: post,
@@ -40,29 +41,15 @@ export function Post() {
     queryFn: () => fetchPostComments(postId),
   });
 
-  // todo: implement this as mutation with tanstack query
-  async function handleSubmitNewPost() {
-    const res = await fetch(`/xrk4np/api/posts.php`, {
-      body: JSON.stringify({
-        text,
-        time: new Date().toISOString(),
-        parentId: postId,
-      }),
-      method: "POST",
-      mode: "no-cors",
-    });
-    if (res.ok) {
+  const newPostMutation = useMutation({
+    mutationFn: ({ text, postId }: NewPostParams) =>
+      submitNewPost({ text, postId }),
+    onSuccess: () => {
       setText("");
-      setError((prev) => ({ ...prev, show: false }));
       refetchPost();
       refetchComments();
-    } else {
-      setError({
-        message: await res.json().then((data) => data.error),
-        show: true,
-      });
-    }
-  }
+    },
+  });
 
   return (
     <Card>
@@ -170,7 +157,7 @@ export function Post() {
           className="flex gap-2"
           onSubmit={(e) => {
             e.preventDefault();
-            handleSubmitNewPost();
+            newPostMutation.mutate({ text, postId });
           }}
         >
           <textarea
@@ -183,7 +170,7 @@ export function Post() {
             onKeyDown={(e) => {
               if (e.key === "Enter" && !e.shiftKey) {
                 e.preventDefault();
-                handleSubmitNewPost();
+                newPostMutation.mutate({ text, postId });
               }
             }}
             onChange={(e) => setText(e.target.value)}
@@ -192,12 +179,17 @@ export function Post() {
           />
           <button
             type="submit"
-            className=" col-span-3 h-10 rounded-xl bg-blue-400 px-3 py-2 text-sm font-semibold text-white drop-shadow"
+            aria-disabled={newPostMutation.isPending}
+            className="col-span-3 h-10 rounded-xl bg-blue-400 px-3 py-2 text-sm font-semibold text-white drop-shadow aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
           >
             Send
           </button>
         </form>
-        {error.show && <p className="text-sm text-red-500">{error.message}</p>}
+        {newPostMutation.isError && (
+          <p className="text-sm text-red-500">
+            {newPostMutation.error.message}
+          </p>
+        )}
       </div>
     </Card>
   );
