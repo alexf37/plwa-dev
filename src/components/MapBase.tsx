@@ -11,6 +11,54 @@ import { ACTIVITY_COLORS, SPOTS, type Location } from "../types";
 import { SpotMarker } from "./SpotMarker";
 import { PostMarker } from "./PostMarker";
 import { type Post } from "../types";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPosts } from "../utils";
+
+function sortPosts(data: Post[]) {
+  const sorted = data.sort(
+    (a, b) => b.like_count + b.comment_count - (a.like_count + a.comment_count),
+  );
+  return sorted.slice(0, 3).reverse();
+}
+
+function PostsMapLayer() {
+  const { data, isSuccess, isError, error } = useQuery({
+    queryKey: ["fetchPosts"],
+    queryFn: fetchPosts,
+  });
+
+  if (isError) console.log(error);
+
+  const postMarkers = useMemo(() => {
+    if (isSuccess) {
+      return sortPosts(data).map((post) => (
+        <PostMarker
+          key={post.id}
+          latitude={post.latitude}
+          longitude={post.longitude}
+          post={post}
+        />
+      ));
+    }
+  }, [data, isSuccess]);
+
+  return <>{postMarkers}</>;
+}
+
+function SpotsMapLayer() {
+  const spotMarkers = useMemo(() => {
+    return SPOTS.map((spot) => (
+      <SpotMarker
+        key={spot.id}
+        spot={spot}
+        {...spot.location}
+        fillColor={ACTIVITY_COLORS[spot.activity]}
+      />
+    ));
+  }, []);
+
+  return <>{spotMarkers}</>;
+}
 
 const INITIAL_VIEWPORT = {
   latitude: 38.035629,
@@ -26,49 +74,12 @@ export function MapBase({ children }: PropsWithChildren) {
       center: [INITIAL_VIEWPORT.longitude, INITIAL_VIEWPORT.latitude],
     });
   }, []);
-  const [posts, setPosts] = useState<Post[]>([]);
-  useEffect(() => {
-    fetch("/xrk4np/api/posts.php")
-      .then((res) => res.json())
-      .then((data: Post[]) => {
-        const sorted = data.sort(
-          (a, b) =>
-            parseInt(b.like_count) +
-            parseInt(b.comment_count) -
-            (parseInt(a.like_count) + parseInt(a.comment_count)),
-        );
-        setPosts(sorted.slice(0, 3).reverse());
-      })
-      .catch((e) => console.log(e));
-  }, []);
 
   const handleFlyToOnClick = ({ latitude, longitude }: Location) => {
     mapRef.current?.flyTo({
       center: [longitude, latitude],
     });
   };
-
-  const spotMarkers = useMemo(() => {
-    return SPOTS.map((spot) => (
-      <SpotMarker
-        key={spot.id}
-        spot={spot}
-        {...spot.location}
-        fillColor={ACTIVITY_COLORS[spot.activity]}
-      />
-    ));
-  }, []);
-
-  const postMarkers = useMemo(() => {
-    return posts.map((post) => (
-      <PostMarker
-        key={post.id}
-        latitude={new Number(post.latitude).valueOf()}
-        longitude={new Number(post.longitude).valueOf()}
-        post={post}
-      />
-    ));
-  }, [posts]);
 
   return (
     <>
@@ -87,8 +98,8 @@ export function MapBase({ children }: PropsWithChildren) {
             handleFlyToOnClick({ latitude, longitude });
           }}
         >
-          {spotMarkers}
-          {postMarkers}
+          <SpotsMapLayer />
+          <PostsMapLayer />
         </Map>
       </div>
     </>

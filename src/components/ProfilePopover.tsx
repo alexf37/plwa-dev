@@ -4,7 +4,7 @@ import { router } from "../routes";
 import { useEffect, useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 
-import { type Post } from "../types";
+import { type DeprecatedPost as Post } from "../types";
 import { Input } from "./Input";
 
 type User = {

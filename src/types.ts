@@ -1,8 +1,26 @@
+import z from "zod";
+
 export type Location = {
   latitude: number;
   longitude: number;
 };
-export type Post = {
+
+export const postSchema = z.object({
+  id: z.string(),
+  author: z.string(),
+  author_id: z.string(),
+  text: z.string(),
+  time: z.coerce.date(),
+  like_count: z.coerce.number(),
+  comment_count: z.coerce.number(),
+  user_liked: z.coerce.number().pipe(z.coerce.boolean()),
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
+});
+
+export type Post = z.infer<typeof postSchema>;
+
+export type DeprecatedPost = {
   id: string;
   author: string;
   author_id: string;

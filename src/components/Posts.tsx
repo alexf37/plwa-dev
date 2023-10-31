@@ -3,25 +3,28 @@ import { PlusIcon } from "./icons/PlusIcon";
 import { Comments } from "./Comments";
 import { router } from "../routes";
 import { Card } from "./Card";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
-import { type Post } from "../types";
 import { PencilSquare } from "./icons/PencilSquare";
 import { MinusIcon } from "./icons/MinusIcon";
 import { RefreshIcon } from "./icons/RefreshIcon";
+import { useQuery } from "@tanstack/react-query";
+import { fetchPosts } from "../utils";
+import { Post } from "../types";
+
+function sortPostsByTime(posts: Post[]) {
+  return posts.sort((a, b) => b.time.getTime() - a.time.getTime());
+}
 
 export function Posts() {
   const [minimised, setMinimised] = useState(false);
-  const [posts, setPosts] = useState<Post[]>([]);
-  function fetchPosts() {
-    fetch("/xrk4np/api/posts.php")
-      .then((res) => res.json())
-      .then((data) => setPosts(data))
-      .catch((e) => console.log(e));
-  }
-  useEffect(() => {
-    fetchPosts();
-  }, []);
+
+  const { data, isSuccess, isError, error, refetch } = useQuery({
+    queryKey: ["fetchPosts"],
+    queryFn: fetchPosts,
+  });
+  if (isError) console.log(error);
+
   return (
     <Card>
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
@@ -30,7 +33,7 @@ export function Posts() {
           <button
             type="button"
             aria-label="Refresh Posts"
-            onClick={fetchPosts}
+            onClick={() => refetch()}
             className="new-post-button"
           >
             <RefreshIcon stroke="currentColor" strokeWidth={1.5} />
@@ -64,27 +67,32 @@ export function Posts() {
       </div>
       {!minimised && (
         <div className="no-scrollbar divide-y divide-slate-200 overflow-y-auto">
-          {posts.map((post) => (
-            <div className="py-4" key={post.id}>
-              <small className="text-xs text-slate-500">{`${
-                post.author
-              } • ${formatDistanceToNowStrict(
-                new Date(post.time),
-              )} ago`}</small>
-              <p className="text-base text-slate-900">{post.text}</p>
-              <div className="grid grid-cols-6 gap-4 pt-2">
-                <Likes
-                  postId={post.id}
-                  likes={parseInt(post.like_count)}
-                  liked={!!parseInt(post.user_liked)}
-                />
-                <Comments
-                  postId={post.id}
-                  comments={parseInt(post.comment_count)}
-                />
+          {isSuccess ? (
+            sortPostsByTime(data).map((post) => (
+              <div className="py-4" key={post.id}>
+                <small className="text-xs text-slate-500">{`${
+                  post.author
+                } • ${formatDistanceToNowStrict(post.time)} ago`}</small>
+                <p className="text-base text-slate-900">{post.text}</p>
+                <div className="grid grid-cols-6 gap-4 pt-2">
+                  <Likes
+                    postId={post.id}
+                    likes={post.like_count}
+                    liked={post.user_liked}
+                  />
+                  <Comments postId={post.id} comments={post.comment_count} />
+                </div>
               </div>
+            ))
+          ) : isError ? (
+            <div className="py-4">
+              <p className="text-base text-slate-900">Error loading posts</p>
             </div>
-          ))}
+          ) : (
+            <div className="py-4">
+              <p className="text-base text-slate-900">Loading posts...</p>
+            </div>
+          )}
         </div>
       )}
     </Card>
