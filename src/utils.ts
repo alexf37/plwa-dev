@@ -98,3 +98,19 @@ export async function submitNewPost({ text, postId }: NewPostParams) {
     await throwErrorFromServer(res, "Failed to submit post");
   }
 }
+
+type DeletePostParams = {
+  postId: string;
+};
+
+export async function deletePost({ postId }: DeletePostParams) {
+  const res = await fetch(`/xrk4np/api/posts.php`, {
+    body: JSON.stringify({
+      postId,
+    }),
+    method: "DELETE",
+  });
+  if (!res.ok) {
+    await throwErrorFromServer(res, "Failed to delete post");
+  }
+}

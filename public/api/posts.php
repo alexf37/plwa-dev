@@ -39,7 +39,11 @@ handle_http_methods(function () {
               WHEN EXISTS (SELECT 1 FROM likes WHERE likes.post = posts.id AND likes.author = $1) 
               THEN 1 
               ELSE 0 
-            END AS user_liked
+            END AS user_liked,
+            CASE 
+                WHEN posts.author = $1 THEN 1 
+                ELSE 0 
+            END AS is_own
             FROM posts JOIN users ON posts.author = users.id
             WHERE (posts.author = $1 OR ($2 = 1))
             AND (posts.post = $3 OR ($3 IS NULL AND (posts.post IS NULL OR (posts.id = $4))))
@@ -66,4 +70,22 @@ handle_http_methods(function () {
         if (!$result) respond_server_error(500, "An error occurred inserting the post");
         respond_with_success(array("success" => "Post inserted successfully"));
     });
+    DELEET(["postId"], function ($postId) {
+        global $dbHandle;
+        session_start();
+        $user = $_SESSION["user"];
+        if (!$user) {
+            $_SESSION = array();
+            session_destroy();
+            respond_client_error(401, "Not logged in.");
+        }
+        $result = pg_query_params($dbHandle, "SELECT author FROM posts WHERE id = $1;", array($postId));
+        if (!$result) respond_server_error(500, "An error occurred deleting the post");
+        $not_own_post = empty(pg_fetch_all($result, PGSQL_ASSOC));
+        if ($not_own_post) respond_server_error(401, "You don't own this post.");
+        $result = pg_query_params($dbHandle, "DELETE FROM posts WHERE id = $1 AND author = $2;", array($postId, $user["id"]));
+        if (!$result) respond_server_error(500, "An error occurred deleting the post");
+        respond_with_success(array("success" => "Post deleted successfully"));
+    });
+
 });

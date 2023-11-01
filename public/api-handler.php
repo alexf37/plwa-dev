@@ -57,6 +57,14 @@ function PATCH(array $param_keys, callable $callback) {
     execute_with_params($request_body, $param_keys, $callback);
 }
 
+function DELEET(array $param_keys, callable $callback) {
+    if ($_SERVER['REQUEST_METHOD'] !== "DELETE") return;
+    $request_body = json_decode(file_get_contents('php://input'), true);
+    if ($request_body === null)
+        respond_client_error(400, "Invalid request body.");
+    execute_with_params($request_body, $param_keys, $callback);
+}
+
 function handle_http_methods(callable $handler) {
     try {
         $handler();

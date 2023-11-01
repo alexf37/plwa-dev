@@ -17,6 +17,7 @@ export const postSchema = z.object({
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
   parent_id: z.coerce.string().optional(),
+  is_own: z.coerce.number().pipe(z.coerce.boolean()),
 });
 
 export type Post = z.infer<typeof postSchema>;

@@ -2,9 +2,8 @@
 
 use PgSql\Connection;
 
-function db_connect()
-{
-    $server_name =  $_SERVER["SERVER_NAME"];
+function db_connect() {
+    $server_name = $_SERVER["SERVER_NAME"];
     $is_local = $server_name === "localhost";
     $host = $is_local ? "db" : "localhost";
     $port = "5432";
@@ -16,8 +15,7 @@ function db_connect()
     return $dbHandle;
 }
 
-function db_init_tables(Connection $dbHandle)
-{
+function db_init_tables(Connection $dbHandle) {
     $result = pg_query(
         $dbHandle,
         "CREATE TABLE IF NOT EXISTS users (
@@ -30,16 +28,16 @@ function db_init_tables(Connection $dbHandle)
         id SERIAL PRIMARY KEY,
         text TEXT NOT NULL,
         time TEXT NOT NULL,
-        author INT NOT NULL REFERENCES users (id),
-        post INT REFERENCES posts (id),
+        author INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
+        post INT REFERENCES posts (id) ON DELETE CASCADE,
         lat FLOAT,
         lng FLOAT
     );
     CREATE TABLE IF NOT EXISTS likes (
         id SERIAL PRIMARY KEY,
-        author INT NOT NULL REFERENCES users (id),
+        author INT NOT NULL REFERENCES users (id) ON DELETE CASCADE,
         time TEXT NOT NULL,
-        post INT NOT NULL REFERENCES posts (id),
+        post INT NOT NULL REFERENCES posts (id) ON DELETE CASCADE,
         UNIQUE(author, post)
     );"
     );

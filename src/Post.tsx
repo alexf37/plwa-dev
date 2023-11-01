@@ -9,12 +9,14 @@ import { CloseIcon } from "./components/icons/CloseIcon";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import {
   NewPostParams,
+  deletePost,
   fetchPost,
   fetchPostComments,
   submitNewPost,
 } from "./utils";
 import { LoadingSpinner } from "./components/LoadingSpinner";
 import { RefreshIcon } from "./components/icons/RefreshIcon";
+import { TrashIcon } from "./components/icons/TrashIcon";
 
 export function Post() {
   const router = useRouter();
@@ -51,6 +53,16 @@ export function Post() {
     },
   });
 
+  const deletePostMutation = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      router.navigate({ to: "/xrk4np/app", search: (prev) => prev });
+    },
+    onError: (e: Error) => {
+      console.log(e.message);
+    },
+  });
+
   return (
     <Card>
       <div className="flex items-center justify-between border-b border-slate-200 pb-6">
@@ -81,9 +93,21 @@ export function Post() {
       </div>
       {postIsSuccess ? (
         <div className="border-b border-slate-200 py-4" key={post.id}>
-          <small className="text-xs text-slate-500">{`${
-            post.author
-          } • ${formatDistanceToNowStrict(post.time)} ago`}</small>
+          <div className="flex justify-between">
+            <small className="text-xs text-slate-500">{`${
+              post.author
+            } • ${formatDistanceToNowStrict(post.time)} ago`}</small>
+            {postIsSuccess && post.is_own && (
+              <button
+                type="button"
+                aria-disabled={deletePostMutation.isPending}
+                className=" aria-disabled:opacity-50"
+                onClick={() => deletePostMutation.mutate({ postId })}
+              >
+                <TrashIcon className="h-4 w-4 text-slate-500 hover:text-red-500" />
+              </button>
+            )}
+          </div>
           <p className="text-base text-slate-900">{post.text}</p>
           <div className="grid grid-cols-6 gap-4 pt-2">
             <Likes
