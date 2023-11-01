@@ -20,47 +20,48 @@ function respond_with_success(array $payload = array("success" => "Success.")) {
     respond(200, $payload);
 }
 
-function execute_with_input(string $method, array $method_superglobal, array $url_param_keys, callable $callback) {
-    if ($_SERVER['REQUEST_METHOD'] == $method) {
-        $args = array();
-        foreach ($url_param_keys as $key => $value) {
-            if (!isset($method_superglobal[$value])) {
-                if (str_ends_with($value, "?")) {
-                    $args[$key] = $method_superglobal[rtrim($value, "?")];
-                    continue;
-                }
-                respond_client_error(400, "Missing required parameter: $value");
+function execute_with_params(array $params, array $param_keys, callable $callback) {
+    $args = array();
+    foreach ($param_keys as $key => $value) {
+        if (!isset($params[$value])) {
+            if (str_ends_with($value, "?")) {
+                $args[$key] = $params[rtrim($value, "?")];
+                continue;
             }
-            $args[$key] = $method_superglobal[$value];
+            respond_client_error(400, "Missing required parameter: $value");
         }
-        $callback(...$args);
+        $args[$key] = $params[$value];
     }
+    $callback(...$args);
 }
 
 // callback must execute a respond function
-function GET(array $url_param_keys, callable $callback) {
-    execute_with_input("GET", $_GET, $url_param_keys, $callback);
+function GET(array $param_keys, callable $callback) {
+    if ($_SERVER['REQUEST_METHOD'] !== "GET") return;
+    execute_with_params($_GET, $param_keys, $callback);
 }
 // callback must execute a respond function
-function POST(array $url_param_keys, callable $callback) {
-    $request_body = json_decode(file_get_contents('php://input'), true);
+function POST(array $param_keys, callable $callback) {
+    if ($_SERVER['REQUEST_METHOD'] !== "POST") return;
+    $request_body = empty($_POST) ? json_decode(file_get_contents('php://input'), true) : $_POST;
     if ($request_body === null)
         respond_client_error(400, "Invalid request body.");
-    execute_with_input("POST", $request_body, $url_param_keys, $callback);
+    execute_with_params($request_body, $param_keys, $callback);
 }
 
-function PATCH(array $url_param_keys, callable $callback) {
+function PATCH(array $param_keys, callable $callback) {
+    if ($_SERVER['REQUEST_METHOD'] !== "PATCH") return;
     $request_body = json_decode(file_get_contents('php://input'), true);
     if ($request_body === null)
         respond_client_error(400, "Invalid request body.");
-    execute_with_input("PATCH", $request_body, $url_param_keys, $callback);
+    execute_with_params($request_body, $param_keys, $callback);
 }
 
 function handle_http_methods(callable $handler) {
     try {
         $handler();
     } catch (Exception $e) {
-        respond_server_error(500, $e->getMessage());
+        respond_server_error(500, "An exception occurred on the server.");
     }
     respond_server_error(501, "Not implemented.");
 }
