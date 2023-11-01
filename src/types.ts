@@ -16,6 +16,7 @@ export const postSchema = z.object({
   user_liked: z.coerce.number().pipe(z.coerce.boolean()),
   latitude: z.coerce.number(),
   longitude: z.coerce.number(),
+  parent_id: z.coerce.string().optional(),
 });
 
 export type Post = z.infer<typeof postSchema>;
