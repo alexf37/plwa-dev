@@ -1,6 +1,15 @@
 import z from "zod";
 import { postSchema } from "./types";
 
+function jsonAsMultipartFormData(json: Record<string, string | undefined>) {
+  const data = new URLSearchParams();
+  for (const [key, value] of Object.entries(json)) {
+    if (value === undefined) continue;
+    data.append(key, value);
+  }
+  return data;
+}
+
 async function throwErrorFromServer(response: Response, message?: string) {
   let errorData;
   try {
@@ -74,13 +83,16 @@ export type NewPostParams = {
 
 export async function submitNewPost({ text, postId }: NewPostParams) {
   const res = await fetch(`/xrk4np/api/posts.php`, {
-    body: JSON.stringify({
+    body: jsonAsMultipartFormData({
       text,
       time: new Date().toISOString(),
       parentId: postId,
     }),
     method: "POST",
     mode: "no-cors",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
   });
   if (!res.ok) {
     await throwErrorFromServer(res, "Failed to submit post");
