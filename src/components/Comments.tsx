@@ -12,15 +12,16 @@ export function Comments({ comments, postId }: CommentsProps) {
       <button
         type="button"
         aria-label="Comment"
-        onClick={() =>
+        onClick={(e) => {
+          e.stopPropagation();
           router.navigate({
             to: `/xrk4np/app/post/$postId`,
             params: {
               postId,
             },
             search: (prev) => prev,
-          })
-        }
+          });
+        }}
       >
         <CommentIcon className="h-5 w-5" />
       </button>
