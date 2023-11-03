@@ -114,7 +114,7 @@ export function ProfilePopover() {
               onChange={(e) => setTempUsername(e.target.value)}
             />
             {error.show && inEditMode && (
-              <p className="text-sm text-red-500">{error.message}</p>
+              <p className="text-sm text-red-600">{error.message}</p>
             )}
             <h2 className="text-sm text-slate-500">
               {postsIsSuccess && `${posts.length} posts`}
@@ -123,14 +123,14 @@ export function ProfilePopover() {
           <div className="flex gap-2">
             <button
               type="submit"
-              className="rounded-lg bg-blue-500 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-blue-600 px-3 py-2 text-sm text-white drop-shadow"
             >
               Save
             </button>
             <button
               type="button"
               onClick={() => setInEditMode(false)}
-              className="rounded-lg bg-red-500 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-red-600 px-3 py-2 text-sm text-white drop-shadow"
             >
               Cancel
             </button>
@@ -150,14 +150,14 @@ export function ProfilePopover() {
             <button
               type="button"
               onClick={() => setInEditMode(true)}
-              className="rounded-lg bg-blue-500 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-blue-600 px-3 py-2 text-sm text-white drop-shadow"
             >
               Edit
             </button>
             <button
               type="button"
               onClick={() => logout()}
-              className="rounded-lg bg-red-500 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-red-600 px-3 py-2 text-sm text-white drop-shadow"
             >
               Logout
             </button>

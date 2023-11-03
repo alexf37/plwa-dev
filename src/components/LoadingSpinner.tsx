@@ -6,7 +6,7 @@ export function LoadingSpinner({
 }: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      className={twMerge("h-5 w-5 animate-spin text-blue-500", className)}
+      className={twMerge("h-5 w-5 animate-spin text-blue-600", className)}
       xmlns="http://www.w3.org/2000/svg"
       fill="none"
       viewBox="0 0 24 24"

@@ -104,7 +104,7 @@ export function Post() {
                 className=" aria-disabled:opacity-50"
                 onClick={() => deletePostMutation.mutate({ postId })}
               >
-                <TrashIcon className="h-4 w-4 text-slate-500 hover:text-red-500" />
+                <TrashIcon className="h-4 w-4 text-slate-500 hover:text-red-600" />
               </button>
             )}
           </div>
@@ -119,7 +119,7 @@ export function Post() {
           </div>
         </div>
       ) : postIsError ? (
-        <p className="text-sm text-red-500">Error loading post</p>
+        <p className="text-sm text-red-600">Error loading post</p>
       ) : (
         <div className="flex items-center justify-center gap-2 py-4">
           <LoadingSpinner />
@@ -149,11 +149,11 @@ export function Post() {
             </div>
           ))
         ) : commentsIsError ? (
-          <p className="text-sm text-red-500">Error loading comments</p>
+          <p className="text-sm text-red-600">Error loading comments</p>
         ) : (
           <div className="flex items-center justify-center gap-2 py-4">
             <svg
-              className="h-5 w-5 animate-spin text-blue-500"
+              className="h-5 w-5 animate-spin text-blue-600"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -204,13 +204,13 @@ export function Post() {
           <button
             type="submit"
             aria-disabled={newPostMutation.isPending}
-            className="col-span-3 h-10 rounded-xl bg-blue-500 px-3 py-2 text-sm font-semibold text-white drop-shadow aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+            className="col-span-3 h-10 rounded-xl bg-blue-600 px-3 py-2 text-sm font-semibold text-white drop-shadow aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
           >
             Send
           </button>
         </form>
         {newPostMutation.isError && (
-          <p className="text-sm text-red-500">
+          <p className="text-sm text-red-600">
             {newPostMutation.error.message}
           </p>
         )}

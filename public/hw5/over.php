@@ -19,10 +19,10 @@
                 <?= "You made $guess_count guesses in total." ?>
             </p>
             <div class="flex gap-2">
-                <button type="button" class="bg-blue-500 px-3 py-2 rounded-lg text-white ">
+                <button type="button" class="bg-blue-600 px-3 py-2 rounded-lg text-white ">
                     <a href="?command=login">Play Again</a>
                 </button>
-                <button type="button" class="bg-red-500 px-3 py-2 rounded-lg text-white ">
+                <button type="button" class="bg-red-600 px-3 py-2 rounded-lg text-white ">
                     <a href="?command=logout">Exit</a>
                 </button>
             </div>

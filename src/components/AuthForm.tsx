@@ -99,7 +99,7 @@ export function AuthForm({
             />
           </div>
           {error.show && (
-            <p className="text-sm text-red-500">{error.message}</p>
+            <p className="text-sm text-red-600">{error.message}</p>
           )}
         </div>
 
@@ -108,7 +108,7 @@ export function AuthForm({
           {children}
           <button
             type="submit"
-            className="rounded-xl bg-blue-500 px-3 py-2 text-white drop-shadow"
+            className="rounded-xl bg-blue-600 px-3 py-2 text-white drop-shadow"
           >
             {error.show ? "Try again" : submitText}
           </button>

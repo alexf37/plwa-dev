@@ -66,7 +66,7 @@ export function NewPost() {
           placeholder="Say anything!"
           className="flex w-full rounded-md px-3 py-2 text-sm"
         ></textarea>
-        {error.show && <p className="text-sm text-red-500">{error.message}</p>}
+        {error.show && <p className="text-sm text-red-600">{error.message}</p>}
       </div>
       <div className="text-button-container">
         <button
@@ -74,14 +74,14 @@ export function NewPost() {
           onClick={() =>
             router.navigate({ to: "/xrk4np/app", search: (prev) => prev })
           }
-          className="text-button bg-red-500 drop-shadow"
+          className="text-button bg-red-600 drop-shadow"
         >
           Cancel
         </button>
         <button
           type="button"
           onClick={() => handleSubmitNewPost()}
-          className="text-button bg-blue-500 drop-shadow"
+          className="text-button bg-blue-600 drop-shadow"
         >
           Post
         </button>

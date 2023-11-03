@@ -54,7 +54,7 @@ export function Likes({ liked, likes, postId }: LikesProps) {
       <button type="button" aria-label="Like" onClick={onLike}>
         <HeartIcon
           filled={tempLiked}
-          className={"h-5 w-5 " + (tempLiked ? "text-red-500" : "")}
+          className={"h-5 w-5 " + (tempLiked ? "text-red-600" : "")}
         />
       </button>
       <span className="text-sm">

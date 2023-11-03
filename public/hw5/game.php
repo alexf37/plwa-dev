@@ -20,7 +20,7 @@
                 <h2 class="text-slate-600 text-lg">Logged in as
                     <?= $email ?>
                 </h2>
-                <button type="button" class="bg-red-500 px-3 py-2 rounded-lg text-white ">
+                <button type="button" class="bg-red-600 px-3 py-2 rounded-lg text-white ">
                     <a href="?command=over">End Game</a>
                 </button>
             </div>

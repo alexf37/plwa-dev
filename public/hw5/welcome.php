@@ -21,7 +21,7 @@
                 <label for="email-input">Email</label>
                 <input required type="email" name="email" id="email-input"
                     class="bg-slate-50 border px-3 py-2 rounded-lg" minlength="1">
-                <button class="bg-blue-500 px-3 py-2 rounded-lg text-white">
+                <button class="bg-blue-600 px-3 py-2 rounded-lg text-white">
                     Submit
                 </button>
             </form>
