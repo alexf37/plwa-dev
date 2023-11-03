@@ -204,7 +204,7 @@ export function Post() {
           <button
             type="submit"
             aria-disabled={newPostMutation.isPending}
-            className="col-span-3 h-10 rounded-xl bg-blue-400 px-3 py-2 text-sm font-semibold text-white drop-shadow aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
+            className="col-span-3 h-10 rounded-xl bg-blue-500 px-3 py-2 text-sm font-semibold text-white drop-shadow aria-disabled:cursor-not-allowed aria-disabled:opacity-50"
           >
             Send
           </button>

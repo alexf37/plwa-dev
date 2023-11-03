@@ -108,7 +108,7 @@ export function AuthForm({
           {children}
           <button
             type="submit"
-            className="rounded-xl bg-blue-400 px-3 py-2 text-white drop-shadow"
+            className="rounded-xl bg-blue-500 px-3 py-2 text-white drop-shadow"
           >
             {error.show ? "Try again" : submitText}
           </button>

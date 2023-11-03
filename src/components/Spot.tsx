@@ -64,7 +64,7 @@ function ChatBox({ spot }: { spot: Spot }) {
         <input
           required
           placeholder="Say something..."
-          className="col-span-9 flex h-10 w-full rounded-xl border px-3 py-2 text-sm shadow outline-blue-400"
+          className="col-span-9 flex h-10 w-full rounded-xl border px-3 py-2 text-sm shadow outline-blue-500"
           type="text"
           {...messageInputProps}
           minLength={1}
@@ -72,7 +72,7 @@ function ChatBox({ spot }: { spot: Spot }) {
         />
         <button
           type="submit"
-          className=" col-span-3 rounded-xl bg-blue-400 px-3 py-2 text-sm font-semibold text-white drop-shadow"
+          className=" col-span-3 rounded-xl bg-blue-500 px-3 py-2 text-sm font-semibold text-white drop-shadow"
         >
           Send
         </button>

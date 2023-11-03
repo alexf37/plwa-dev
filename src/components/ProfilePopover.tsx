@@ -123,14 +123,14 @@ export function ProfilePopover() {
           <div className="flex gap-2">
             <button
               type="submit"
-              className="rounded-lg bg-blue-400 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-blue-500 px-3 py-2 text-sm text-white drop-shadow"
             >
               Save
             </button>
             <button
               type="button"
               onClick={() => setInEditMode(false)}
-              className="rounded-lg bg-red-400 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-red-500 px-3 py-2 text-sm text-white drop-shadow"
             >
               Cancel
             </button>
@@ -150,14 +150,14 @@ export function ProfilePopover() {
             <button
               type="button"
               onClick={() => setInEditMode(true)}
-              className="rounded-lg bg-blue-400 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-blue-500 px-3 py-2 text-sm text-white drop-shadow"
             >
               Edit
             </button>
             <button
               type="button"
               onClick={() => logout()}
-              className="rounded-lg bg-red-400 px-3 py-2 text-sm text-white drop-shadow"
+              className="rounded-lg bg-red-500 px-3 py-2 text-sm text-white drop-shadow"
             >
               Logout
             </button>

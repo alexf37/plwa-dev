@@ -74,14 +74,14 @@ export function NewPost() {
           onClick={() =>
             router.navigate({ to: "/xrk4np/app", search: (prev) => prev })
           }
-          className="text-button bg-red-400 drop-shadow"
+          className="text-button bg-red-500 drop-shadow"
         >
           Cancel
         </button>
         <button
           type="button"
           onClick={() => handleSubmitNewPost()}
-          className="text-button bg-blue-400 drop-shadow"
+          className="text-button bg-blue-500 drop-shadow"
         >
           Post
         </button>

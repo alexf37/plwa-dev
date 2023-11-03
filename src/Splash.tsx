@@ -41,12 +41,12 @@ export function Splash() {
       <div className="pointer-events-auto fixed z-50 grid h-full w-full grid-rows-6 place-content-center">
         <hgroup className=" row-span-3 row-start-3 flex flex-col items-center gap-2">
           <h1 className="text-6xl font-bold text-white drop-shadow-lg md:text-8xl">
-            <span className="text-blue-400">Spot</span>Chat
+            <span className="text-blue-500">Spot</span>Chat
           </h1>
           <h2 className="text-2xl text-white md:text-3xl">Find your spot.</h2>
           <Link
             to="/xrk4np/app"
-            className="text-md group mt-2 flex items-center gap-2 rounded-full border-2 border-white px-4 py-2.5 font-semibold text-white drop-shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400"
+            className="text-md group mt-2 flex items-center gap-2 rounded-full border-2 border-white px-4 py-2.5 font-semibold text-white drop-shadow-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500"
           >
             Try it out{" "}
             <RightArrowIcon
