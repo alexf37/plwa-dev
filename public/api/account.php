@@ -28,6 +28,7 @@ handle_http_methods(function () {
         }
         if (strlen($username) < 4) respond_client_error(400, "Username must be at least 4 bytes long.");
         if (strlen($username) > 50) respond_client_error(400, "Username must be less than 50 bytes long.");
+        if (!preg_match("/^[a-zA-Z0-9]+$/", $username)) respond_client_error(400, "Username must only contain alphanumeric characters.");
         $user = $_SESSION["user"];
         $result = pg_query_params($dbHandle, "UPDATE users SET username = $1 WHERE id = $2;", array($username, $user["id"]));
         if (!$result) respond_server_error(500, "An error occurred updating the user.");
