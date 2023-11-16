@@ -35,6 +35,7 @@ export default defineConfig({
     outDir: "../apache/xrk4np/public_html",
     emptyOutDir: true,
     manifest: true,
+    sourcemap: true,
     cssCodeSplit: true,
     rollupOptions: {
       input: rollupInputs,
