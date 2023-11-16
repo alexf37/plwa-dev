@@ -1,3 +1,4 @@
+// modified (with permission) from professor hott
 export async function fetchWord() {
   try {
     const response = await fetch(
