@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { fetchWord } from "./wordlewords.ts";
-import { html } from "./taggedTemplates.ts";
+import { html, Templit } from "./templit.ts";
 
 const guessForm = () =>
   document.querySelector("#guess-form")! as HTMLFormElement;
@@ -253,6 +253,13 @@ function Root() {
           </button>
         </div>
         <h2 class="font-semibold">Previous Guesses</h2>
+        <button
+          type="button"
+          id="test-button"
+          class="rounded-md border border-gray-200 bg-green-500 p-2 font-bold tracking-wide text-white hover:bg-green-600"
+        >
+          ${"test"}
+        </button>
         <ul
           id="guesses"
           class="max-h-96 overflow-y-auto rounded-md border border-gray-200"
@@ -307,23 +314,17 @@ function Root() {
   `;
 }
 
-function renderRoot() {
-  document.body.replaceChildren(Root());
+const postRender = () => {
   guessForm().addEventListener("submit", onGuess);
   newGameButton().addEventListener("click", newGame);
   clearHistoryButton().addEventListener("click", clearHistory);
   guessInput().focus();
   guessList().scrollTop = guessList().scrollHeight;
+};
+
+const t = new Templit(Root, document.body, postRender);
+
+function renderRoot() {
+  t.render();
 }
-
-window.addEventListener("load", () => {
-  renderRoot();
-});
-
-//note: this means that if the user has two concurrent games open,
-// the last one closed will be the one saved, even if it is
-// out of date. this also makes for weird behavior if the user
-// tries playing two games at once
-window.addEventListener("unload", () => {
-  game.save();
-});
+renderRoot();
