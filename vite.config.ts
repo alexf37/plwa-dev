@@ -14,6 +14,7 @@ const filesToInclude = [
   "hw2/styles/main.css",
   "hw3/index.html",
   "hw6/index.html",
+  "hw7/index.html",
   "app/splash.html",
 ];
 

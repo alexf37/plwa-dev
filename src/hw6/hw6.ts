@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { fetchWord } from "./wordlewords.ts";
-import { html } from "./taggedTemplates.ts";
+import { html, Templit } from "./templit.ts";
 
 const guessForm = () =>
   document.querySelector("#guess-form")! as HTMLFormElement;
@@ -255,19 +255,11 @@ function Root() {
         <h2 class="font-semibold">Previous Guesses</h2>
         <ul
           id="guesses"
-          class="max-h-96 overflow-y-auto rounded-md border border-gray-200"
+          class="max-h-96 divide-y overflow-y-auto rounded-md border border-gray-200"
         >
-          ${(() => {
-            const e = document.createElement("div");
-            e.classList.add("divide-y", "divide-gray-200");
-            const guesses = game.guesses.map((guess) =>
-              GuessListItem({ guess }),
-            );
-            if (guesses.length === 0) {
-              return html`<p class="p-2"><i>No previous guesses</i></p>`;
-            } else e.append(...guesses);
-            return e as Element;
-          })()}
+          ${game.guesses.length == 0
+            ? html`<p class="p-2"><i>No previous guesses</i></p>`
+            : game.guesses.map((guess) => GuessListItem({ guess })) ?? ""}
         </ul>
         <form id="guess-form" class="space-y-2">
           <label for="guess-input">Enter a guess:</label>
@@ -307,23 +299,17 @@ function Root() {
   `;
 }
 
-function renderRoot() {
-  document.body.replaceChildren(Root());
+const postRender = () => {
   guessForm().addEventListener("submit", onGuess);
   newGameButton().addEventListener("click", newGame);
   clearHistoryButton().addEventListener("click", clearHistory);
   guessInput().focus();
   guessList().scrollTop = guessList().scrollHeight;
+};
+
+const t = new Templit(Root, document.body, postRender);
+
+function renderRoot() {
+  t.render();
 }
-
-window.addEventListener("load", () => {
-  renderRoot();
-});
-
-//note: this means that if the user has two concurrent games open,
-// the last one closed will be the one saved, even if it is
-// out of date. this also makes for weird behavior if the user
-// tries playing two games at once
-window.addEventListener("unload", () => {
-  game.save();
-});
+renderRoot();
