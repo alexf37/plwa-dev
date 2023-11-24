@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <!-- link: https://cs4640.cs.virginia.edu/xrk4np/hw7/ -->
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script defer type="module" src="./hw7.ts"></script>
+    <!-- <link rel="stylesheet" href="/xrk4np/tailwind.css" /> -->
+    <title>HW7</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      table {
+        border: 1px solid grey;
+        border-collapse: collapse;
+        width: 50vmin;
+        margin: 0 auto;
+      }
+      #game {
+        width: 100%;
+      }
+      tr {
+        width: 100%;
+        display: flex;
+      }
+      td {
+        width: 100%;
+        aspect-ratio: 1/1;
+        border: 1px solid grey;
+        background-color: black;
+        cursor: pointer;
+      }
+      td.on {
+        background-color: #ccc;
+      }
+      #dimform {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .justify-between {
+        justify-content: space-between;
+      }
+      .gap-2 {
+        gap: 0.5rem;
+      }
+      .gap-4 {
+        gap: 1rem;
+      }
+      .flex {
+        display: flex;
+      }
+      .flex-col {
+        flex-direction: column;
+      }
+      body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        max-width: 1200px;
+        gap: 1rem;
+        padding: 2rem;
+        margin: 0 auto;
+      }
+      input {
+        padding: 0.25rem;
+        border-radius: 0.25rem;
+        border: 1px solid grey;
+      }
+      button {
+        padding: 0.5rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>HW7 - Lights Out</h1>
+    <form method="get" id="dimform">
+      <div class="flex flex-col gap-2">
+        <div class="flex justify-between gap-2">
+          <label for="rownum"># of rows: </label>
+          <input type="number" name="rows" id="rownum" />
+        </div>
+        <div class="flex justify-between gap-2">
+          <label for="rownum"># of columns: </label>
+          <input type="number" name="cols" id="colnum" />
+        </div>
+      </div>
+      <button>Start</button>
+    </form>
+    <div id="game">
+      <table id="table"></table>
+    </div>
+  </body>
+</html>

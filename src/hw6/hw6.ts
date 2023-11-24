@@ -253,28 +253,13 @@ function Root() {
           </button>
         </div>
         <h2 class="font-semibold">Previous Guesses</h2>
-        <button
-          type="button"
-          id="test-button"
-          class="rounded-md border border-gray-200 bg-green-500 p-2 font-bold tracking-wide text-white hover:bg-green-600"
-        >
-          ${"test"}
-        </button>
         <ul
           id="guesses"
-          class="max-h-96 overflow-y-auto rounded-md border border-gray-200"
+          class="max-h-96 divide-y overflow-y-auto rounded-md border border-gray-200"
         >
-          ${(() => {
-            const e = document.createElement("div");
-            e.classList.add("divide-y", "divide-gray-200");
-            const guesses = game.guesses.map((guess) =>
-              GuessListItem({ guess }),
-            );
-            if (guesses.length === 0) {
-              return html`<p class="p-2"><i>No previous guesses</i></p>`;
-            } else e.append(...guesses);
-            return e as Element;
-          })()}
+          ${game.guesses.length == 0
+            ? html`<p class="p-2"><i>No previous guesses</i></p>`
+            : game.guesses.map((guess) => GuessListItem({ guess })) ?? ""}
         </ul>
         <form id="guess-form" class="space-y-2">
           <label for="guess-input">Enter a guess:</label>
