@@ -15,7 +15,7 @@ const filesToInclude = [
   "hw3/index.html",
   "hw6/index.html",
   "hw7/index.html",
-  "splash/splash.html",
+  "splash/index.html",
 ];
 
 const rollupInputs: Record<string, string> = filesToInclude.reduce(
