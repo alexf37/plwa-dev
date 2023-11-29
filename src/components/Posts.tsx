@@ -3,7 +3,7 @@ import { PlusIcon } from "./icons/PlusIcon";
 import { Comments } from "./Comments";
 import { router } from "../routes";
 import { Card } from "./Card";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { PencilSquare } from "./icons/PencilSquare";
 import { MinusIcon } from "./icons/MinusIcon";
@@ -25,12 +25,18 @@ export function Posts() {
     queryFn: fetchPosts,
   });
   if (isError) console.log(error);
+  const bref = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    $("#addpost").on("mouseover", () => {
-      $("#addpost").css("background-color", "#e5e7eb");
-    });
-  }, []);
+    if (bref.current) {
+      $("#addpost").on("mouseover", function () {
+        $(this).addClass("bg-blue-100");
+      });
+      $("#addpost").on("mouseout", function () {
+        $(this).removeClass("bg-blue-100");
+      });
+    }
+  }, [bref]);
 
   return (
     <Card>
@@ -58,6 +64,7 @@ export function Posts() {
             )}
           </button>
           <button
+            ref={bref}
             type="button"
             aria-label="Add Post"
             id="addpost"
@@ -67,11 +74,12 @@ export function Posts() {
                 search: (prev) => prev,
               })
             }
-            className="new-post-button hover:bg-slate-300"
+            className="new-post-button"
           >
             <PencilSquare stroke="currentColor" strokeWidth={1.5} />
           </button>
         </div>
+        <div className=" hidden h-0 w-0 bg-blue-100"></div>
       </div>
       {!minimised && (
         <div className="no-scrollbar divide-y divide-slate-200 overflow-y-auto">
