@@ -3,7 +3,7 @@ import { PlusIcon } from "./icons/PlusIcon";
 import { Comments } from "./Comments";
 import { router } from "../routes";
 import { Card } from "./Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { formatDistanceToNowStrict } from "date-fns";
 import { PencilSquare } from "./icons/PencilSquare";
 import { MinusIcon } from "./icons/MinusIcon";
@@ -12,6 +12,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchPosts } from "../utils";
 import { Post } from "../types";
 import { LoadingSpinner } from "./LoadingSpinner";
+import $ from "jquery";
 
 function sortPostsByTime(posts: Post[]) {
   return posts.sort((a, b) => b.time.getTime() - a.time.getTime());
@@ -19,12 +20,17 @@ function sortPostsByTime(posts: Post[]) {
 
 export function Posts() {
   const [minimised, setMinimised] = useState(false);
-
   const { data, isSuccess, isError, error, refetch } = useQuery({
     queryKey: ["fetchPosts"],
     queryFn: fetchPosts,
   });
   if (isError) console.log(error);
+
+  useEffect(() => {
+    $("#addpost").on("mouseover", () => {
+      $("#addpost").css("background-color", "#e5e7eb");
+    });
+  }, []);
 
   return (
     <Card>
@@ -54,13 +60,14 @@ export function Posts() {
           <button
             type="button"
             aria-label="Add Post"
+            id="addpost"
             onClick={() =>
               router.navigate({
                 to: "/xrk4np/app/new-post",
                 search: (prev) => prev,
               })
             }
-            className="new-post-button"
+            className="new-post-button hover:bg-slate-300"
           >
             <PencilSquare stroke="currentColor" strokeWidth={1.5} />
           </button>

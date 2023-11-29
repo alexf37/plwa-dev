@@ -1,28 +1,26 @@
 import z from "zod";
 import { postSchema } from "./types";
+import $ from "jquery";
 
 function xhrFetch(
   url: string,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): Promise<{ ok: boolean; json: () => Promise<any> }> {
   return new Promise((resolve, reject) => {
-    const xhr = new XMLHttpRequest();
-    xhr.open("GET", url);
-
-    xhr.onload = () => {
-      const ok = xhr.status >= 200 && xhr.status < 300;
-      resolve({
-        ok,
-        json: () =>
-          ok
-            ? Promise.resolve(JSON.parse(xhr.responseText))
-            : Promise.reject(new Error(xhr.statusText)),
-      });
-    };
-
-    xhr.onerror = () => reject(new Error("Network error"));
-
-    xhr.send();
+    $.ajax({
+      url: url,
+      method: "GET",
+      dataType: "json",
+      success: (data) => {
+        resolve({
+          ok: true,
+          json: () => Promise.resolve(data),
+        });
+      },
+      error: (_str, textStatus, errorThrown) => {
+        reject(new Error(textStatus || errorThrown));
+      },
+    });
   });
 }
 
