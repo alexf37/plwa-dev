@@ -1,6 +1,31 @@
 import z from "zod";
 import { postSchema } from "./types";
 
+function xhrFetch(
+  url: string,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+): Promise<{ ok: boolean; json: () => Promise<any> }> {
+  return new Promise((resolve, reject) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+
+    xhr.onload = () => {
+      const ok = xhr.status >= 200 && xhr.status < 300;
+      resolve({
+        ok,
+        json: () =>
+          ok
+            ? Promise.resolve(JSON.parse(xhr.responseText))
+            : Promise.reject(new Error(xhr.statusText)),
+      });
+    };
+
+    xhr.onerror = () => reject(new Error("Network error"));
+
+    xhr.send();
+  });
+}
+
 function jsonAsMultipartFormData(json: Record<string, string | undefined>) {
   const data = new URLSearchParams();
   for (const [key, value] of Object.entries(json)) {
@@ -21,9 +46,12 @@ async function throwErrorFromServer(response: Response, message?: string) {
 }
 
 export async function fetchPosts() {
-  const res = await fetch("/xrk4np/api/posts.php");
+  const res = await xhrFetch("/xrk4np/api/posts.php");
   if (!res.ok) {
-    await throwErrorFromServer(res, "Failed to fetch posts");
+    await throwErrorFromServer(
+      await res.json().catch(() => console.log("error")),
+      "Failed to fetch posts",
+    );
   }
   const data = await res.json();
   const parseResult = z.array(postSchema).safeParse(data);
